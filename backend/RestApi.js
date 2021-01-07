@@ -4,7 +4,7 @@ const Encrypt = require('./Encrypt');
 
 module.exports = class RestApi {
 
-  constructor(expressApp, urlPrefix = '/api/', pathToDB = './database.db') {
+  constructor(expressApp, urlPrefix = '/api/', pathToDB = '../database/database.db') {
     this.app = expressApp;
     this.db = sqlite3(pathToDB);
     this.prefix = urlPrefix;
