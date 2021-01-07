@@ -57,7 +57,22 @@ const getAllSubforumThreads = async (req, res) => {
 // }
 
 
+// TODO: Check if inside of restApi
+const getUserById = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    SELECT * FROM users WHERE id = $id
+  `);
 
+  //res.json(statement.all(req.params));
+
+  let user = statement.get(req.params) || null;
+  if (user) {
+    delete user.password;
+    res.json(user);
+  } else {
+    res.status(404).json({ error: "No user with that id!" });
+  }
+};
 
 
 
@@ -101,6 +116,7 @@ module.exports = {
   getAllSubforums,
   //getAllThreads,
   getAllSubforumThreads,
+  getUserById
   // getAllThreads,
   // getThreadById,
   // getThreadPosts,
