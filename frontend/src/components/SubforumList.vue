@@ -50,10 +50,13 @@ export default {
 }
 
 
+
+
 h1 {
   width: 100%;
   padding-left: 60px;
   text-align: center;
+  text-decoration: underline;
 }
 
 
