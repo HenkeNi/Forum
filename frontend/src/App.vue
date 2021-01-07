@@ -40,6 +40,7 @@
 <style>
 * {
   box-sizing: border-box;
+  font-family: 'Architects Daughter', cursive;
 }
 
 body {
