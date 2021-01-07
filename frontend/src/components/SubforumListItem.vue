@@ -1,11 +1,8 @@
 <template>
-
   <div class="subforum-container" @click="goToSubforum">
     <div class="icon-img">
-      <i class="bi bi-chat-dots"></i>
-      <!-- <img src="https://image.flaticon.com/icons/png/512/14/14558.png"/> -->
+      <span class="material-icons" style="font-size: 5em;">chat</span>
     </div>
-    <hr/>
     <div class="title-container">
       <h3 class="subforum-name">{{ subforum.title }}</h3>
       <p>{{ subforum.description }}</p>
@@ -30,23 +27,23 @@ export default {
 .subforum-container {
   margin-bottom: 30px;
   width: 80vw;
-  height: 100px;
   border: 1px solid yellow;
   background-color: rgb(77, 75, 75);
   cursor: pointer;
   display: flex;
-  flex-direction: row;
-
+  flex-flow: row wrap;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
 }
 
 .title-container {
   display: flex;
-  flex-flow: column wrap;
-  width: 90%;
+  flex-flow: column;
   padding: 15px 0px 0px 40px;
 }
 
 .title-container p {
+  margin: 0px 0px 20px;
   padding-left: 15px;
 }
 
@@ -54,6 +51,11 @@ export default {
   background-color: yellow;
   height: 100%;
   width: 12vw;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
 hr {
@@ -67,6 +69,10 @@ hr {
 
 .subforum-name {
   margin: 0px;
+  font-size: 2em
 }
+
+
+
 
 </style>
