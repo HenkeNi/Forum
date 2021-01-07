@@ -18,6 +18,7 @@ export default {
 .footer {
   position: fixed;
   left: 0;
+  height: 5%;
   bottom: 0;
   width: 100%;
   /* height: 100px; */
@@ -26,5 +27,6 @@ export default {
   border-top: solid black 1px;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 </style>
