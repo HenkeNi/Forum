@@ -5,6 +5,7 @@ const restController = require('../controllers/restController');
 // Get 
 router.get('/subforums', restController.getAllSubforums);
 router.get('/threads/:subforumId', restController.getAllSubforumThreads);
+router.get('/users/:id', restController.getUserById);
 //router.get('/users', restController.getUsers);
 //router.get('/threads', restController.getAllThreads);
 //router.get('/thread/:threadId', restController.getThreadPosts)
