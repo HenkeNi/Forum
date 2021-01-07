@@ -4,7 +4,10 @@
      <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
       <div class="menu-options"> 
         <h3>Contact</h3>
-        <div class="sign-in" id="sign-in-options"><h3>Login</h3><h3>Register</h3></div>
+        <div class="sign-in" id="sign-in-options">
+          <h3>Login /</h3>
+          <h3>Register</h3>
+        </div>
         <div id="logout-option"><h3>Logout</h3></div>
       </div>
     </div>
@@ -67,28 +70,43 @@ export default {
 .title {
   text-align: center;
   margin: 0;
+  padding-top: 30px;
   font-size: 3.2em;
   color: rgb(207, 205, 205);
   cursor: pointer;
 }
 
 .menu-options {
-  width: 60%;
+  padding-bottom: 15px;
+  width: 95%;
   height: 60px;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
+  /* flex-wrap: nowrap; */
+  justify-content: flex-end;
   color: rgb(231, 231, 231);
-  background-color: red;
+  align-items: flex-end;
+}
+
+.menu-options h3 {
+  margin: 0px 15px;
 }
 
 .sign-in {
-  height: 100%;
+  /* height: 100%; */
+  width: 200px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-content: flex-end;
+  /* align-content: flex-end; */
+  /* justify-content: space-around; */
+}
+
+.sign-in h3 {
+  margin: 0px;
+  display: inline-block;
+  padding-left: 5px;
 }
 
 .line {
