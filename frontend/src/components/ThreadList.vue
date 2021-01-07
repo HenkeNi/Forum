@@ -12,6 +12,7 @@
 import ThreadListItem from './ThreadListItem.vue';
 
 export default {
+  props: ['subforum'],
   components: {
     ThreadListItem,
   },
@@ -22,7 +23,8 @@ export default {
   },
   methods: {
     async fetchAllThreads() {
-      let res = await fetch('http://localhost:3000/rest/threads/1');
+      console.log("subforum", this.subforum);
+      let res = await fetch(`http://localhost:3000/rest/threads/${this.subforum.id}`); // TODO: FIX!!!!
       res = await res.json();
       console.log(res);
       this.threads = res;
@@ -37,6 +39,7 @@ export default {
 
 <style scoped>
 .thread-list {
+  height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

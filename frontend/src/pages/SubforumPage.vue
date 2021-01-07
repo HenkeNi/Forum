@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="subforum-page">
     <div>
       <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
     </div>
-    <ThreadList />
+    <ThreadList :subforum="this.$route.params.subforum" />
   </div>
 </template>
 
@@ -19,8 +19,15 @@ export default {
 </script>
 
 <style scoped>
+.subforum-page {
+  background-color: gray;
+}
+
 .title {
+  margin-top: 0px;
+  padding-top: 40px;
   text-align: center;
+  text-decoration: underline;
 }
 
 
