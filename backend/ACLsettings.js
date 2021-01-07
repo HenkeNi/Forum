@@ -14,7 +14,9 @@ module.exports = {
     if (method === 'POST' && user.userRole === 'admin') { return true; }
 
     // Allow all logged in users to see list of other users
-    if (method === 'GET' && user.userRole) { return true; }
+    //if (method === 'GET' && user.userRole) { return true; } // TODO: keep it like this (check if users is logged in else -> anonymous User)
+    if (method === 'GET') { return true; }
+
 
     // Allow admins to change info about a user
     if (method === 'PUT' && user.userRole === 'admin') { return true; }
