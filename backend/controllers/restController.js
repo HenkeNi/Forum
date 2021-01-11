@@ -3,28 +3,20 @@ const db = sqlite3('../database/database.db');
 
 
 const getAllSubforums = async (req, res) => {
-  console.log("FETCHING... subforums");
   let statement = db.prepare(/*sql*/ `
     SELECT * FROM subforums`);
   res.json(statement.all());
 }
 
-
-// const getAllThreads = async (req, res) => {
-//   let statement = db.prepare(/*sql*/ `
-//       SELECT threads.* FROM threads, subforums WHERE threads.subforumId = $subforumId AND subforum.id = $subforumId
-//   `);
-//   res.json(statement.all({ subforumId: req.params.subforumId }));
-// }
-
-
 const getAllSubforumThreads = async (req, res) => {
-  console.log("FETCHIN threads");
   let statement = db.prepare(/*sql*/ `
     SELECT * FROM threads WHERE subforumId = $subforumId ORDER BY published_time ASC
   `);
   res.json(statement.all(req.params)); // TODO: CHECK::::
 }
+
+
+
 
 
 
@@ -42,12 +34,13 @@ const getAllSubforumThreads = async (req, res) => {
 
 
 
-// const getThreadPosts = async (req, res) => {
-//   let statement = db.prepare(`
-//     SELECT * FROM posts WHERE threadId = $threadId ORDER BY published_time ASC
-//   `);
-//   res.json(statement.all(req.params));
-// }
+const getThreadPosts = async (req, res) => {
+  console.log("FETCHIN POSTS");
+  let statement = db.prepare(`
+    SELECT * FROM posts WHERE threadId = $threadId ORDER BY published_time ASC
+  `);
+  res.json(statement.all(req.params));
+}
 
 
 
@@ -65,6 +58,9 @@ const getUserById = async (req, res) => {
 
   //res.json(statement.all(req.params));
 
+
+
+  // TODO: REMOVE!!??!
   let user = statement.get(req.params) || null;
   if (user) {
     delete user.password;
@@ -81,6 +77,26 @@ const getUserById = async (req, res) => {
 
 
 
+
+const createThread = async (req, res) => {
+  console.log("POSTING NEW THREAD");
+  let statement = db.prepare(/*sql*/`
+    INSERT into threads (title, userId, published_time, subforumId, active) 
+    VALUES ($title, $userId, $published_time, $subforumId, $active)
+  `);
+
+  res.json(statement.run(req.body));
+} 
+
+
+const createPost = async (req, res) => {
+  console.log("POSTING NEW POST");
+  let statement = db.prepare(/*sql*/`
+    INSERT into posts (message, userId, threadId, published_time)
+    VALUES ($message, $userId, $threadId, $published_time)
+  `);
+  res.json(statement.run(req.body));
+}
 
 
 
@@ -116,7 +132,14 @@ module.exports = {
   getAllSubforums,
   //getAllThreads,
   getAllSubforumThreads,
-  getUserById
+  getUserById,
+  getThreadPosts,
+
+
+  createThread,
+  createPost,
+
+
   // getAllThreads,
   // getThreadById,
   // getThreadPosts,
