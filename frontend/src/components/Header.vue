@@ -1,14 +1,19 @@
 <template>
   <div>
+     <div class="modals">
+     <SignInModal v-model="signInModalOpen" />
+     <RegisterModal v-model="registerModalOpen" />
+    </div>
     <div class="header-component">
      <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
       <div class="menu-options"> 
-        <h3>Contact</h3>
+        <h3>{{currentUser.username}}</h3>
+        <h3 @click="whoAmI">Contact</h3>
         <div class="sign-in" id="sign-in-options">
-          <h3>Login /</h3>
-          <h3>Register</h3>
+          <h3 @click="showSignInModal">Login /</h3>
+          <h3 @click="showRegisterModal">Register</h3>
         </div>
-        <div id="logout-option"><h3>Logout</h3></div>
+        <div id="logout-option"><h3 @click="signOutUser">Logout</h3></div>
       </div>
     </div>
     <div class="line"></div>
@@ -16,36 +21,93 @@
 </template>
 
 <script>
+import SignInModal from './SignInModal.vue';
+import RegisterModal from './RegisterModal.vue';
+
 export default {
+  components: {
+    SignInModal,
+    RegisterModal,
+  },
   data() {
     return {
-      isLoggedIn: true,
+      signInModalOpen: false,
+      registerModalOpen: false,
+    }
+  },
+  computed: {
+    /*showLogin() {
+      console.log("TRUE OR FALSE: ", this.$store.getters.currentUser !== null)
+      return this.$store.getters.currentUser === null;
+    },*/
+    currentUser() {
+      return this.$store.getters.currentUser || "";
     }
   },
   methods: {
     backToHomePage() {
+      if (this.$route.path === "/") { return; }
       this.$router.push("/");
     },
-    hideElements() {
-       var login = document.getElementById("sign-in-options");
-      var logout = document.getElementById("logout-option");
 
-      if (this.isLoggedIn) {
+    hideElements(hideLogin) {
+       var login = document.getElementById("sign-in-options");
+       var logout = document.getElementById("logout-option");
+
+
+      if (!hideLogin) {
         login.style.display = "block";
         logout.style.display = "none";
       } else {
         login.style.display = "none";
         logout.style.display = "block";
       }
+    },
+    showSignInModal() {
+      this.signInModalOpen = !this.signInModalOpen;
+    },
+    showRegisterModal() {
+      this.registerModalOpen = !this.registerModalOpen;
+    },
+    async signOutUser() {
+      // DELETE 
+      console.log("LOGOUT");
+
+      //let res = await fetch('http://localhost:3000/api/login', {
+      let res = await fetch('http://localhost:3000/rest/logout', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json' 
+        },
+        body: 
+          JSON.stringify({ "user": this.currentUser }) // stored user
+      });
+      res = await res.json();
+      
+      if (!res) {
+        console.log("DELETE failed!"); // write message ... failed to login!
+      } else {
+        console.log("DELETE Worked!\n", res);
+        this.hideElements(false);
+        this.$store.commit('setCurrentUser', null);
+      }
+    },
+    async whoAmI() {
+      let res = await fetch('http://localhost:3000/rest/whoami');
+      res = await res.json();
+      console.log(res);
     }
   },
   mounted() {
-    this.hideElements()
+    this.hideElements(false);
   },
   watch: {
-    isLoggedIn() {
+    /*isLoggedIn() {
       this.hideElements();
-    }
+    },*/
+    currentUser() {
+      this.$store.getters.currentUser === null ? this.hideElements(false) : this.hideElements(true);
+    },
   }
 }
 </script>
@@ -90,6 +152,7 @@ export default {
 
 .menu-options h3 {
   margin: 0px 15px;
+  cursor: pointer;
 }
 
 .sign-in {
@@ -113,6 +176,13 @@ export default {
   background-color: yellow;
   height: 5px;
   width: 100vw;
+}
+
+.modals {
+  /* margin-top: 0px; */
+  display: flex;
+  /* justify-content: flex-start; */
+  align-content: center; 
 }
 
 
