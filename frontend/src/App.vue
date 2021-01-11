@@ -20,21 +20,10 @@
       Header,
       Footer
     },
-    methods: {
-      async checkSessionForUser() {
-        //let user = await fetch(`http://localhost:3000/api/login`);
-        console.log("CHECKING FOR LOGGED IN USER");
-        //console.log(user);
-        //var api = new RestApi(); 
-        //console.log(api.get)
-      }
-    },
     created() {
-      this.checkSessionForUser();
-      
+      this.$store.dispatch('fetchCurrentUser');
     }
   }
-  
 </script>
 
 <style>
@@ -46,5 +35,4 @@
 body {
   margin: 0px;
 }
-
 </style>
