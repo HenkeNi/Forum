@@ -1,8 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const store = require('better-express-store');
-const restRoutes = require('./routes/restRoutes');
 
+const restRoutes = require('./routes/restRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -40,7 +41,7 @@ app.use(ACL(ACLsettings));
 
 
 // Create the REST api
-new RestApi(app, '/api/', '../database/database.db');
+//new RestApi(app, '/api/', '../database/database.db');
 //new RestApi(app, '/api/', './database.db');
 
 
@@ -48,6 +49,7 @@ new RestApi(app, '/api/', '../database/database.db');
 app.listen(3000, () => { console.log('Listening on port 3000') }); 
 
 app.use('/rest', restRoutes);
+app.use('/rest', authRoutes);
 
 
 
