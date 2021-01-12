@@ -1,6 +1,7 @@
 <template>
-  <div class="post-container">
+  <div v-bind:class="{ warning: isWarning }" class="post-container">
     <h2>{{post.message}}</h2>
+    <div class="remove" v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
     <h3>sent: {{post.published_time}}</h3>
     <h3>posted by: <span class="posted-by">{{author.username}}</span></h3>
   </div>
@@ -14,12 +15,32 @@ export default {
       author: Object
     }
   },
+  computed: {
+    isWarning() {
+      return this.post.warning === 1;
+    },
+    isAuthorized() {
+      let user = this.$store.getters.currentUser;
+
+      if (user) {
+        return user.userRole === 'admin' || user.userRole === 'moderator';
+      }
+      return false;
+    }
+  },
   methods: {
     async fetchAuthor() {
       let res = await fetch(`http://localhost:3000/rest/users/${this.post.userId}`); // TODO: FIX!!!!
       res = await res.json();
       console.log(res);
       this.author = res;
+    },
+    async remove() {
+      let res = await fetch(`http://localhost:3000/rest/deletepost/${this.post.id}`, {
+        method: 'delete'
+      });
+      res = await res.json();
+      console.log(res);
     }
   },
   created() {
@@ -31,6 +52,7 @@ export default {
 
 <style scoped>
 .post-container {
+  text-align: start;
   margin-bottom: 30px;
   width: 80vw;
   border: 1px solid yellow;
@@ -42,5 +64,14 @@ export default {
     color: rgb(231, 231, 31);
 }
 
+.warning {
+  border: 1px solid black;
+  background-color: rgb(255, 255, 116);
+}
+
+
+.remove {
+  cursor: pointer;
+}
 
 </style>
