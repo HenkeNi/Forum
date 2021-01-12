@@ -8,7 +8,7 @@
 
       <label for="message">Message</label><br/>
       <input required id="message" type="text" />
-      <button>Cancel</button><button @click="createThread">Confirm</button>
+      <button @click="goBack">Cancel</button><button @click="createThread">Confirm</button>
     </form>
   </div>
 </template>
@@ -46,15 +46,18 @@ export default {
       res = await res.json();
       console.log("RESPONSE: ", res.lastInsertRowid);
 
-      this.postInitialPost(res);
+      this.postInitialPost(thread, res);
+
+      thread.id = res.lastInsertRowid;
+      this.$router.push({ name: 'ThreadPage', params: {thread: thread} });
     },
 
-    async postInitialPost(thread) {
+    async postInitialPost(thread, res) {
     
       let post = {
         "message": document.getElementById("message").value,
         "userId": this.$store.getters.currentUser.id,
-        "threadId": thread.lastInsertRowid,
+        "threadId": res.lastInsertRowid,
         "published_time": Date.now()
       }
 
@@ -68,19 +71,19 @@ export default {
       //   "pubished_time": Date.now()
       // });      
 
-
-
-      let res = await fetch('http://localhost:3000/rest/posts', {
+      let result = await fetch('http://localhost:3000/rest/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 
         },
         body: JSON.stringify(post)
       });
-      res = await res.json();
-      console.log(res);
+      result = await result.json();
+      console.log(result);
     },
-
+    goBack() {
+      this.$router.push({ name: 'SubforumPage', params: {subforum: this.subforum} });
+    }
   }
 }
 </script>
