@@ -12,6 +12,15 @@ router.get('/posts/:threadId', restController.getThreadPosts);
 // POST
 router.post("/threads", restController.createThread);
 router.post("/posts", restController.createPost);
+
+
+// PUT
+router.put("/closethread/:threadId", restController.closeThread);
+
+
+// DELETE
+router.delete("/deletepost/:id", restController.deletePost);
+
 //router.post('/threads/:subforumId', restController.createThread);
 
 
