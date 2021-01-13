@@ -1,6 +1,6 @@
 <template>
   <div class="thread-page">
-    <NewPostModal :threadId="this.thread.id" v-model="newpostModalOpen"/>
+    <NewPostModal :threadId="this.thread.id" @myEvent="fetchPosts" v-model="newpostModalOpen"/>
     <h1 class="title">{{thread.title}}</h1>
     <div class="block" v-if="showCloseThread">
       <h3 @click="closeThread">Close Thread</h3>
@@ -8,7 +8,7 @@
     <div class="closed" v-if="isClosed">
       <h3>Thread is Closed!</h3>
     </div>
-    <PostList :posts="this.posts" :thread="this.thread" />
+    <PostList class="list" :posts="this.posts" :thread="this.thread" />
     <div v-if="!isClosed">
       <h2 class="new-post" @click="newPost">+ Add new post</h2>
     </div>
@@ -39,13 +39,14 @@ export default {
 
       if (user) { return (user.userRole === "moderator" || user.userRole === "admin") && this.isClosed === false; }
       return false;
-    }
+    },
   },
   methods: {
     async fetchPosts() {
       let res = await fetch(`http://localhost:3000/rest/posts/${this.thread.id}`); // TODO: FIX!!!!
       res = await res.json();
       this.posts = res;
+      this.newpostModalOpen = false;// temp SOLUTION...
     },
     async closeThread() {
       let res = await fetch(`http://localhost:3000/rest/closethread/${this.thread.id}`, {
@@ -57,7 +58,8 @@ export default {
     newPost() {
       if (this.isClosed) { return; }
       this.newpostModalOpen = !this.newpostModalOpen;
-      this.fetchPosts();
+      console.log("AFTER NEW POST");
+      //this.fetchPosts();
     },
   },
   created() {
@@ -67,6 +69,7 @@ export default {
   mounted() {
     this.fetchPosts();
   },
+ 
 
 }
 </script>
@@ -106,6 +109,10 @@ export default {
   border: 1px solid yellow;
   background-color: rgb(240, 145, 145);
   cursor: pointer;
+}
+
+.list {
+  padding-bottom: 40px;
 }
 
 .new-post {
