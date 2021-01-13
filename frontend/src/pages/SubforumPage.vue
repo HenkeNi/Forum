@@ -1,10 +1,10 @@
 <template>
   <div class="subforum-page">
-    <div>
+    <div class="top">
       <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
       <h2 class="create" @click="createNewThread">+ Create new thread</h2>
     </div>
-    <ThreadList :subforum="this.$route.params.subforum" />
+    <ThreadList class="thread-list" :subforum="this.$route.params.subforum" />
   </div>
 </template>
 
@@ -31,13 +31,25 @@ export default {
 .subforum-page {
   background-color: gray;
 }
-
-.title {
+.top {
   margin-top: 0px;
-  padding-top: 40px;
+  padding-top: 20px;
+  padding-bottom: 20px;
   text-align: center;
   text-decoration: underline;
+
+  width: 100vw;
+  border: 1px solid yellow;
+  background-color: rgb(114, 110, 110);
 }
+.title {
+
+
+}
+
+/* .thread-list {
+  background-color: gray;
+} */
 
 .new-thread {
   background-color: greenyellow;
