@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit("input", !this.value);
+      this.$emit("myEvent", "input", !this.value);
     },
     async submit(e) { // TODO: put in store??
       e.preventDefault();
