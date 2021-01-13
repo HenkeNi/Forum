@@ -4,6 +4,7 @@ import HomePage from '@/pages/HomePage';
 import SubforumPage from '@/pages/SubforumPage';
 import ThreadPage from '@/pages/ThreadPage';
 import ThreadCreationPage from '@/pages/ThreadCreationPage';
+import ProfilePage from '@/pages/ProfilePage';
 
 Vue.use(VueRouter);
 
@@ -29,6 +30,12 @@ const routes = [
     path: '/threadCreation/:subforum',
     name: 'threadCreation',
     component: ThreadCreationPage,
+    props: true,
+  },
+  {
+    path: '/profile/:userId',
+    name: 'ProfilePage',
+    component: ProfilePage,
     props: true,
   }
 ];
