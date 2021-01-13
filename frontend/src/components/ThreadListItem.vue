@@ -4,8 +4,8 @@
       <h1>{{thread.title}}</h1>
     </div>
     <div class="thread-info">
-      <h4>by: <span class="author">{{author.username}}</span></h4>
-      <h4>published at: <span class="published">{{thread.published_time}}</span></h4>
+      <h4>by: <span @click="goToProfile" class="author">{{author.username}}</span></h4>
+      <h4>published at: <span class="published">{{publishedDate}}</span></h4>
     </div>
   </div>
 </template>
@@ -18,9 +18,17 @@ export default {
       author: Object,
     }
   },
+  computed: {
+    publishedDate() {
+      return new Date(this.thread.published_time).toLocaleString();
+    }
+  },
   methods: {
     goToThreadPage() {
       this.$router.push({ name: 'ThreadPage', params: {thread: this.thread} });
+    },
+    goToProfile() {
+      this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
     },
     async fetchAuthor() {
       let res = await fetch(`http://localhost:3000/rest/users/${this.thread.userId}`); 
