@@ -2,8 +2,8 @@
   <div v-bind:class="{ warning: isWarning }" class="post-container">
     <h2>{{post.message}}</h2>
     <div class="remove" v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
-    <h3>sent: {{post.published_time}}</h3>
-    <h3>posted by: <span class="posted-by">{{author.username}}</span></h3>
+    <h3>sent: {{publishedDate}}</h3>
+    <h3 class="author" @click="goToProfile">posted by: <span class="posted-by">{{author.username}}</span></h3>
   </div>
 </template>
 
@@ -26,6 +26,9 @@ export default {
         return user.userRole === 'admin' || user.userRole === 'moderator';
       }
       return false;
+    },
+    publishedDate() {
+      return new Date(this.post.published_time).toLocaleString();
     }
   },
   methods: {
@@ -41,6 +44,9 @@ export default {
       });
       res = await res.json();
       console.log(res);
+    },
+    goToProfile() {
+      this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
     }
   },
   created() {
@@ -71,6 +77,10 @@ export default {
 
 
 .remove {
+  cursor: pointer;
+}
+
+.author {
   cursor: pointer;
 }
 
