@@ -36,8 +36,7 @@ export default {
     async register(e) {
       e.preventDefault();
       
-      //let res = await fetch('http://localhost:3000/api/users', {
-      let res = await fetch('http://localhost:3000/rest/register', {
+      let user = await fetch('http://localhost:3000/rest/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 
@@ -47,31 +46,21 @@ export default {
              "email": document.getElementById("reg-email").value, 
               "password": document.getElementById("reg-password").value,
               "username": document.getElementById("reg-username").value,
-              "userRole": "member"
+              "userRole": "member",
+              "isActive": 1
           })
       });
-      res = await res.json();
-      console.log(res);
+      user = await user.json();
 
-      if (!res) {
-        console.log("FAILED!");
+      if (!user) {
+        console.log("Failed registration!");
         this.failed = true;
       } else {
-        this.$store.commit('setCurrentUser', res);
-        //this.$store.commit('setIsLoggedIn', true)
+        console.log("Registration success!", user);
+        this.$store.dispatch('fetchCurrentUser');
+        //this.$store.commit('setCurrentUser', user);
         this.$emit("input", !this.value);
-
-        console.log("SUCCESS");
       }
-
-      // if (!re) {
-      //   console.log("Creation failed!"); // write message ... failed to login!
-      // } else {
-      //   console.log("Creation successfull!\n", user);
-      //   //this.$store.commit('setIsLoggedIn', true)
-      //   //console.log(this.$store.getters.isLoggedIn);
-      //   this.$emit("input", !this.value);
-      // }
     }
   },
 }
