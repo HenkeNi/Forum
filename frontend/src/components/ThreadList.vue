@@ -39,11 +39,12 @@ export default {
 
 <style scoped>
 .thread-list {
-  height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-content: flex-start;
+  background-color: gray;
+  padding-bottom: 40px;
 }
 
 </style>
