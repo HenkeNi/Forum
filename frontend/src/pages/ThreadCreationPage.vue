@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <h1>Create new thread</h1>
+  <div class="thread-creation">
+    <h1 class="title">Create new thread</h1>
 
-    <form>
+    <form class="form">
       <label for="title">Enter title</label><br/>
       <input required id="title" type="text" /><br/>
 
       <label for="message">Message</label><br/>
-      <input required id="message" type="text" />
+      <input class="message" required id="message" type="text" />
       <button @click="goBack">Cancel</button><button @click="createThread">Confirm</button>
     </form>
   </div>
@@ -58,7 +58,8 @@ export default {
         "message": document.getElementById("message").value,
         "userId": this.$store.getters.currentUser.id,
         "threadId": res.lastInsertRowid,
-        "published_time": Date.now()
+        "published_time": Date.now(),
+        "warning": 0
       }
 
       console.log("POST:", post);
@@ -89,7 +90,39 @@ export default {
 </script>
 
 
-<style>
+<style scoped> 
+.thread-creation {
+  background-color: gray;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+.title {
+  padding-top: 30px;
+  margin: 0px;
+  text-align: center;
+}
 
+.form {
+  padding-top: 50px;
+  width: 40vw;
+  height: 50vh;
+  background-color: darkgray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 30px;
+}
+
+.form label {
+  margin: 0px;
+  padding-bottom: 2px;
+}
+
+.message {
+  width: 30vw;
+  height: 40vh;
+}
 
 </style>
