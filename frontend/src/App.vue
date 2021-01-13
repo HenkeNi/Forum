@@ -11,9 +11,6 @@
   import Header from './components/Header.vue';
   import Footer from './components/Footer.vue';
 
-  // TEST 
-  //import rest from '../RestApi';
-
   export default {
     name: 'app',
     components: {
