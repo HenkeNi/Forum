@@ -40,6 +40,7 @@ export default {
 .post-list {
   top: 0px;
   /* height: 100vh; */
+  background-color: gray;
   text-align: center;
   display: flex;
   justify-content: flex-start;
