@@ -28,8 +28,8 @@ export default new Vuex.Store({
   actions: {
     async fetchCurrentUser({ commit }) {
       
-      //let user = await fetch(`http://localhost:3000/api/login`); // check if anyone is logged in....
-      let user = await fetch('http://localhost:3000/rest/whoami');
+      //let user = await fetch(`/api/login`); // check if anyone is logged in....
+      let user = await fetch('/rest/v1/whoami');
       user = await user.json();
       commit("setCurrentUser", user);
       //this.setCurrentUser(user);
@@ -42,7 +42,7 @@ export default new Vuex.Store({
 
     async postNewPost(post) {
       console.log("TRYING TO POST: ", post);
-      let res = await fetch('http://localhost:3000/rest/posts', {
+      let res = await fetch('/rest/v1/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 
