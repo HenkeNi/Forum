@@ -46,7 +46,7 @@ export default {
   justify-content: flex-start;
   align-content: center;
   flex-direction: column;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 }
 
 </style>
