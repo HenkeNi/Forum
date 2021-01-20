@@ -46,7 +46,7 @@ app.use(ACL(ACLsettings));
 
 
 // Start web server
-app.listen(3000, () => { console.log('Listening on port 3000') }); 
+app.listen(4000, () => { console.log('Listening on port 4000') }); 
 
 app.use('/rest', restRoutes);
 app.use('/rest', authRoutes);
