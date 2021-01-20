@@ -7,7 +7,7 @@
     <div class="header-component">
      <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
       <div class="menu-options"> 
-        <h3>{{currentUser.username}}</h3>
+        <h3 @click="goToProfile">{{currentUser.username}}</h3>
         <h3 @click="whoAmI">Contact</h3>
         <div class="sign-in" id="sign-in-options">
           <h3 @click="showSignInModal">Login /</h3>
@@ -69,12 +69,14 @@ export default {
     showRegisterModal() {
       this.registerModalOpen = !this.registerModalOpen;
     },
+    goToProfile() {
+      this.$router.push({ name: 'ProfilePage', params: {user: this.currentUser} });
+    },
     async signOutUser() {
       // DELETE 
       console.log("LOGOUT");
 
-      //let res = await fetch('http://localhost:3000/api/login', {
-      let res = await fetch('http://localhost:3000/rest/logout', {
+      let res = await fetch('/rest/v1/logout', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json' 
@@ -93,7 +95,7 @@ export default {
       }
     },
     async whoAmI() {
-      let res = await fetch('http://localhost:3000/rest/whoami');
+      let res = await fetch('/rest/v1/whoami');
       res = await res.json();
       console.log(res);
     }
