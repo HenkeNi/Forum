@@ -2,7 +2,12 @@
   <div class="subforum-page">
     <div class="top">
       <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
-      <h2 class="create" @click="createNewThread">+ Create new thread</h2>
+      <div class="create" @click="createNewThread"> 
+        <span class="material-icons" style="font-size: 2em;">add_circle
+          <span class="tooltiptext">New Thread</span>  
+        </span>
+      </div>
+     
     </div>
     <ThreadList class="thread-list" :subforum="this.$route.params.subforum" />
   </div>
@@ -37,7 +42,7 @@ export default {
   padding-bottom: 20px;
   text-align: center;
   text-decoration: underline;
-
+  
   width: 100vw;
   border: 1px solid yellow;
   background-color: rgb(114, 110, 110);
@@ -46,6 +51,24 @@ export default {
 
 
 }
+
+.material-icons .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-emphasis: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  font-size: small;
+  position: absolute;
+  z-index: 1;
+}
+
+.material-icons:hover .tooltiptext {
+  visibility: visible;
+}
+
 
 /* .thread-list {
   background-color: gray;
