@@ -36,7 +36,7 @@ export default {
     async register(e) {
       e.preventDefault();
       
-      let user = await fetch('http://localhost:3000/rest/register', {
+      let user = await fetch('/rest/v1/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 

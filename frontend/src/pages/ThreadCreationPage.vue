@@ -33,9 +33,9 @@ export default {
 
       if (thread.userId === null || thread.userId === undefined) { return; } 
 
-      let res = await fetch('http://localhost:3000/rest/threads', {
+      let res = await fetch('/rest/v1/threads', {
 
-      //let res = await fetch(`http://localhost:3000/threads/${this.$route.params.subforum.id}`, {
+      //let res = await fetch(`/threads/${this.$route.params.subforum.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 
@@ -72,7 +72,7 @@ export default {
       //   "pubished_time": Date.now()
       // });      
 
-      let result = await fetch('http://localhost:3000/rest/posts', {
+      let result = await fetch('/rest/v1/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 

@@ -43,13 +43,13 @@ export default {
   },
   methods: {
     async fetchPosts() {
-      let res = await fetch(`http://localhost:3000/rest/posts/${this.thread.id}`); // TODO: FIX!!!!
+      let res = await fetch(`/rest/v1/posts/${this.thread.id}`); // TODO: FIX!!!!
       res = await res.json();
       this.posts = res;
       this.newpostModalOpen = false;// temp SOLUTION...
     },
     async closeThread() {
-      let res = await fetch(`http://localhost:3000/rest/closethread/${this.thread.id}`, {
+      let res = await fetch(`/rest/v1/closethread/${this.thread.id}`, {
         method: 'PUT',
        });
       res = await res.json();
@@ -58,7 +58,6 @@ export default {
     newPost() {
       if (this.isClosed) { return; }
       this.newpostModalOpen = !this.newpostModalOpen;
-      console.log("AFTER NEW POST");
       //this.fetchPosts();
     },
   },
@@ -80,7 +79,8 @@ export default {
   flex-direction: column;
   background-color: gray;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  min-height: 80vh;
 }
 
 .title {
@@ -111,12 +111,10 @@ export default {
   cursor: pointer;
 }
 
-.list {
-  padding-bottom: 40px;
-}
 
 .new-post {
-  padding-bottom: 100px;
+  margin-top: 0px;
+  padding-bottom: 50px;
   cursor: pointer;
 }
 

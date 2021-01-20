@@ -60,7 +60,7 @@ export default {
         post.warning = 0;
       }
 
-      let res = await fetch('http://localhost:3000/rest/posts', {
+      let res = await fetch('/rest/v1/posts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json' 

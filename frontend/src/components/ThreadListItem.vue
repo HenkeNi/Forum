@@ -31,7 +31,7 @@ export default {
       this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
     },
     async fetchAuthor() {
-      let res = await fetch(`http://localhost:3000/rest/users/${this.thread.userId}`); 
+      let res = await fetch(`/rest/v1/users/${this.thread.userId}`); 
       res = await res.json();
       console.log(res);
       this.author =  res;

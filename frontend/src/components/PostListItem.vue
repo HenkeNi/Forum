@@ -1,9 +1,13 @@
 <template>
   <div v-bind:class="{ warning: isWarning }" class="post-container">
-    <h2>{{post.message}}</h2>
-    <div class="remove" v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
-    <h3>sent: {{publishedDate}}</h3>
-    <h3 class="author" @click="goToProfile">posted by: <span class="posted-by">{{author.username}}</span></h3>
+    <div class="message">
+      <h2>{{post.message}}</h2>
+    </div>
+    <div class="info">
+      <div class="remove" v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
+      <h3>sent: {{publishedDate}}</h3>
+      <h3 class="author" @click="goToProfile">posted by: <span class="posted-by">{{author.username}}</span></h3>
+    </div>
   </div>
 </template>
 
@@ -33,13 +37,13 @@ export default {
   },
   methods: {
     async fetchAuthor() {
-      let res = await fetch(`http://localhost:3000/rest/users/${this.post.userId}`); // TODO: FIX!!!!
+      let res = await fetch(`/rest/v1/users/${this.post.userId}`); // TODO: FIX!!!!
       res = await res.json();
       console.log(res);
       this.author = res;
     },
     async remove() {
-      let res = await fetch(`http://localhost:3000/rest/deletepost/${this.post.id}`, {
+      let res = await fetch(`/rest/v1/deletepost/${this.post.id}`, {
         method: 'delete'
       });
       res = await res.json();
@@ -60,10 +64,16 @@ export default {
 .post-container {
   text-align: start;
   margin-bottom: 30px;
+  padding: 20px;
   width: 80vw;
   border: 1px solid yellow;
   background-color: rgb(77, 75, 75);
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message {
 }
 
 .posted-by {
@@ -82,6 +92,11 @@ export default {
 
 .author {
   cursor: pointer;
+}
+
+.info {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 </style>

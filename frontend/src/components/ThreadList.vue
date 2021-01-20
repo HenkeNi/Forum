@@ -24,7 +24,7 @@ export default {
   methods: {
     async fetchAllThreads() {
       console.log("subforum", this.subforum);
-      let res = await fetch(`http://localhost:3000/rest/threads/${this.subforum.id}`); // TODO: FIX!!!!
+      let res = await fetch(`/rest/v1/threads/${this.subforum.id}`); // TODO: FIX!!!!
       res = await res.json();
       console.log(res);
       this.threads = res;

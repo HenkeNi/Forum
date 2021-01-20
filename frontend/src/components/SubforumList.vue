@@ -23,8 +23,7 @@ export default {
   },
   methods: {
     async fetchSubforums() {
-      //let res = await fetch('http://localhost:3000/api/subforums');
-     let res = await fetch('http://localhost:3000/rest/subforums');
+      let res = await fetch('/rest/v1/subforums');
       res = await res.json();
       console.log(res);
       this.subforums = res;

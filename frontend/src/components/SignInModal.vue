@@ -36,9 +36,7 @@ export default {
     async login(e) { // TODO: put in store??
       e.preventDefault();
 
-      //let user = await fetch('http://localhost:3000/api/login', {
-      let user = await fetch('http://localhost:3000/rest/login', {
-
+      let user = await fetch('/rest/v1/login', {
        method: 'POST',
         headers: {
           'Content-Type': 'application/json' 
