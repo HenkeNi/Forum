@@ -7,7 +7,9 @@ const register = async (req, res) => {
   req.body.password = Encrypt.multiEncrypt(req.body.password);
 
   let statement = db.prepare(/*sql*/`
-    INSERT INTO users (email, password, username, userRole) values ($email, $password, $username, $userRole)`);
+    INSERT INTO users (email, password, username, userRole, isActive)
+    VALUES ($email, $password, $username, $userRole, $isActive)
+  `);
   res.json(statement.run(req.body));
 }
 

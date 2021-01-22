@@ -1,8 +1,11 @@
+const Encrypt = require("../Encrypt");
 const sqlite3 = require('better-sqlite3');
 const db = sqlite3('../database/database.db');
 
 
+// GET
 const getAllSubforums = async (req, res) => {
+  console.log("FETCHING SUBFORUMS");
   let statement = db.prepare(/*sql*/ `
     SELECT * FROM subforums`);
   res.json(statement.all());
@@ -10,46 +13,29 @@ const getAllSubforums = async (req, res) => {
 
 const getAllSubforumThreads = async (req, res) => {
   let statement = db.prepare(/*sql*/ `
-    SELECT * FROM threads WHERE subforumId = $subforumId ORDER BY published_time ASC
+    SELECT * FROM threads 
+    WHERE subforumId = $subforumId 
+    ORDER BY published_time ASC
   `);
   res.json(statement.all(req.params)); // TODO: CHECK::::
 }
 
-
-// const getThreadById = async (req, res) => {
-//   let statement = db.prepare(`
-//     SELECT * FROM threads WHERE id = $id
-//   `);
-//   res.json(statement.get(req.params));
-// }
-
-
-
 const getThreadPosts = async (req, res) => {
   console.log("FETCHIN POSTS");
-  let statement = db.prepare(`
-    SELECT * FROM posts WHERE threadId = $threadId ORDER BY published_time ASC
+  let statement = db.prepare(/*sql*/`
+    SELECT * FROM posts 
+    WHERE threadId = $threadId 
+    ORDER BY published_time ASC
   `);
   res.json(statement.all(req.params));
 }
 
-
-
-// const getAllUsers = async (req, res) => {
-//   let statement = db.prepare(/*sql*/ `SELECT * FROM users`);
-//     res.json(statement.all());
-// }
-
-
-// TODO: Check if inside of restApi
 const getUserById = async (req, res) => {
   let statement = db.prepare(/*sql*/`
-    SELECT * FROM users WHERE id = $id
+    SELECT * FROM users 
+    WHERE id = $id
   `);
 
-  //res.json(statement.all(req.params));
-
-  // TODO: REMOVE!!??!
   let user = statement.get(req.params) || null;
   if (user) {
     delete user.password;
@@ -61,14 +47,15 @@ const getUserById = async (req, res) => {
 
 
 
-
+// PUT
 const createThread = async (req, res) => {
   console.log("POSTING NEW THREAD");
   let statement = db.prepare(/*sql*/`
-    INSERT into threads (title, userId, published_time, subforumId, active) 
+    INSERT INTO threads (title, userId, published_time, subforumId, active) 
     VALUES ($title, $userId, $published_time, $subforumId, $active)
-  `);
-
+    `);
+    
+    //WHERE NOT (user.isActive = 0 (SELECT * FROM users WHERE id = userId))
   res.json(statement.run(req.body));
 } 
 
@@ -105,6 +92,36 @@ const deletePost = async (req, res) => {
 }
 
 
+
+const deleteUser = async (req, res) => {
+  console.log("DELETING USER");
+  let statement = db.prepare(/*sql*/`
+    DELETE FROM users
+    WHERE id = $id 
+  `);
+  res.json(statement.run({ id: req.params.id }));
+}
+
+
+
+//const makeUserModerator 
+
+const updateUser = async (req, res) => {
+  console.log("UPDATING USER");
+
+  if (req.body.password) {
+    req.body.password = Encrypt.multiEncrypt(req.body.password);
+  }
+
+  req.body.id = req.params.id;
+
+  let statement = db.prepare(/*sql*/`
+    UPDATE users
+    SET ${Object.keys(req.body).map(x => x + ' = $' + x)}   
+    WHERE id = $id
+  `);
+  res.json(statement.run(req.body));
+}
 
 
 
@@ -152,6 +169,9 @@ module.exports = {
 
   closeThread,
   deletePost,
+  deleteUser,
+
+  updateUser,
 
   // getAllThreads,
   // getThreadById,
