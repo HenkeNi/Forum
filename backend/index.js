@@ -11,11 +11,11 @@ const RestApi = require('./RestApi');
 const ACL = require('./ACL');
 const ACLsettings = require('./ACLsettings')
 
+const path = require('path');
+
 
 // Make express able to read 'req.body'
 app.use(express.json()); 
-
-
 
 app.use((error, req, res, next) => {
   if (error) {
@@ -44,12 +44,29 @@ app.use(ACL(ACLsettings));
 //new RestApi(app, '/api/', '../database/database.db');
 //new RestApi(app, '/api/', './database.db');
 
+app.use('/rest/v1', restRoutes);
+app.use('/rest/v1', authRoutes);
+
+
+
+
+app.use(express.static('dist'));
+
+// app.use(express.static(path.join(dirname, 'frontend')));
+// app.get('/', (req, res)=>{
+//  res.sendFile(path.join(dirname, "../frontend/dist/index.html"));
+// });
+
+//app.use(express.static(path.join(__dirname, "..", "frontend", "dist")))
+
+/*app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+});*/
+
+
 
 // Start web server
 app.listen(4000, () => { console.log('Listening on port 4000') }); 
-
-app.use('/rest', restRoutes);
-app.use('/rest', authRoutes);
 
 
 
