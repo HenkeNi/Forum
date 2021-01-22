@@ -1,7 +1,10 @@
 <template>
   <div class="profile-page">
     <h2 class="title">{{ user.username }}</h2>
-    <h3>{{user.email}}</h3>
+    <div class="info">
+      <h3>email: {{user.email}}</h3>
+      <h3>{{user.userRole}}</h3>
+    </div>
     <div v-if="isAdmin">
       <h3 @click="deleteUser">DELETE</h3>
     </div>
@@ -17,10 +20,10 @@ export default {
   props: ['user'],
   computed: {
     isAdmin() {
-      return this.$store.getters.currentUser.userRole === "admin";
+      return this.$store.getters.currentUser !== null && this.$store.getters.currentUser.userRole === "admin";
     },
     profileUserIsModerator() {
-      return this.user.userRole === "moderator";
+      return this.$store.getters.currentUser !== null && this.user.userRole === "moderator";
     }
   },
   methods: {
@@ -84,6 +87,13 @@ export default {
   margin: 0px;
   text-align: center;
   text-decoration: underline;
+}
+
+.info {
+  text-align: center;
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;  
 }
 
 </style>
