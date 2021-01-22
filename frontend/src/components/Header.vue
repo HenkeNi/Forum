@@ -5,15 +5,16 @@
      <RegisterModal v-model="registerModalOpen" />
     </div>
     <div class="header-component">
-     <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
-      <div class="menu-options"> 
-        <h3 @click="goToProfile">{{currentUser.username}}</h3>
-        <h3 @click="whoAmI">Contact</h3>
-        <div class="sign-in" id="sign-in-options">
-          <h3 @click="showSignInModal">Login /</h3>
-          <h3 @click="showRegisterModal">Register</h3>
+      <div class="overlay">
+        <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
+        <div class="menu-options"> 
+          <h3 @click="goToProfile">{{currentUser.username}}</h3>
+          <div class="sign-in" id="sign-in-options">
+            <h3 @click="showSignInModal">Login /</h3>
+            <h3 @click="showRegisterModal">Register</h3>
+          </div>
+          <div id="logout-option"><h3 @click="signOutUser">Logout</h3></div>
         </div>
-        <div id="logout-option"><h3 @click="signOutUser">Logout</h3></div>
       </div>
     </div>
     <div class="line"></div>
@@ -94,11 +95,6 @@ export default {
         this.$store.commit('setCurrentUser', null);
       }
     },
-    async whoAmI() {
-      let res = await fetch('/rest/v1/whoami');
-      res = await res.json();
-      console.log(res);
-    }
   },
   mounted() {
     this.hideElements(false);
@@ -118,17 +114,26 @@ export default {
 .header-component {
   width: 100vw;
   height: 150px;
+  
+  /* background-image: url("https://cdna.artstation.com/p/assets/images/images/003/932/068/large/michael-broussard-env-gothamstreets-devsketch-1b.jpg?1478645462"); */
   /* background-image: url("https://wallpapercave.com/wp/U08hnMx.jpg"); */
-  /* background-image: url("https://images.wallpapersden.com/image/download/batman-8k-logo_a2traW6UmZqaraWkpJRmZW1lrWdlaWU.jpg"); */
-  background-color: rgb(27, 26, 26);
+  background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
+  /* background-color: rgb(27, 26, 26); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+
+  /* background-size: contain; */
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
 
+.overlay{
+  width: 100vw;
+  height: 150px;
+  background: rgba(221, 218, 57, 0.1);
 }
 
 .title {
@@ -136,7 +141,8 @@ export default {
   margin: 0;
   padding-top: 30px;
   font-size: 3.2em;
-  color: rgb(207, 205, 205);
+  color: white;
+  /* color: rgb(207, 205, 205); */
   cursor: pointer;
 }
 
@@ -153,7 +159,7 @@ export default {
 }
 
 .menu-options h3 {
-  margin: 0px 15px;
+  margin: 0px 5px;
   cursor: pointer;
 }
 
@@ -174,18 +180,17 @@ export default {
   padding-left: 5px;
 }
 
+
+.modals {
+  display: flex;
+  align-content: center; 
+  }
+
+
 .line {
   background-color: yellow;
   height: 5px;
   width: 100vw;
 }
-
-.modals {
-  /* margin-top: 0px; */
-  display: flex;
-  /* justify-content: flex-start; */
-  align-content: center; 
-}
-
 
 </style>
