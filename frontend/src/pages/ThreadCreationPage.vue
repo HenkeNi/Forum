@@ -38,7 +38,7 @@ export default {
       //let res = await fetch(`/threads/${this.$route.params.subforum.id}`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json' 
+          'Content-Type': 'application/json'
         },
         body: 
           JSON.stringify(thread)

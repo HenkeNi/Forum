@@ -16,10 +16,11 @@ router.post("/posts", restController.createPost);
 
 // PUT
 router.put("/closethread/:threadId", restController.closeThread);
-
+router.put("/user/:id", restController.updateUser);
 
 // DELETE
 router.delete("/deletepost/:id", restController.deletePost);
+router.delete("/deleteusers/:id", restController.deleteUser);
 
 //router.post('/threads/:subforumId', restController.createThread);
 

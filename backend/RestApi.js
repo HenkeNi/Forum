@@ -17,7 +17,7 @@ module.exports = class RestApi {
       this.createPutRoute(table);
       this.createDeleteRoute(table);
     }
-    this.addLoginRoutes();
+    //this.addLoginRoutes();
   }
 
   // Get all table names
@@ -61,6 +61,7 @@ module.exports = class RestApi {
 
   createPostRoute(table) {
     this.app.post(this.prefix + table, (req, res) => {
+      console.log("IN HERE!!!!")
       let b = req.body;
       if (b.password) { b.password = Encrypt.multiEncrypt(b.password); } // encrypt password fields (if any!)
 
@@ -115,6 +116,7 @@ module.exports = class RestApi {
         WHERE email = $email AND password = $password 
       `);
       let user = statement.get(req.body) || null;
+      
       if (user) {
         delete user.password;
         req.session.user = user; // Save logged in user in session
