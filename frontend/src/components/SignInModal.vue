@@ -66,9 +66,9 @@ export default {
 <style scoped>
 
 .modal {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 120%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;  
@@ -81,7 +81,7 @@ export default {
 
 .form {
   width: 40%;
-  height: 30%;
+  height: 50%;
   /* padding: 20px 50px 50px; */
   background-color: rgb(186, 187, 183);
   display: flex;

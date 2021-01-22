@@ -1,17 +1,24 @@
 <template>
   <div class="modal" v-show="value">
     <div class="form">
-      <h2 class="title">Register</h2>
-      <form>
+      <div class="title">
+        <h2>Register</h2>
+      </div>
+      <div>
+         <form>
         <div class="input-fields">
           <input required type="email" id="reg-email" name="reg-email" placeholder="email" /><br/>
           <input required type="text" id="reg-username" name="reg-username" placeholder="username" /><br/>
           <input required type="password" id="reg-password" name="reg-password" placeholder="password"/><br/>  
         </div>
         <p v-show="failed">Registration failed!</p>
-        <input type="submit" @click="register" value="Register" />      
-        <button @click.prevent="close">Close</button>
       </form>
+      </div>
+      <div class="buttons">
+         <input type="submit" @click="register" value="Register" />      
+        <button @click.prevent="close">Close</button>
+      </div>
+     
     </div>
   </div>  
 </template>
@@ -68,9 +75,9 @@ export default {
 
 <style scoped>
 .modal {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 120%;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;  
@@ -83,11 +90,11 @@ export default {
 
 .form {
   width: 40%;
-  height: 30%;
+  height: 50%;
   /* padding: 20px 50px 50px; */
   background-color: rgb(186, 187, 183);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
   flex-flow: column wrap;
   text-align: center;
@@ -95,12 +102,19 @@ export default {
 
 
 
+.buttons {
+  padding-bottom: 30px;
+}
+
 .input-fields {
   padding-bottom: 30px;
 }
 
 .input-fields input {
   width: 100%;
+  border: none;
+  border-bottom: 2px solid black;
+  background-color: rgb(186, 187, 183);
 }
 
 </style>
