@@ -45,6 +45,7 @@ export default {
   align-content: flex-start;
   background-color: gray;
   padding-bottom: 40px;
+  height: 100vh; 
 }
 
 </style>
