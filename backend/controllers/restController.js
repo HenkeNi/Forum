@@ -91,7 +91,21 @@ const deletePost = async (req, res) => {
   res.json(statement.run({ id: req.params.id }));
 }
 
+const deleteAllUserThreads = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    DELETE FROM threads
+    where userId == $id
+  `);
+  res.json(statement.run({ id: req.params.id }));
+}
 
+const deleteAllUserPosts = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    DELETE FROM posts
+    where userId == $id
+  `);
+  res.json(statement.run({ id: req.params.id }));
+}
 
 const deleteUser = async (req, res) => {
   console.log("DELETING USER");
@@ -122,6 +136,8 @@ const updateUser = async (req, res) => {
   `);
   res.json(statement.run(req.body));
 }
+
+
 
 
 
@@ -178,7 +194,8 @@ module.exports = {
   // getThreadPosts,
   // getAllUsers,
 
-
+ deleteAllUserThreads,
+ deleteAllUserPosts
 
 
 

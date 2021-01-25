@@ -19,9 +19,13 @@ router.put("/closethread/:threadId", restController.closeThread);
 router.put("/user/:id", restController.updateUser);
 
 // DELETE
-router.delete("/deletepost/:id", restController.deletePost);
-router.delete("/deleteusers/:id", restController.deleteUser);
+router.delete("/post/:id", restController.deletePost);
+router.delete("/users/:id", restController.deleteUser);
 
+
+
+router.delete("/threads/:userId", restController.deleteAllUserThreads);
+router.delete("/posts/:userId", restController.deleteAllUserPosts);
 //router.post('/threads/:subforumId', restController.createThread);
 
 
