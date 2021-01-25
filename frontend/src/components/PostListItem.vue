@@ -43,11 +43,12 @@ export default {
       this.author = res;
     },
     async remove() {
-      let res = await fetch(`/rest/v1/deletepost/${this.post.id}`, {
+      let res = await fetch(`/rest/v1/post/${this.post.id}`, {
         method: 'delete'
       });
       res = await res.json();
       console.log(res);
+      // TODO: emit RELOAD...
     },
     goToProfile() {
       this.$router.push({ name: 'ProfilePage', params: {user: this.author} });

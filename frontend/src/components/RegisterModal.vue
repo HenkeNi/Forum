@@ -9,7 +9,7 @@
         <div class="input-fields">
           <input required type="email" id="reg-email" name="reg-email" placeholder="email" /><br/>
           <input required type="text" id="reg-username" name="reg-username" placeholder="username" /><br/>
-          <input required type="password" id="reg-password" name="reg-password" placeholder="password"/><br/>  
+          <input required type="password" id="reg-password" name="reg-password" minlength="8" placeholder="password"/><br/>  
         </div>
         <p v-show="failed">Registration failed!</p>
       </form>
@@ -42,7 +42,7 @@ export default {
     },
     async register(e) {
       e.preventDefault();
-      
+
       let user = await fetch('/rest/v1/register', {
         method: 'POST',
         headers: {
