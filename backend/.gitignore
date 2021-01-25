@@ -1,5 +1,5 @@
-salt.json
-session-secret.json
+# salt.json
+# session-secret.json
 
 .DS_Store
 node_modules
