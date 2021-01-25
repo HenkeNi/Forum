@@ -6,7 +6,7 @@
       <h3>{{user.userRole}}</h3>
     </div>
     <div v-if="isAdmin">
-      <h3 @click="deleteUser">DELETE</h3>
+      <h3 class="delete" @click="deleteUser">DELETE</h3>
     </div>
     <div v-if="isAdmin">
       <h3 v-if="!profileUserIsModerator" @click="makeModerator">Make Moderator</h3>
@@ -29,16 +29,32 @@ export default {
   methods: {
     async deleteUser() {
 
+      // Temporary solution
+      this.deleteAllUserPosts();
+      this.deleteAllUserThreads();
+
       if (this.$store.getters.currentUser.userRole !== "admin") { return }
       console.log("DELETING USER");
 
-      let res = await fetch(`/rest/v1/deleteusers/${this.user.id}`, {
+      let res = await fetch(`/rest/v1/users/${this.user.id}`, {
         method: 'DELETE'
       });
       res = await res.json();
       console.log(res);
       this.goToHomePage();
     },
+
+    async deleteAllUserPosts() {
+      await fetch(`/rest/v1/threads/${this.used.id}`, {
+        method: 'DELETE'
+      });
+    },
+    async deleteAllUserThreads() {
+       await fetch(`/rest/v1/posts/${this.used.id}`, {
+        method: 'DELETE'
+      });
+    },
+
     logoutUser() {
       // NEEDED or only ADMIN CAN DELETE USER?
     },
@@ -94,6 +110,10 @@ export default {
   display: flex;
   flex-direction: column; 
   justify-content: center;  
+}
+
+.delete {
+  cursor: pointer;
 }
 
 </style>
