@@ -154,7 +154,8 @@ export default {
   flex-direction: row;
   /* flex-wrap: nowrap; */
   justify-content: flex-end;
-  color: rgb(231, 231, 231);
+  color: black;
+  /* color: rgb(231, 231, 231); */
   align-items: flex-end;
 }
 
