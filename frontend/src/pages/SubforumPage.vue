@@ -1,14 +1,21 @@
 <template>
   <div class="subforum-page">
     <div class="top">
-      <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
-      <div class="create" @click="createNewThread"> 
-        <span class="material-icons" style="font-size: 2em;">add_circle
-          <span class="tooltiptext">New Thread</span>  
-        </span>
+      <div class="info">
+        <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
+        <h2>{{ this.$route.params.subforum.description }}</h2>     
       </div>
-     
+      <div class="create" @click="createNewThread">
+        <h3>Create Thread</h3>
+      </div>
     </div>
+    <!-- <hr style="width:80%"> -->
+ 
+     <!-- <div class="create" @click="createNewThread"> 
+        <span class="material-icons" style="font-size: 2em;">add_circle
+          <span class="tooltiptext">Create new thread</span>  
+        </span>
+      </div> -->
     <ThreadList class="thread-list" :subforum="this.$route.params.subforum" />
   </div>
 </template>
@@ -35,18 +42,42 @@ export default {
 <style scoped>
 .subforum-page {
   background-color: gray;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .top {
-  margin-top: 0px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  text-align: center;
-  text-decoration: underline;
-  
-  width: 100vw;
-  border: 1px solid yellow;
-  background-color: rgb(114, 110, 110);
+  margin-top: 30px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  text-align: start;  
+  width: 80vw;
+  display: flex;
+  /* flex-direction: column; */
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  /* border: 1px solid yellow; */
+  /* background-color: rgb(77, 75, 75); */
+  /* background-color: rgb(114, 110, 110); */
 }
+
+.info {
+  width: 80vw;
+}
+
+
+.top h1 {
+  text-decoration: underline;
+  margin-bottom: 0px;
+}
+.top h2 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 10px;
+}
+
 .title {
 
 
@@ -80,6 +111,18 @@ export default {
 }
 
 .create {
+  float: right;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.create h3 {
+  width: 25%;
+  padding: 10px 15px;
+  font-weight: bold;
+  background-color: yellow;
   cursor: pointer;
 }
 

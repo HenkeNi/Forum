@@ -29,6 +29,8 @@ export default {
   width: 80vw;
   border: 1px solid yellow;
   background-color: rgb(77, 75, 75);
+  border-radius: 5px;
+
   cursor: pointer;
   display: flex;
   flex-flow: row wrap;

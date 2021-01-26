@@ -141,7 +141,8 @@ export default {
   margin: 0;
   padding-top: 30px;
   font-size: 3.2em;
-  color: white;
+  color: rgb(221, 221, 132);
+  /* color: white; */
   /* color: rgb(207, 205, 205); */
   cursor: pointer;
 }
@@ -154,7 +155,7 @@ export default {
   flex-direction: row;
   /* flex-wrap: nowrap; */
   justify-content: flex-end;
-  color: black;
+  color: white;
   /* color: rgb(231, 231, 231); */
   align-items: flex-end;
 }

@@ -54,6 +54,8 @@ h1 {
   width: 100%;
   padding-left: 60px;
   text-align: center;
+  /* width: 80vw; */
+  /* text-align: start; */
   text-decoration: underline;
 }
 
