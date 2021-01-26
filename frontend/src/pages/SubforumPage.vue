@@ -9,7 +9,7 @@
         <h3>Create Thread</h3>
       </div>
     </div>
-    <!-- <hr style="width:80%"> -->
+    <hr style="border:black;color:black;width:80%;height:2px;background-color:black">
  
      <!-- <div class="create" @click="createNewThread"> 
         <span class="material-icons" style="font-size: 2em;">add_circle
@@ -65,23 +65,31 @@ export default {
 
 .info {
   width: 80vw;
+  background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
+  margin-bottom: 30px;
+  width: 80vw;
+  background-color: rgb(85, 83, 83);
+  border-radius: 5px;
+  color: white;
+  text-align: center;
 }
 
 
 .top h1 {
   text-decoration: underline;
+  margin-top: 10px;
   margin-bottom: 0px;
 }
 .top h2 {
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-bottom: 10px;
   padding-left: 10px;
 }
 
-.title {
 
 
-}
+
+
 
 .material-icons .tooltiptext {
   visibility: hidden;
@@ -101,17 +109,9 @@ export default {
 }
 
 
-/* .thread-list {
-  background-color: gray;
-} */
 
-.new-thread {
-  background-color: greenyellow;
-  display: inline;
-}
 
 .create {
-  float: right;
   width: 100%;
   text-align: center;
   display: flex;
@@ -122,8 +122,14 @@ export default {
   width: 25%;
   padding: 10px 15px;
   font-weight: bold;
-  background-color: yellow;
+  background-color: rgb(26, 33, 36);
+  color: white;
+  /* background-color: yellow; */
+  border-radius: 5px;
   cursor: pointer;
+  border: 1px solid rgb(214, 214, 214);
 }
+
+
 
 </style>

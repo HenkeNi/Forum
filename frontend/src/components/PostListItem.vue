@@ -1,12 +1,16 @@
 <template>
   <div v-bind:class="{ warning: isWarning }" class="post-container">
+    <div @click="goToProfile" class="profile">
+      <h3 class="author">{{author.username}}</h3>
+      <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
+      <h4>{{ author.userRole }}</h4>
+    </div>
     <div class="message">
       <h2>{{post.message}}</h2>
     </div>
     <div class="info">
       <div class="remove" v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
       <h3>sent: {{publishedDate}}</h3>
-      <h3 class="author" @click="goToProfile">posted by: <span class="posted-by">{{author.username}}</span></h3>
     </div>
   </div>
 </template>
@@ -64,15 +68,31 @@ export default {
 <style scoped>
 .post-container {
   text-align: start;
-  margin-bottom: 30px;
   padding: 20px;
   width: 80vw;
-  border: 1px solid yellow;
-  background-color: rgb(77, 75, 75);
-  margin-bottom: 20px;
+  border: 1px solid white;
+  background-color: rgb(167, 164, 164);
   display: flex;
   justify-content: space-between;
 }
+
+.profile {
+  margin: 0px;
+  background-color: blue;
+  cursor: pointer;
+  text-align: center;
+}
+
+.profile h4 {
+  margin-top: 0px;
+}
+
+
+img {
+  width: 80px;
+  hegiht: 80px;
+}
+
 
 .message {
 }
@@ -92,7 +112,7 @@ export default {
 }
 
 .author {
-  cursor: pointer;
+  margin-bottom: 0px;
 }
 
 .info {

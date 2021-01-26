@@ -22,9 +22,11 @@ export default {
   bottom: 0;
   width: 100%;
   /* height: 100px; */
-  background-color: yellow;
+  /* background-color: yellow; */
+  background-color: rgb(26, 33, 36);
   text-emphasis: center;
-  border-top: solid black 1px;
+  border-top: solid rgb(17, 15, 37) 1px;
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;

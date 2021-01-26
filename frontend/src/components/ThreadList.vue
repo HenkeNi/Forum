@@ -1,9 +1,10 @@
 <template>
   <div class="thread-list">
     <ThreadListItem 
-      v-for="thread in threads"
+      v-for="(thread, index) in threads"
       :key="thread.id"
       :thread="thread"
+      :index="index"
     />
   </div>
 </template>
@@ -45,6 +46,7 @@ export default {
   align-content: flex-start;
   background-color: gray;
   padding-bottom: 40px;
+  padding-top: 30px;
   height: 100vh; 
 }
 

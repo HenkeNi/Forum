@@ -6,7 +6,7 @@
       <h3 @click="closeThread">Close Thread</h3>
     </div>
     <div class="closed" v-if="isClosed">
-      <h3>Thread is Closed!</h3>
+      <h3 class="closed-text">Thread Closed!</h3>
     </div>
     <PostList class="list" :posts="this.posts" :thread="this.thread" />
     <div v-if="!isClosed">
@@ -85,13 +85,14 @@ export default {
 }
 
 .title {
-  margin: 0px;
+  margin-top: 30px;
   padding: 30px 0px 30px 0px;
   text-align: center;
   text-decoration: underline;
   width: 80vw;
-  border: 1px solid yellow;
-  background-color: rgb(105, 105, 105);
+  /* background-color: rgb(105, 105, 105); */
+  background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
+  color: white;
 }
 
 .block {
@@ -107,9 +108,11 @@ export default {
   text-align: center;
   text-decoration: underline;
   width: 80vw;
-  border: 1px solid yellow;
-  background-color: rgb(240, 145, 145);
-  cursor: pointer;
+  font-size: 3.2em;
+  position: absolute;
+  color: red;
+  /* transform-origin: 0 0; */
+  transform: rotate(-10deg);
 }
 
 
@@ -118,5 +121,7 @@ export default {
   padding-bottom: 50px;
   cursor: pointer;
 }
+
+
 
 </style>

@@ -4,8 +4,8 @@
       <span class="material-icons" style="font-size: 5em;">chat</span>
     </div>
     <div class="title-container">
-      <h3 class="subforum-name">{{ subforum.title }}</h3>
-      <p>{{ subforum.description }}</p>
+      <h3 class="subforum-name text">{{ subforum.title }}</h3>
+      <p class="text">{{ subforum.description }}</p>
     </div>
   </div>
 </template>
@@ -27,10 +27,14 @@ export default {
 .subforum-container {
   margin-bottom: 30px;
   width: 80vw;
-  border: 1px solid yellow;
-  background-color: rgb(77, 75, 75);
-  border-radius: 5px;
+  border: 1px solid rgb(214, 214, 214);
 
+
+  background-color: rgb(85, 83, 83);
+  /* background-image: linear-gradient(red, yellow); */
+  background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
+
+  border-radius: 5px;
   cursor: pointer;
   display: flex;
   flex-flow: row wrap;
@@ -50,7 +54,8 @@ export default {
 }
 
 .icon-img {
-  background-color: yellow;
+  background-color: rgb(214, 214, 214);
+  /* background-color: yellow; */
   height: 100%;
   width: 12vw;
   /* text-align: center; */
@@ -74,6 +79,17 @@ hr {
   font-size: 2em
 }
 
+
+.material-icons {
+  /* background-color: white; */
+}
+
+.text {
+  color: rgb(214, 214, 214);
+  text-shadow: 1px 2px #000000;
+  /* text-shadow: -0.5px 0.5px #000000;   */
+
+}
 
 
 
