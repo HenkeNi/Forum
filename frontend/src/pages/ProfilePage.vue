@@ -1,14 +1,14 @@
 <template>
   <div class="profile-page">
     <div class="license">
-          <div class="image">
-      <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
-    </div>
-    <div class="info">
-      <h2 class="title">{{ user.username }}</h2>
-      <h3>email: {{user.email}}</h3>
-      <h3>role: {{user.userRole}}</h3>
-    </div>
+      <div class="image">
+        <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
+      </div>
+      <div class="info">
+        <h2 class="title">{{ user.username }}</h2>
+        <h3>email: {{user.email}}</h3>
+        <h3>role: {{user.userRole}}</h3>
+      </div>
     </div>
     <div v-if="isAdmin">
       <div class="delete">
@@ -24,27 +24,47 @@
 
 <script>
 export default {
-  props: ['user'],
+  props: ["user"],
   computed: {
     isAdmin() {
-      return this.$store.getters.currentUser !== null && this.$store.getters.currentUser.userRole === "admin";
+      if (this.user.userRole === "admin") {
+        return false;
+      }
+
+      return (
+        this.$store.getters.currentUser !== null &&
+        this.$store.getters.currentUser.userRole === "admin"
+      );
     },
-    profileUserIsModerator() { // FIX
-      return this.$store.getters.currentUser !== null && this.user.userRole === "moderator";
+    profileUserIsModerator() {
+      // FIX
+      if (this.user.userRole === "admin") {
+        return false;
+      }
+
+      return (
+        this.$store.getters.currentUser !== null &&
+        this.user.userRole === "moderator"
+      );
     }
   },
   methods: {
     async deleteUser() {
+      if (this.user.userRole === "Admin") {
+        return;
+      }
 
       // Temporary solution
       this.deleteAllUserPosts();
       this.deleteAllUserThreads();
 
-      if (this.$store.getters.currentUser.userRole !== "admin") { return }
+      if (this.$store.getters.currentUser.userRole !== "admin") {
+        return;
+      }
       console.log("DELETING USER");
 
       let res = await fetch(`/rest/v1/users/${this.user.id}`, {
-        method: 'DELETE'
+        method: "DELETE"
       });
       res = await res.json();
       console.log(res);
@@ -53,12 +73,12 @@ export default {
 
     async deleteAllUserPosts() {
       await fetch(`/rest/v1/threads/${this.used.id}`, {
-        method: 'DELETE'
+        method: "DELETE"
       });
     },
     async deleteAllUserThreads() {
-       await fetch(`/rest/v1/posts/${this.used.id}`, {
-        method: 'DELETE'
+      await fetch(`/rest/v1/posts/${this.used.id}`, {
+        method: "DELETE"
       });
     },
 
@@ -66,37 +86,38 @@ export default {
       // NEEDED or only ADMIN CAN DELETE USER?
     },
     goToHomePage() {
-        this.$router.push("/");
+      this.$router.push("/");
     },
     async makeModerator() {
-      
+      if (this.user.userRole === "Admin") {
+        return;
+      }
+
       let res = await fetch(`/rest/v1/users/${this.user.id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
-        body:
-          JSON.stringify({ "userRole": "moderator" })
+        body: JSON.stringify({ userRole: "moderator" })
       });
       res = await res.json();
       console.log(res);
     },
     async removeModerator() {
       let res = await fetch(`/rest/v1/users/${this.user.id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
-        body:
-          JSON.stringify({ "userRole": "member" })
+        body: JSON.stringify({ userRole: "member" })
       });
       res = await res.json();
       console.log(res);
     }
-  },
+  }
 
   // TODO: if current user == admin -> radera användare || gör användare till moderator...
-}
+};
 </script>
 
 <style scoped>
@@ -118,10 +139,9 @@ export default {
 .info {
   text-align: start;
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   justify-content: center;
-  padding-right: 10px;  
-  
+  padding-right: 10px;
 }
 
 .delete {
@@ -131,7 +151,6 @@ export default {
   margin-top: 10px;
   border: solid black 2px;
 }
-
 
 .mode {
   cursor: pointer;
@@ -143,11 +162,11 @@ export default {
 
 img {
   width: 200px;
-   height: 90%;
-   padding-bottom: 30px;
-   padding-top: 10px;
-   padding-left: 10px;
-   margin-right: 10px;
+  height: 90%;
+  padding-bottom: 30px;
+  padding-top: 10px;
+  padding-left: 10px;
+  margin-right: 10px;
 }
 
 .license {
@@ -155,10 +174,7 @@ img {
   width: 60vw;
   margin-top: 30px;
   display: flex;
-    background-color: rgb(136, 136, 60);
-
+  background-color: rgb(26, 33, 36);
+  color: white;
 }
-
-
-
 </style>

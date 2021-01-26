@@ -2,15 +2,16 @@
   <div class="thread-page">
     <NewPostModal :threadId="this.thread.id" @myEvent="fetchPosts" v-model="newpostModalOpen" />
     <h1 class="title">{{thread.title}}</h1>
-    <div class="block" v-if="showCloseThread">
-      <h3 @click="closeThread">Close Thread</h3>
-    </div>
+  
     <div class="closed" v-if="isClosed">
       <h3 class="closed-text">Thread Closed!</h3>
     </div>
     <PostList class="list" :posts="this.posts" :thread="this.thread" />
     <div @click="newPost" class="post" v-if="!isClosed">
       <h2>New Post</h2>
+    </div>
+    <div class="block" v-if="showCloseThread">
+      <h3 @click="closeThread">Close Thread</h3>
     </div>
   </div>
 </template>
@@ -101,19 +102,13 @@ export default {
   color: white;
 }
 
-.block {
-  text-align: center;
-  text-decoration: underline;
-  width: 80vw;
-  border: 1px solid yellow;
-  background-color: rgb(240, 145, 145);
-  cursor: pointer;
-}
+
 
 .closed {
+  display: inline-block;
   text-align: center;
   text-decoration: underline;
-  width: 80vw;
+  /* width: 80vw; */
   font-size: 3.2em;
   position: absolute;
   color: red;
@@ -137,5 +132,21 @@ export default {
   color: white;
   border-radius: 5px;
   border: 1px solid rgb(214, 214, 214);
+}
+
+.block {
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: underline;
+  width: 300px;
+  margin-top: 10px;
+  border: 1px solid white;
+  background-color: rgb(175, 25, 25);
+  cursor: pointer;
+  color: black;
+}
+
+.block h3 {
+  margin: 5px;
 }
 </style>

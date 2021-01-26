@@ -5,36 +5,51 @@
         <h2>Register</h2>
       </div>
       <div>
-         <form>
-        <div class="input-fields">
-          <input required type="email" id="reg-email" name="reg-email" placeholder="email" /><br/>
-          <input required type="text" id="reg-username" name="reg-username" placeholder="username" /><br/>
-          <input required type="password" id="reg-password" name="reg-password" minlength="8" placeholder="password"/><br/>  
-        </div>
-        <p v-show="failed">Registration failed!</p>
-      </form>
+        <form>
+          <div class="input-fields">
+            <input required type="email" id="reg-email" name="reg-email" placeholder="email" />
+            <br />
+            <input
+              required
+              type="text"
+              id="reg-username"
+              name="reg-username"
+              placeholder="username"
+            />
+            <br />
+            <input
+              required
+              type="password"
+              id="reg-password"
+              name="reg-password"
+              minlength="8"
+              placeholder="password"
+            />
+            <br />
+          </div>
+          <p v-show="failed">Registration failed!</p>
+        </form>
       </div>
       <div class="buttons">
-         <input type="submit" @click="register" value="Register" />      
+        <input type="submit" @click="register" value="Register" />
         <button @click.prevent="close">Close</button>
       </div>
-     
     </div>
-  </div>  
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Register-Modal',
-   props: {
+  name: "Register-Modal",
+  props: {
     value: {
-      required: true,
+      required: true
     }
   },
   data() {
     return {
-      failed: false,
-    }
+      failed: false
+    };
   },
   methods: {
     close() {
@@ -43,19 +58,18 @@ export default {
     async register(e) {
       e.preventDefault();
 
-      let user = await fetch('/rest/v1/register', {
-        method: 'POST',
+      let user = await fetch("/rest/v1/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json' 
+          "Content-Type": "application/json"
         },
-        body: 
-          JSON.stringify({ 
-             "email": document.getElementById("reg-email").value, 
-              "password": document.getElementById("reg-password").value,
-              "username": document.getElementById("reg-username").value,
-              "userRole": "member",
-              "isActive": 1
-          })
+        body: JSON.stringify({
+          email: document.getElementById("reg-email").value,
+          password: document.getElementById("reg-password").value,
+          username: document.getElementById("reg-username").value,
+          userRole: "member",
+          isActive: 1
+        })
       });
       user = await user.json();
 
@@ -64,23 +78,24 @@ export default {
         this.failed = true;
       } else {
         console.log("Registration success!", user);
-        this.$store.dispatch('fetchCurrentUser');
+        this.$store.dispatch("fetchCurrentUser");
         //this.$store.commit('setCurrentUser', user);
         this.$emit("input", !this.value);
       }
     }
-  },
-}
+  }
+};
 </script>
 
 <style scoped>
 .modal {
+  z-index: 1;
   position: fixed;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  justify-content: center;  
+  justify-content: center;
   align-items: center;
 }
 
@@ -100,8 +115,6 @@ export default {
   text-align: center;
 }
 
-
-
 .buttons {
   padding-bottom: 30px;
 }
@@ -116,5 +129,4 @@ export default {
   border-bottom: 2px solid black;
   background-color: rgb(186, 187, 183);
 }
-
 </style>

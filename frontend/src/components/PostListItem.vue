@@ -1,11 +1,11 @@
 <template>
-  <div class="post-container">
+  <div v-bind:class="{ warning: isWarning }" class="post-container">
     <div @click="goToProfile" class="profile">
       <h3 class="author">{{author.username}}</h3>
       <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
       <h4>{{ author.userRole }}</h4>
     </div>
-    <div v-bind:class="{ warning: isWarning }" class="main">
+    <div  class="main">
       <div class="published">
         <h3>{{publishedDate}}</h3>
       </div>
@@ -13,11 +13,9 @@
         <h2>{{post.message}}</h2>
       </div>
     </div>
-   
-
-   
-    <div class="info">
-      <div class="remove" v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
+      
+    <div class="remove">
+      <div v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
     </div>
   </div>
 </template>
@@ -117,10 +115,6 @@ export default {
   margin: 0px;
 }
 
-.info {
-  display: flex;
-  flex-direction: column-reverse;
-}
 
 img {
   width: 80px;
@@ -154,8 +148,14 @@ img {
 }
 
 
-.remove {
+.remove h3 {
   cursor: pointer;
+  margin-right: 20px;
+  background-color: rgb(175, 25, 25);
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  border: 1px solid rgb(214, 214, 214);
 }
 
 
