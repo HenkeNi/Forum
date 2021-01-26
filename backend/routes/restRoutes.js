@@ -15,11 +15,11 @@ router.post("/posts", restController.createPost);
 
 
 // PUT
-router.put("/closethread/:threadId", restController.closeThread);
-router.put("/user/:id", restController.updateUser);
+router.put("/threads/:threadId", restController.closeThread);
+router.put("/users/:id", restController.updateUser);
 
 // DELETE
-router.delete("/post/:id", restController.deletePost);
+router.delete("/posts/:id", restController.deletePost);
 router.delete("/users/:id", restController.deleteUser);
 
 

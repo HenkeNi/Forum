@@ -10,13 +10,15 @@ module.exports = class RestApi {
     this.prefix = urlPrefix;
     //let tables = this.getAllTables();
 
-    for (let table of this.getAllTables()) {
-      this.createGetAllRoute(table);
-      this.createGetRoute(table);
-      this.createPostRoute(table);
-      this.createPutRoute(table);
-      this.createDeleteRoute(table);
-    }
+    this.getAllTables(); // TEST!!
+
+    // for (let table of this.getAllTables()) {
+    //   this.createGetAllRoute(table);
+    //   this.createGetRoute(table);
+    //   this.createPostRoute(table);
+    //   this.createPutRoute(table);
+    //   this.createDeleteRoute(table);
+    // }
     //this.addLoginRoutes();
   }
 
@@ -39,8 +41,12 @@ module.exports = class RestApi {
       /*let result = statement.all();
         result.forEach(x => delete x.password);
         res.json(result);*/
-
-      res.json(statement.all().map(x => ({ ...x, password: undefined })));
+      try {
+        res.json(statement.all().map(x => ({ ...x, password: undefined })));
+      }
+      catch (e) {
+        res.json({ error: e + '' });
+      }
 
       //res.json(statement.all());
     });
@@ -52,9 +58,15 @@ module.exports = class RestApi {
         SELECT * FROM ${table}
         WHERE id = $id
       `);
-      let result = statement.get(req.params) || null;   
+      let result;
+      try {
+        result = statement.get(req.params) || null;   
+      }
+      catch (e) {
+        result = { error: e + '' };
+      }
+      
       if (result) { delete result.password; }
-
       res.json(result); 
     });
   }
@@ -70,7 +82,12 @@ module.exports = class RestApi {
         INSERT INTO ${table} (${Object.keys(b)})
         VALUES (${Object.keys(b).map(x => '$' + x)})  
       `);
-      res.json(statement.run(b));
+      try {
+        res.json(statement.run(b));
+      }
+      catch (e) {
+        res.json({ error: e + '' });
+      }
     });
   }
 
@@ -87,7 +104,13 @@ module.exports = class RestApi {
         SET ${Object.keys(b).map(x => x + ' = $' + x)}   
         WHERE  id = $id    
       `);
-      res.json(statement.run(b));
+
+       try {
+        res.json(statement.run(b));
+      }
+      catch (e) {
+        res.json({ error: e + '' });
+      }
     });
   }
 
@@ -96,7 +119,12 @@ module.exports = class RestApi {
       let statement = this.db.prepare(`
         DELETE FROM ${table} WHERE id = $id
       `);
-      res.json(statement.run(req.params));
+      try {
+        res.json(statement.run(req.params));
+      }
+      catch (e) {
+        res.json({ error: e + '' });
+      }
     });
   }
 

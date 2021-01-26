@@ -14,15 +14,19 @@ module.exports = function (settings) {
     }
 
     // Check if function exist in settings with same name as table that are querying
-    let tableName = req.url.replace(restPrefix, '').split('/')[0];
+    //let tableName = req.url.replace(restPrefix, '').split('/')[0];
+
+    let tableName = req.url.replace(restPrefix, '').split('/')[1];
     
+    console.log("Table name: ", tableName);
+
     // if no method name with same name as table in settings 
     // or the method returns false --> forbid access
     if (typeof settings[tableName] !== 'function' || !settings[tableName](
       req.session.user || {}, req.method, req
     )) {
       res.status(403);
-      res.json({ error: 'Not allowed' });
+      res.json({ error: 'Not allowed: No such table??' });
       return;
     }
 

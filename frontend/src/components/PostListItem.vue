@@ -43,7 +43,7 @@ export default {
       this.author = res;
     },
     async remove() {
-      let res = await fetch(`/rest/v1/post/${this.post.id}`, {
+      let res = await fetch(`/rest/v1/posts/${this.post.id}`, {
         method: 'delete'
       });
       res = await res.json();

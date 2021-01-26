@@ -49,11 +49,12 @@ export default {
       this.newpostModalOpen = false;// temp SOLUTION...
     },
     async closeThread() {
-      let res = await fetch(`/rest/v1/closethread/${this.thread.id}`, {
+      let res = await fetch(`/rest/v1/threads/${this.thread.id}`, {
         method: 'PUT',
        });
       res = await res.json();
       console.log(res);
+      this.isClosed = true;
     },
     newPost() {
       if (this.isClosed) { return; }

@@ -45,7 +45,7 @@ export default {
       });
       res = await res.json();
       console.log("RESPONSE: ", res.lastInsertRowid);
-
+      console.log("SOMETAS,", res.lastInsertRowid);
       this.postInitialPost(thread, res);
 
       thread.id = res.lastInsertRowid;
@@ -61,6 +61,7 @@ export default {
         "published_time": Date.now(),
         "warning": 0
       }
+
 
       console.log("POST:", post);
 

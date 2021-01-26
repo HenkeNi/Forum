@@ -22,7 +22,7 @@ export default {
     isAdmin() {
       return this.$store.getters.currentUser !== null && this.$store.getters.currentUser.userRole === "admin";
     },
-    profileUserIsModerator() {
+    profileUserIsModerator() { // FIX
       return this.$store.getters.currentUser !== null && this.user.userRole === "moderator";
     }
   },
@@ -63,7 +63,7 @@ export default {
     },
     async makeModerator() {
       
-      let res = await fetch(`/rest/v1/user/${this.user.id}`, {
+      let res = await fetch(`/rest/v1/users/${this.user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ export default {
       console.log(res);
     },
     async removeModerator() {
-      let res = await fetch(`/rest/v1/user/${this.user.id}`, {
+      let res = await fetch(`/rest/v1/users/${this.user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

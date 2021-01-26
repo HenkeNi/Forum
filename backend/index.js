@@ -41,7 +41,7 @@ app.use(ACL(ACLsettings));
 
 
 // Create the REST api
-//new RestApi(app, '/api/', '../database/database.db');
+new RestApi(app, '/rest/', '../database/database.db');
 //new RestApi(app, '/api/', './database.db');
 
 app.use('/rest/v1', restRoutes);
