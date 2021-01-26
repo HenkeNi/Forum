@@ -1,14 +1,21 @@
 <template>
   <div class="profile-page">
-    <h2 class="title">{{ user.username }}</h2>
+    <div class="license">
+          <div class="image">
+      <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
+    </div>
     <div class="info">
+      <h2 class="title">{{ user.username }}</h2>
       <h3>email: {{user.email}}</h3>
-      <h3>{{user.userRole}}</h3>
+      <h3>role: {{user.userRole}}</h3>
+    </div>
     </div>
     <div v-if="isAdmin">
-      <h3 class="delete" @click="deleteUser">DELETE</h3>
+      <div class="delete">
+        <h3 @click="deleteUser">DELETE USER</h3>
+      </div>
     </div>
-    <div v-if="isAdmin">
+    <div class="mode" v-if="isAdmin">
       <h3 v-if="!profileUserIsModerator" @click="makeModerator">Make Moderator</h3>
       <h3 v-if="profileUserIsModerator" @click="removeModerator">Remove Moderator</h3>
     </div>
@@ -96,24 +103,62 @@ export default {
 .profile-page {
   background-color: grey;
   height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
   padding-top: 40px;
   margin: 0px;
-  text-align: center;
+  text-align: start;
   text-decoration: underline;
 }
 
 .info {
-  text-align: center;
+  text-align: start;
   display: flex;
   flex-direction: column; 
-  justify-content: center;  
+  justify-content: center;
+  padding-right: 10px;  
+  
 }
 
 .delete {
   cursor: pointer;
+  background-color: rgb(175, 33, 33);
+  padding: 1px 5px;
+  margin-top: 10px;
+  border: solid black 2px;
 }
+
+
+.mode {
+  cursor: pointer;
+  background-color: rgb(90, 192, 43);
+  padding: 1px 5px;
+  margin-top: 10px;
+  border: solid black 2px;
+}
+
+img {
+  width: 200px;
+   height: 90%;
+   padding-bottom: 30px;
+   padding-top: 10px;
+   padding-left: 10px;
+   margin-right: 10px;
+}
+
+.license {
+  border: solid black 2px;
+  width: 60vw;
+  margin-top: 30px;
+  display: flex;
+    background-color: rgb(136, 136, 60);
+
+}
+
+
 
 </style>
