@@ -8,28 +8,29 @@
 
 
 <script>
-  import Header from './components/Header.vue';
-  import Footer from './components/Footer.vue';
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 
-  export default {
-    name: 'app',
-    components: {
-      Header,
-      Footer
-    },
-    created() {
-      this.$store.dispatch('fetchCurrentUser');
-    }
+export default {
+  name: "app",
+  components: {
+    Header,
+    Footer
+  },
+  created() {
+    this.$store.dispatch("fetchCurrentUser");
   }
+};
 </script>
 
 <style>
 * {
   box-sizing: border-box;
-  font-family: 'Architects Daughter', cursive;
+  font-family: "Architects Daughter", cursive;
 }
 
 body {
   margin: 0px;
+  background-color: gray;
 }
 </style>
