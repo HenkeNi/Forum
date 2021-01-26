@@ -21,7 +21,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/thread/:threadId',
+    path: '/thread/:thread',
     name: 'ThreadPage',
     component: ThreadPage,
     props: true,
