@@ -33,7 +33,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/profile/:userId',
+    path: '/profile/:user',
     name: 'ProfilePage',
     component: ProfilePage,
     props: true,

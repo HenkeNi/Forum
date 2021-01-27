@@ -24,12 +24,9 @@ export default {
   methods: {
     async fetchSubforums() {
       let res = await fetch('/rest/v1/subforums');
-      res = await res.json();
-      console.log(res);
-      this.subforums = res;
+      this.subforums = await res.json();
     }
   },
-
   created() {
     this.fetchSubforums();    
   }
@@ -51,11 +48,9 @@ export default {
 
 
 h1 {
-  width: 100%;
-  padding-left: 60px;
+  width: 80%;
+  /* padding-left: 20px; */
   text-align: center;
-  /* width: 80vw; */
-  /* text-align: start; */
   text-decoration: underline;
 }
 

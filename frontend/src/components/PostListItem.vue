@@ -8,10 +8,12 @@
     <div  class="main">
       <div class="published">
         <h3>{{publishedDate}}</h3>
+        <h2 v-if="isWarning">Warning!</h2>
       </div>
       <div class="message">
         <h2>{{post.message}}</h2>
       </div>
+    
     </div>
       
     <div class="remove">
@@ -60,9 +62,7 @@ export default {
   methods: {
     async fetchAuthor() {
       let res = await fetch(`/rest/v1/users/${this.post.userId}`); // TODO: FIX!!!!
-      res = await res.json();
-      console.log(res);
-      this.author = res;
+      this.author = await res.json();
     },
     async remove() {
       let res = await fetch(`/rest/v1/posts/${this.post.id}`, {
@@ -87,16 +87,19 @@ export default {
 .post-container {
   text-align: start;
   /* padding: 10px; */
-  width: 80vw;
-  border: 1px solid white;
+  width: 60vw;
+  border: 2px solid black;
   background-color: rgb(167, 164, 164);
   display: flex;
   justify-content: flex-start;
   /* height: 400px; */
   min-height: 250px;
   margin-bottom: 10px;
-  
+  border-radius: 10px;
 }
+
+
+
 
 .profile {
   margin: 0px;
@@ -105,14 +108,17 @@ export default {
   /* background-color: rgb(116, 115, 115); */
   height: 100%;
   width: 120px;
+  padding-left: 5px;
 }
 
 .profile h4 {
   margin: 0px;
+
 }
 
 .author {
   margin: 0px;
+  padding-top: 5px;
 }
 
 
@@ -132,6 +138,11 @@ img {
 
 .published {
   width: 100%;
+  display: flex;
+}
+
+.published h3 {
+  margin-right: 150px;
 }
 
 .message {
@@ -143,7 +154,7 @@ img {
 }
 
 .warning {
-  /* border: 1px solid black; */
+  border: 2px solid black;
   background-color: rgb(255, 255, 116);
 }
 

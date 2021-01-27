@@ -9,7 +9,7 @@
         <h3>Create Thread</h3>
       </div>
     </div>
-    <hr style="border:black;color:black;width:80%;height:2px;background-color:black">
+    <hr style="border:black;color:black;width:60%;height:2px;background-color:black">
  
      <!-- <div class="create" @click="createNewThread"> 
         <span class="material-icons" style="font-size: 2em;">add_circle
@@ -51,13 +51,13 @@ export default {
   padding-bottom: 10px;
   padding-left: 5px;
   text-align: start;  
-  width: 80vw;
+  width: 60vw;
   display: flex;
   /* flex-direction: column; */
   align-items: flex-end;
   flex-wrap: wrap;
   justify-content: space-around;
-
+  
   /* border: 1px solid yellow; */
   /* background-color: rgb(77, 75, 75); */
   /* background-color: rgb(114, 110, 110); */
@@ -72,6 +72,7 @@ export default {
   border-radius: 5px;
   color: white;
   text-align: center;
+      /* box-shadow: 1px 2px 8px #000000; */
 }
 
 
@@ -128,6 +129,8 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid rgb(214, 214, 214);
+      box-shadow: 1px 2px 8px #000000;
+
 }
 
 

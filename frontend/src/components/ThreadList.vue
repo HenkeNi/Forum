@@ -24,11 +24,8 @@ export default {
   },
   methods: {
     async fetchAllThreads() {
-      console.log("subforum", this.subforum);
-      let res = await fetch(`/rest/v1/threads/${this.subforum.id}`); // TODO: FIX!!!!
-      res = await res.json();
-      console.log(res);
-      this.threads = res;
+      let res = await fetch(`/rest/v1/threads/${this.subforum.id}`); 
+      this.threads = await res.json();
     }
   },
   created() {

@@ -74,9 +74,6 @@ export default {
       this.$router.push({ name: 'ProfilePage', params: {user: this.currentUser} });
     },
     async signOutUser() {
-      // DELETE 
-      console.log("LOGOUT");
-
       let res = await fetch('/rest/v1/logout', {
         method: 'DELETE',
         headers: {
@@ -88,9 +85,9 @@ export default {
       res = await res.json();
       
       if (!res) {
-        console.log("DELETE failed!"); // write message ... failed to login!
+        console.log("Logout failed!"); // write message ... failed to login!
       } else {
-        console.log("DELETE Worked!\n", res);
+        console.log("Logout Succeeded!\n", res);
         this.hideElements(false);
         this.$store.commit('setCurrentUser', null);
       }

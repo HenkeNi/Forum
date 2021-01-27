@@ -96,10 +96,11 @@ export default {
   padding: 30px 0px 30px 0px;
   text-align: center;
   text-decoration: underline;
-  width: 80vw;
+  width: 60vw;
   /* background-color: rgb(105, 105, 105); */
   background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
   color: white;
+  border-radius: 5px;
 }
 
 
@@ -117,7 +118,7 @@ export default {
 }
 
 .post {
-  width: 80vw;
+  width: 60vw;
   display: flex;
   justify-content: flex-end;
 }

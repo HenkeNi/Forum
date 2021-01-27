@@ -41,7 +41,6 @@ export default new Vuex.Store({
     },
 
     async postNewPost(post) {
-      console.log("TRYING TO POST: ", post);
       let res = await fetch('/rest/v1/posts', {
         method: 'POST',
         headers: {

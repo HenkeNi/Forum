@@ -171,7 +171,7 @@ img {
 
 .license {
   border: solid black 2px;
-  width: 60vw;
+  width: 50vw;
   margin-top: 30px;
   display: flex;
   background-color: rgb(26, 33, 36);

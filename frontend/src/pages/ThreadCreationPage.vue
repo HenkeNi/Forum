@@ -1,14 +1,19 @@
 <template>
   <div class="thread-creation">
-    <h1 class="title">Create new thread</h1>
+    <div class="head">
+      <h1 class="title">Thread Creation</h1>
+    </div>
 
     <form class="form">
-      <label for="title">Enter title</label><br/>
+      <label for="title">Title</label><br/>
       <input required id="title" type="text" /><br/>
 
       <label for="message">Message</label><br/>
-      <input class="message" required id="message" type="text" />
-      <button @click="goBack">Cancel</button><button @click="createThread">Confirm</button>
+      <textarea required id="message" type="text" name="Text1" cols="40" rows="5"></textarea>
+      <!-- <input class="message" required id="message" rows="5" type="text" /> -->
+      <div class="buttons">
+        <button class="cancel" @click="goBack">Cancel</button><button class="confirm" @click="createThread">Confirm</button>
+      </div>
     </form>
   </div>
 </template>
@@ -100,20 +105,39 @@ export default {
   align-items: center
 }
 .title {
-  padding-top: 30px;
+  padding-top: 15px;
+  padding-bottom: 15px;  
   margin: 0px;
   text-align: center;
 }
 
+.head {
+  background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
+  margin-bottom: 30px;
+  width: 60vw;
+  background-color: rgb(85, 83, 83);
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  margin-top: 30px;
+  padding-bottom: 10px;
+    /* box-shadow: 2px 2px 8px #000000; */
+
+}
+
+
+
 .form {
   padding-top: 50px;
-  width: 40vw;
+  width: 59.5vw;
   height: 50vh;
   background-color: darkgray;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-bottom: 30px;
+  box-shadow: 1px 1px 8px #000000;
+
 }
 
 .form label {
@@ -124,6 +148,38 @@ export default {
 .message {
   width: 30vw;
   height: 40vh;
+}
+
+label {
+  text-align: center;
+}
+
+
+.buttons {
+  display: flex;
+  padding-top: 20px;
+}
+
+.confirm {
+  padding: 10px 15px;
+  background-color: rgb(26, 33, 36);
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid rgb(214, 214, 214);
+  box-shadow: 1px 2px 8px #000000;
+  width: 100%;
+}
+
+.cancel {
+  padding: 10px 15px;
+  background-color: rgb(114, 114, 114);
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid rgb(214, 214, 214);
+  box-shadow: 1px 2px 8px #000000;
+  width: 100%;
 }
 
 </style>

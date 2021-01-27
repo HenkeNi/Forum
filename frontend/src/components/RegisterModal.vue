@@ -113,6 +113,7 @@ export default {
   align-content: center;
   flex-flow: column wrap;
   text-align: center;
+  border-radius: 5px;
 }
 
 .buttons {
