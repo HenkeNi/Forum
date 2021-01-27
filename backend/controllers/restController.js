@@ -46,6 +46,17 @@ const getUserById = async (req, res) => {
 };
 
 
+// const getNumberOfPostsInThread = async (req, res) => {
+//   let statement = db.prepare(/*sql*/`
+//     SELECT COUNT(*) 
+//     FROM posts 
+//     WHERE threadId = $id
+//   `);
+
+//     res.json(statement.all( req.params ));
+// }
+
+
 
 // PUT
 const createThread = async (req, res) => {
@@ -144,6 +155,7 @@ const updateUser = async (req, res) => {
 
 
 
+
 // const getForumThreads = async (req, res) => {
 //   let statement = db.prepare(/*sql*/`SELECT * FROM threads WHERE thread.subforumId = subforums.id`);
 //   res.json(statement.all({ subjectId: req.params.subjectId }));
@@ -178,7 +190,7 @@ module.exports = {
   getAllSubforumThreads,
   getUserById,
   getThreadPosts,
-
+  // getNumberOfPostsInThread,
 
   createThread,
   createPost,
