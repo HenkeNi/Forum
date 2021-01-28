@@ -42,9 +42,9 @@ export default {
   justify-content: center;
   align-content: flex-start;
   background-color: gray;
-  padding-bottom: 40px;
+  padding-bottom: 70px;
   padding-top: 30px;
-  height: 100vh; 
+  /* min-height: 100vh;  */
 }
 
 </style>
