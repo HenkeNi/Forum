@@ -64,8 +64,6 @@ export default {
         email:    document.getElementById("reg-email").value,
         password: document.getElementById("reg-password").value,
         username: document.getElementById("reg-username").value,
-        userRole: "member",
-        isActive: 1
       });
 
       if (!res) { this.failed = true; } 
