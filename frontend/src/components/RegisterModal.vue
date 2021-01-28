@@ -2,7 +2,7 @@
   <div class="modal" v-show="value">
     <div class="form">
       <div class="title">
-        <h2>Register</h2>
+        <h2>Create Account</h2>
       </div>
       <div>
         <form>
@@ -31,8 +31,8 @@
         </form>
       </div>
       <div class="buttons">
-        <input type="submit" @click="register" value="Register" />
-        <button @click.prevent="close">Close</button>
+        <input class="register" type="submit" @click="register" value="Register" />
+        <h4 class="cancel" @click.prevent="close">Cancel</h4>
       </div>
     </div>
   </div>
@@ -104,8 +104,8 @@ export default {
 }
 
 .form {
-  width: 40%;
-  height: 50%;
+  width: 30%;
+  height: 40%;
   /* padding: 20px 50px 50px; */
   background-color: rgb(186, 187, 183);
   display: flex;
@@ -114,20 +114,37 @@ export default {
   flex-flow: column wrap;
   text-align: center;
   border-radius: 5px;
+  border: 2px solid black;
 }
 
 .buttons {
-  padding-bottom: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cancel {
+  cursor: pointer;
+}
+
+.register {
+  width: 100%;
+  height: 30px;
+  border: 2px solid white;
+  background-color: rgb(26, 33, 36);
+  color: white;
 }
 
 .input-fields {
-  padding-bottom: 30px;
+  /* padding-bottom: 30px; */
 }
 
 .input-fields input {
   width: 100%;
-  border: none;
-  border-bottom: 2px solid black;
-  background-color: rgb(186, 187, 183);
+  /* border: none; */
+  /* border-bottom: 2px solid black; */
+  /* background-color: rgb(186, 187, 183); */
 }
 </style>

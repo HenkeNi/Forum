@@ -3,40 +3,43 @@
     <div class="top">
       <div class="info">
         <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
-        <h2>{{ this.$route.params.subforum.description }}</h2>     
+        <h2>{{ this.$route.params.subforum.description }}</h2>
       </div>
       <div class="create" @click="createNewThread">
         <h3>Create Thread</h3>
       </div>
     </div>
-    <hr style="border:black;color:black;width:60%;height:2px;background-color:black">
- 
-     <!-- <div class="create" @click="createNewThread"> 
+    <hr style="border:black;color:black;width:60%;height:2px;background-color:black" />
+
+    <!-- <div class="create" @click="createNewThread"> 
         <span class="material-icons" style="font-size: 2em;">add_circle
           <span class="tooltiptext">Create new thread</span>  
         </span>
-      </div> -->
+    </div>-->
     <ThreadList class="thread-list" :subforum="this.$route.params.subforum" />
   </div>
 </template>
 
 
 <script>
-import ThreadList from '../components/ThreadList.vue';
+import ThreadList from "../components/ThreadList.vue";
 
 export default {
   components: {
-    ThreadList,
+    ThreadList
   },
 
   methods: {
     // TODO: maybe put thus code in subfou page and instead do router push to ThreadPage and do ti there....
     createNewThread() {
       // if user is not logged in return....
-      this.$router.push({ name: 'threadCreation', params: {subforum: this.$route.params.subforum} });
+      this.$router.push({
+        name: "threadCreation",
+        params: { subforum: this.$route.params.subforum }
+      });
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -50,14 +53,14 @@ export default {
   margin-top: 30px;
   padding-bottom: 10px;
   padding-left: 5px;
-  text-align: start;  
+  text-align: start;
   width: 60vw;
   display: flex;
   /* flex-direction: column; */
   align-items: flex-end;
   flex-wrap: wrap;
   justify-content: space-around;
-  
+
   /* border: 1px solid yellow; */
   /* background-color: rgb(77, 75, 75); */
   /* background-color: rgb(114, 110, 110); */
@@ -72,9 +75,8 @@ export default {
   border-radius: 5px;
   color: white;
   text-align: center;
-      /* box-shadow: 1px 2px 8px #000000; */
+  /* box-shadow: 1px 2px 8px #000000; */
 }
-
 
 .top h1 {
   text-decoration: underline;
@@ -86,11 +88,6 @@ export default {
   margin-bottom: 10px;
   padding-left: 10px;
 }
-
-
-
-
-
 
 .material-icons .tooltiptext {
   visibility: hidden;
@@ -109,9 +106,6 @@ export default {
   visibility: visible;
 }
 
-
-
-
 .create {
   width: 100%;
   text-align: center;
@@ -129,10 +123,6 @@ export default {
   border-radius: 5px;
   cursor: pointer;
   border: 1px solid rgb(214, 214, 214);
-      box-shadow: 1px 2px 8px #000000;
-
+  box-shadow: 1px 2px 8px #000000;
 }
-
-
-
 </style>

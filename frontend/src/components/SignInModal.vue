@@ -9,10 +9,13 @@
           <input required type="password" id="password" name="password" placeholder="password" />
           <br />
         </div>
-        <input type="submit" @click="login" value="Login" />
-        <button @click.prevent="close">Close</button>
+        
         <p class="warning" v-show="failed">Wrong email or password!</p>
       </form>
+      <div class="buttons">
+        <input type="submit" @click="login" value="Login" />
+        <button @click.prevent="close">Close</button>
+      </div>
     </div>
   </div>
 </template>
@@ -85,16 +88,18 @@ export default {
 }
 
 .form {
-  width: 40%;
-  height: 50%;
+  width: 30%;
+  height: 40%;
   /* padding: 20px 50px 50px; */
   background-color: rgb(186, 187, 183);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-content: center;
   flex-flow: column wrap;
   text-align: center;
-  border-radius: 5px;
+  border-radius: 5px;  
+  border: 2px solid black;
+
 }
 
 .input-fields {
@@ -108,4 +113,9 @@ export default {
 .warning {
   color: red;
 }
+
+.buttons {
+  padding-bottom: 40px;
+}
+
 </style>
