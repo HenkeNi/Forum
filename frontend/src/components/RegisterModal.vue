@@ -7,33 +7,34 @@
       <div>
         <form>
           <div class="input-fields">
-            <input required type="email" id="reg-email" name="reg-email" placeholder="email" />
+            <input type="email" id="reg-email" name="reg-email" placeholder="email" required/>
             <br />
             <input
-              required
               type="text"
               id="reg-username"
               name="reg-username"
               placeholder="username"
+              required
             />
             <br />
             <input
-              required
               type="password"
               id="reg-password"
               name="reg-password"
               minlength="8"
               placeholder="password"
+              required
             />
             <br />
           </div>
           <p v-show="failed">Registration failed!</p>
-        </form>
-      </div>
-      <div class="buttons">
-        <input class="register" type="submit" @click="register" value="Register" />
+          <div class="buttons">
+        <button class="register" @click="register" type="submit" value="Register">Register</button>
         <h4 class="cancel" @click.prevent="close">Cancel</h4>
       </div>
+        </form>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -59,15 +60,14 @@ export default {
     },
     async register(e) {
       e.preventDefault();
-  
+
       let res = await this.$store.dispatch("registerUser", {
         email:    document.getElementById("reg-email").value,
         password: document.getElementById("reg-password").value,
         username: document.getElementById("reg-username").value,
       });
-
-      if (!res) { this.failed = true; } 
-      else { this.$emit("input", !this.value); }
+      if (res.error) { this.failed = true; }
+      if (res) { this.close(); }
     },
     clearFields() {
       document.getElementById("reg-email").value = "";

@@ -53,8 +53,10 @@ module.exports = {
   login() {
     return true; // always allow attempts to login and logout
   },
-  register() {
-    return true;
+  register(user, method, req) {
+    if (method === 'POST' && user.userRole !== 'admin') { return true; }
+    return false;
+    //return true; // TODO: FIX!!!
   },
   whoami() {
     return true;
