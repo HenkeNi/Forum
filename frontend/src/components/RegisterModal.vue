@@ -53,35 +53,28 @@ export default {
   },
   methods: {
     close() {
+      this.clearFields();
+      this.failed = false;
       this.$emit("input", !this.value);
     },
     async register(e) {
       e.preventDefault();
-
-      let user = await fetch("/rest/v1/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: document.getElementById("reg-email").value,
-          password: document.getElementById("reg-password").value,
-          username: document.getElementById("reg-username").value,
-          userRole: "member",
-          isActive: 1
-        })
+  
+      let res = await this.$store.dispatch("registerUser", {
+        email:    document.getElementById("reg-email").value,
+        password: document.getElementById("reg-password").value,
+        username: document.getElementById("reg-username").value,
+        userRole: "member",
+        isActive: 1
       });
-      user = await user.json();
 
-      if (!user) {
-        console.log("Failed registration!");
-        this.failed = true;
-      } else {
-        console.log("Registration success!", user);
-        this.$store.dispatch("fetchCurrentUser");
-        //this.$store.commit('setCurrentUser', user);
-        this.$emit("input", !this.value);
-      }
+      if (!res) { this.failed = true; } 
+      else { this.$emit("input", !this.value); }
+    },
+    clearFields() {
+      document.getElementById("reg-email").value = "";
+      document.getElementById("reg-password").value = "";
+      document.getElementById("reg-username").value = "";
     }
   }
 };

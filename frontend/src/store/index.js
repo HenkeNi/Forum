@@ -39,7 +39,6 @@ export default new Vuex.Store({
      // user !== null ? commit('setIsLoggedIn', true) : commit('setIsLoggedIn', false);
      // console.log(this.state.isLoggedIn);
     },
-
     async postNewPost(post) {
       let res = await fetch('/rest/v1/posts', {
         method: 'POST',
@@ -50,7 +49,33 @@ export default new Vuex.Store({
       });
       res = await res.json();
       return res;
-    }
+    },
+    async signInUser({ commit }, credentials) {
+      let res = await fetch("/rest/v1/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(credentials)
+      });
+      res = await res.json(); 
+      commit("setCurrentUser", res);
+      return res;
+    },
+    async registerUser({ dispatch }, credentials) {
+      let res = await fetch("/rest/v1/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(credentials)
+      });
+      res = await res.json();
+      credentials.id = res.lastInsertRowid;
+      dispatch("signInUser", credentials);
+      return res;
+    },
+    
 
   },
   modules: {},
