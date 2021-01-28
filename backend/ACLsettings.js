@@ -43,7 +43,7 @@ module.exports = {
     if (method === 'PUT' && user.userRole === 'admin') { return true; }
 
     // Allow a user to change their own info (split.pop is how to get id from url)
-    if (method === 'PUT' && +req.url.split('/').pop() === user.id) { return true; }
+    if (method === 'PUT' && req.body.userRole !== 'admin' && +req.url.split('/').pop() === user.id) { return true; }
     
     // Allow admins to delete users
     if (method === 'DELETE' && user.userRole === 'admin') { return true; }
