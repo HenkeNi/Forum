@@ -9,7 +9,7 @@
           <input required type="password" id="password" name="password" placeholder="password" />
           <br />
         </div>
-        
+
         <p class="warning" v-show="failed">Wrong email or password!</p>
       </form>
       <div class="buttons">
@@ -36,35 +36,28 @@ export default {
   },
   methods: {
     close() {
+      this.clearFields();
+      this.failed = false;
       this.$emit("input", !this.value);
     },
     async login(e) {
-      // TODO: put in store??
       e.preventDefault();
 
-      let user = await fetch("/rest/v1/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: document.getElementById("email").value,
-          password: document.getElementById("password").value
-        })
+      let user = await this.$store.dispatch("signInUser", {
+        email: document.getElementById("email").value,
+        password: document.getElementById("password").value
       });
-      user = await user.json();
 
       if (!user) {
+        console.log("Login attempt failed!");
         this.failed = true;
       } else {
-        console.log("Successfully logged in with:\n", user);
-        this.clearFields();
-        this.$store.commit("setCurrentUser", user);
-        this.$emit("input", !this.value);
+        this.close();
       }
     },
     clearFields() {
       document.getElementById("email").value = "";
+      document.getElementById("password").value = "";
     }
   }
 };
@@ -97,9 +90,8 @@ export default {
   align-content: center;
   flex-flow: column wrap;
   text-align: center;
-  border-radius: 5px;  
+  border-radius: 5px;
   border: 2px solid black;
-
 }
 
 .input-fields {
@@ -117,5 +109,4 @@ export default {
 .buttons {
   padding-bottom: 40px;
 }
-
 </style>
