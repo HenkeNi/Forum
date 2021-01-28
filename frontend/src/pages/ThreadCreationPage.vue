@@ -49,8 +49,6 @@ export default {
           JSON.stringify(thread)
       });
       res = await res.json();
-      console.log("RESPONSE: ", res.lastInsertRowid);
-      console.log("SOMETAS,", res.lastInsertRowid);
       this.postInitialPost(thread, res);
 
       thread.id = res.lastInsertRowid;
