@@ -7,7 +7,7 @@
           <input required type="text" id="message" name="message" placeholder="Enter message" />
           <br />
         </div>
-        <div v-if="displayWarningCheckbox">
+        <div v-if="showCheckbox">
           <label for="warning">Warning message</label>
           <br />
           <input type="checkbox" id="warning" name="warning" />
@@ -32,9 +32,8 @@ export default {
     }
   },
   computed: {
-    displayWarningCheckbox() {
+    showCheckbox() {
       let user = this.$store.getters.currentUser;
-
       if (user) {
         return user.userRole === "admin" || user.userRole === "moderator";
       }
@@ -47,25 +46,19 @@ export default {
       this.$emit("myEvent", "input", !this.value);
     },
     async submit(e) {
-      // TODO: put in store??
+
       e.preventDefault();
 
       let post = {
         message: document.getElementById("message").value,
         userId: this.$store.getters.currentUser.id,
         threadId: this.threadId,
-        published_time: Date.now()
+        published_time: Date.now(),
+        warning: 0
       };
 
-      let userRole = this.$store.getters.currentUser.userRole; // TEMPORARY SOLUTION!!!!!
-      if (
-        userRole === "admin" ||
-        (userRole === "moderator" &&
-          document.getElementById("warning").checked === true)
-      ) {
+      if (this.showCheckbox && document.getElementById("warning").checked === true) {
         post.warning = 1;
-      } else {
-        post.warning = 0;
       }
 
       let res = await fetch("/rest/v1/posts", {
