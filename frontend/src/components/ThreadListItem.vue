@@ -2,14 +2,13 @@
   <div v-bind:class="{ evenRow: !isEvenRow }" class="thread-container" @click="goToThreadPage">
     <div class="container">
       <div class="left">
-
       <div class="user-icon">
         <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
       </div>
       <div class="user-info">
         <div class="title-close">
           <div class="thread-title">
-            <h1>{{thread.title}}</h1>
+            <h2 class="title">{{thread.title}}</h2>
           </div>
         </div>
         <div class="thread-info">
@@ -22,6 +21,10 @@
       </div>
       <div class="closed">
         <h2 v-if="isClosed">closed</h2>
+        <div class="amount">
+          <p>Posts</p>
+          <p>{{postsAmount}}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -32,7 +35,8 @@ export default {
   props: ["thread", "index"],
   data() {
     return {
-      author: Object
+      author: Object,
+      postsAmount: 0
     };
   },
   computed: {
@@ -81,10 +85,16 @@ export default {
     async fetchAuthor() {
       let res = await fetch(`/rest/v1/users/${this.thread.userId}`);
       this.author = await res.json();
+    },
+    async fetchPostAmount() {
+      let res = await fetch(`/rest/v1/posts/count/${this.thread.id}`);
+      res = await res.json();
+      this.postsAmount = res[0]["COUNT(threadId)"];
     }
   },
   created() {
     this.fetchAuthor();
+    this.fetchPostAmount()
   }
 };
 </script>
@@ -139,6 +149,8 @@ export default {
 }
 
 .user-info {
+  width: 70%;
+
 }
 
 .title-close {
@@ -148,9 +160,24 @@ export default {
 }
 
 .closed {
-  padding-top: 20px;
-  padding-right: 40px;
+  /* padding-top: 20px; */
+  padding-right: 30px;
 
+  display: flex;
+  align-items: center;
+}
+
+.amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 30px;
+}
+
+.closed p {
+  margin: 0px;
+  font-size: 1.2em;
 }
 
 .closed h2 {
@@ -200,4 +227,15 @@ export default {
   color: black;
   /* box-shadow: 0.5px 0.5px 8px #000000; */
 }
+
+.title {
+  padding-top: 10px;
+  width: 300px;
+  margin: 0px;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  white-space: nowrap;
+}
+
+
 </style>

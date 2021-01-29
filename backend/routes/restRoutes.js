@@ -26,7 +26,15 @@ router.delete("/users/:id", restController.deleteUser);
 
 router.delete("/threads/:userId", restController.deleteAllUserThreads);
 router.delete("/posts/:userId", restController.deleteAllUserPosts);
+
+
 //router.post('/threads/:subforumId', restController.createThread);
+
+
+// GET Count
+router.get("/threads/count/:subforumId", restController.getNumberOfThreadsInSubforum);
+router.get("/posts/count/:threadId", restController.getNumberOfPostsInThread);
+
 
 
 

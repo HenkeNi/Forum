@@ -3,20 +3,40 @@
     <div class="icon-img">
       <span class="material-icons" style="font-size: 5em;">chat</span>
     </div>
+    <div class="info">
+
     <div class="title-container">
       <h3 class="subforum-name text">{{ subforum.title }}</h3>
       <p class="text">{{ subforum.description }}</p>
     </div>
+    <div class="threads">
+      <p class="threads-title">Threads</p>
+      <p class="amount">{{ this.threadsAmount }}</p>
+    </div>
+        </div>
   </div>
 </template>
 
 <script>
 export default {
   props: ['subforum'],
+  data() {
+    return {
+      threadsAmount: 0,
+    }
+  },
   methods: {
     goToSubforum() {
       this.$router.push({ name: 'SubforumPage', params: {subforum: this.subforum} });
+    },
+    async fetchThreadCount() {
+      let res = await fetch(`/rest/v1/threads/count/${this.subforum.id}`);
+      res = await res.json();
+      this.threadsAmount = res[0]["COUNT(subforumId)"];
     }
+  },
+  created() {
+    this.fetchThreadCount();  
   }
 }
 </script>
@@ -39,6 +59,12 @@ export default {
   flex-flow: row wrap;
   /* flex-direction: row;
   flex-wrap: wrap; */
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  width: 52vw;
 }
 
 .title-container {
@@ -64,6 +90,27 @@ export default {
   align-content: center;
 }
 
+.threads {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-right: 30px;
+
+}
+
+.threads-title {
+  margin: 0px;
+  font-size: 1em;
+
+}
+
+.amount {
+  margin: 0px;
+  font-size: 2.5em;
+}
+
 hr {
   /* color: rgb(207, 207, 161); */
   /* margin-top: 30px; */
@@ -75,7 +122,7 @@ hr {
 
 .subforum-name {
   margin: 0px;
-  font-size: 2em
+  font-size: 2em;
 }
 
 

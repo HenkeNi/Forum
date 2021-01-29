@@ -46,15 +46,24 @@ const getUserById = async (req, res) => {
 };
 
 
-// const getNumberOfPostsInThread = async (req, res) => {
-//   let statement = db.prepare(/*sql*/`
-//     SELECT COUNT(*) 
-//     FROM posts 
-//     WHERE threadId = $id
-//   `);
+// Found with better solution
+const getNumberOfThreadsInSubforum = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+        SELECT COUNT(subforumId)
+        FROM threads  
+        WHERE subforumId = $id;
+  `);
+  res.json(statement.all({ id: req.params.subforumId }));
+}
 
-//     res.json(statement.all( req.params ));
-// }
+const getNumberOfPostsInThread = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    SELECT COUNT(threadId) 
+    FROM posts 
+    WHERE threadId = $id
+  `);
+  res.json(statement.all({ id: req.params.threadId }));
+}
 
 
 
@@ -134,6 +143,8 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   console.log("UPDATING USER");
 
+  // TOD: if req.body.userRole Sätt alltid till member? - dum ide!, tänk om moderator eller admin uppdateras
+
   if (req.body.password) {
     req.body.password = Encrypt.multiEncrypt(req.body.password);
   }
@@ -207,7 +218,10 @@ module.exports = {
   // getAllUsers,
 
  deleteAllUserThreads,
- deleteAllUserPosts
+  deleteAllUserPosts,
+ 
+  getNumberOfThreadsInSubforum,
+  getNumberOfPostsInThread
 
 
 

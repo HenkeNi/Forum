@@ -101,6 +101,7 @@ export default {
   background-image: url("https://i.pinimg.com/originals/d2/dc/2f/d2dc2f6d81d98938f19a5c99aaf32db9.jpg");
   color: white;
   border-radius: 5px;
+  word-wrap: break-word;
 }
 
 
@@ -133,6 +134,7 @@ export default {
   color: white;
   border-radius: 5px;
   border: 1px solid rgb(214, 214, 214);
+
 }
 
 .block {

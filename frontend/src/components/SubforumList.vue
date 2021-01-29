@@ -1,6 +1,7 @@
 <template>
   <div class="subforum-list">
-    <h1>Forums</h1><br/>
+      <h1 class="forum">Forums</h1>
+    <br/>
     <SubforumListItem 
       v-for="subforum in subforums"
       :key = "subforum.id"
@@ -34,7 +35,6 @@ export default {
 </script>
 
 <style scoped>
-
 .subforum-list {
   height: 100vh;
   padding-top: 40px;
@@ -44,15 +44,10 @@ export default {
   align-content: flex-start;
 }
 
-
-
-
 h1 {
   width: 80%;
   /* padding-left: 20px; */
   text-align: center;
   text-decoration: underline;
 }
-
-
 </style>

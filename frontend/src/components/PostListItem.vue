@@ -6,19 +6,23 @@
       <h4>{{ author.userRole }}</h4>
     </div>
     <div  class="main">
+    <div class="top">
       <div class="published">
         <h3>{{publishedDate}}</h3>
+      </div>
+      <div>
         <h2 v-if="isWarning">Warning!</h2>
       </div>
+      <div class="remove">
+      <div v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
+    </div>
+        </div>
       <div class="message">
         <h2>{{post.message}}</h2>
       </div>
+    </div>
     
-    </div>
-      
-    <div class="remove">
-      <div v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
-    </div>
+
   </div>
 </template>
 
@@ -96,9 +100,14 @@ export default {
   min-height: 250px;
   margin-bottom: 10px;
   border-radius: 10px;
+  word-wrap: break-word;
 }
 
-
+.top {
+  width: 580px;
+  display: flex;
+  justify-content: space-between;
+}
 
 
 .profile {
@@ -137,16 +146,21 @@ img {
 }
 
 .published {
-  width: 100%;
+  width: 60%;
   display: flex;
 }
 
 .published h3 {
-  margin-right: 150px;
+  /* margin-right: 150px; */
 }
 
 .message {
   text-align: start;
+  width: 80%;
+  padding-bottom: 20px;
+}
+.message h2 {
+  /* margin: 0px; */
 }
 
 .posted-by {
