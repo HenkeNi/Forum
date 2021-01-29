@@ -44,7 +44,7 @@ export default {
 <style scoped>
 .subforum-container {
   margin-bottom: 30px;
-  width: 65vw;
+  width: 55vw;
   border: 1px solid rgb(214, 214, 214);
 
 
@@ -64,7 +64,7 @@ export default {
 .info {
   display: flex;
   justify-content: space-between;
-  width: 52vw;
+  width: 42vw;
 }
 
 .title-container {
