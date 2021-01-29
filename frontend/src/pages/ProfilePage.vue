@@ -6,18 +6,20 @@
       </div>
       <div class="info">
         <h2 class="title">{{ user.username }}</h2>
-        <h3>email: {{user.email}}</h3>
+        <h3>email: {{user.email }}</h3>
         <h3>role: {{user.userRole}}</h3>
       </div>
     </div>
-    <div v-if="isAdmin">
+    <div v-if="showOptions">
+      <div>
       <div class="delete">
         <h3 @click="deleteUser">DELETE USER</h3>
       </div>
     </div>
-    <div class="mode" v-if="isAdmin">
-      <h3 v-if="!profileUserIsModerator" @click="makeModerator">Make Moderator</h3>
-      <h3 v-if="profileUserIsModerator" @click="removeModerator">Remove Moderator</h3>
+    <div class="mode">
+      <h3 v-if="!isModerator" @click="makeModerator">Make Moderator</h3>
+      <h3 v-if="isModerator" @click="removeModerator">Remove Moderator</h3>
+    </div>
     </div>
   </div>
 </template>
@@ -26,43 +28,17 @@
 export default {
   props: ["user"],
   computed: {
-    isAdmin() {
-      if (this.user.userRole === "admin") {
-        return false;
-      }
-
-      return (
-        this.$store.getters.currentUser !== null &&
-        this.$store.getters.currentUser.userRole === "admin"
-      );
+    showOptions() {
+      if (this.user.userRole === "admin") { return false; } // Admin pressed on own profile -> don't turn admin into a moderator/delete admin
+      return (this.$store.getters.currentUser !== null && this.$store.getters.currentUser.userRole === "admin"); // only show if admin
     },
-    profileUserIsModerator() {
-      // FIX
-      if (this.user.userRole === "admin") {
-        return false;
-      }
-
-      return (
-        this.$store.getters.currentUser !== null &&
-        this.user.userRole === "moderator"
-      );
+    isModerator() {
+      return this.user.userRole !== null && this.user.userRole === "moderator"; 
     }
   },
   methods: {
     async deleteUser() {
-      if (this.user.userRole === "Admin") {
-        return;
-      }
-
-      // Temporary solution
-      this.deleteAllUserPosts();
-      this.deleteAllUserThreads();
-
-      if (this.$store.getters.currentUser.userRole !== "admin") {
-        return;
-      }
-      console.log("DELETING USER");
-
+      
       let res = await fetch(`/rest/v1/users/${this.user.id}`, {
         method: "DELETE"
       });
@@ -70,28 +46,11 @@ export default {
       console.log(res);
       this.goToHomePage();
     },
-
-    async deleteAllUserPosts() {
-      await fetch(`/rest/v1/threads/${this.used.id}`, {
-        method: "DELETE"
-      });
-    },
-    async deleteAllUserThreads() {
-      await fetch(`/rest/v1/posts/${this.used.id}`, {
-        method: "DELETE"
-      });
-    },
-
-    logoutUser() {
-      // NEEDED or only ADMIN CAN DELETE USER?
-    },
     goToHomePage() {
       this.$router.push("/");
     },
     async makeModerator() {
-      if (this.user.userRole === "Admin") {
-        return;
-      }
+      if (this.user.userRole === "Admin") { return; } // Prevent admin from making themselves moderator...
 
       let res = await fetch(`/rest/v1/users/${this.user.id}`, {
         method: "PUT",
@@ -100,8 +59,9 @@ export default {
         },
         body: JSON.stringify({ userRole: "moderator" })
       });
-      res = await res.json();
+      res = await res.json();      
       console.log(res);
+      if (res) { this.user.userRole = "moderator"; }
     },
     async removeModerator() {
       let res = await fetch(`/rest/v1/users/${this.user.id}`, {
@@ -113,10 +73,9 @@ export default {
       });
       res = await res.json();
       console.log(res);
+      if (res) { this.user.userRole = "member"; }
     }
-  }
-
-  // TODO: if current user == admin -> radera användare || gör användare till moderator...
+  }, 
 };
 </script>
 
