@@ -62,8 +62,8 @@ const getUserById = async (req, res) => {
 const createThread = async (req, res) => {
   console.log("POSTING NEW THREAD");
   let statement = db.prepare(/*sql*/`
-    INSERT INTO threads (title, userId, published_time, subforumId, active) 
-    VALUES ($title, $userId, $published_time, $subforumId, $active)
+    INSERT INTO threads (title, userId, published_time, subforumId) 
+    VALUES ($title, $userId, $published_time, $subforumId)
     `);
     
     //WHERE NOT (user.isActive = 0 (SELECT * FROM users WHERE id = userId))

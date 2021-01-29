@@ -30,8 +30,7 @@ export default {
         "title": document.getElementById("title").value,
         "userId": this.$store.getters.currentUser.id,
         "published_time": Date.now(),
-        "subforumId": this.$route.params.subforum.id,
-        "active": "active",
+        "subforumId": this.$route.params.subforum.id
       }
 
       console.log("POSTING THREAD", thread);
