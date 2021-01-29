@@ -43,6 +43,7 @@ export default {
   },
   methods: {
     close() {
+      document.getElementById("message").value = "";
       this.$emit("myEvent", "input", !this.value);
     },
     async submit(e) {
@@ -77,7 +78,7 @@ export default {
       res = await res.json();
       console.log(res);
       this.close();
-    }
+    },
   }
 };
 </script>
