@@ -1,13 +1,13 @@
 <template>
   <div class="thread-page">
-    <NewPostModal :threadId="this.thread.id" @myEvent="fetchPosts" v-model="newpostModalOpen" />
+    <NewPostModal :threadId="this.thread.id" @reload="fetchPosts" @myEvent="modalClosed" v-model="newpostModalOpen" />
     <h1 class="title">{{thread.title}}</h1>
   
-    <div class="closed" v-if="isClosed">
+    <div class="closed" v-if="threadClosed">
       <h3 class="closed-text">Thread Closed!</h3>
     </div>
     <PostList class="list" :posts="this.posts" :thread="this.thread" />
-    <div @click="newPost" class="post" v-if="!isClosed">
+    <div @click="newPost" class="post" v-if="!threadClosed">
       <h2>New Post</h2>
     </div>
     <div class="block" v-if="showCloseThread">
@@ -29,29 +29,32 @@ export default {
   data() {
     return {
       posts: [],
-      isClosed: false,
+      threadClosed: false,
       newpostModalOpen: false
     };
   },
   computed: {
     showCloseThread() {
       let user = this.$store.getters.currentUser;
-
       if (user) {
         return (
           (user.userRole === "moderator" || user.userRole === "admin") &&
-          this.isClosed === false
+          this.threadClosed === false
         );
       }
       return false;
     }
   },
   methods: {
+    modalClosed() {
+      this.newpostModalOpen = false;
+      this.fetchPosts();
+    },
     async fetchPosts() {
+      console.log("FETCHING POSTS");
       let res = await fetch(`/rest/v1/posts/${this.thread.id}`); // TODO: FIX!!!!
       res = await res.json();
       this.posts = res;
-      this.newpostModalOpen = false; // temp SOLUTION...
     },
     async closeThread() {
       let res = await fetch(`/rest/v1/threads/${this.thread.id}`, {
@@ -59,23 +62,24 @@ export default {
       });
       res = await res.json();
       console.log(res);
-      this.isClosed = true;
+      this.threadClosed = true;
     },
     newPost() {
-      if (this.isClosed) {
-        return;
-      }
       this.newpostModalOpen = !this.newpostModalOpen;
-      //this.fetchPosts();
     }
   },
   created() {
     this.fetchPosts();
-    this.isClosed = this.thread.active === 0 ? true : false;
+    this.threadClosed = this.thread.active === 0 ? true : false;
   },
   mounted() {
     this.fetchPosts();
-  }
+  },
+  // watch: {
+  //   newpostModalOpen() {
+  //     this.fetchPosts();
+  //   } 
+  //}
 };
 </script>
   

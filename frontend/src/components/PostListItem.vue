@@ -74,7 +74,7 @@ export default {
       });
       res = await res.json();
       console.log(res);
-      // TODO: emit RELOAD...
+      this.$parent.reload();
     },
     goToProfile() {
       this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
