@@ -1,17 +1,27 @@
 <template>
   <div v-bind:class="{ evenRow: !isEvenRow }" class="thread-container" @click="goToThreadPage">
-    <div class="user-icon">
-      <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
-    </div>
-    <div class="user-info">
-      <div class="thread-title">
-        <h1>{{thread.title}}</h1>
+    <div class="container">
+      <div class="left">
+
+      <div class="user-icon">
+        <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
       </div>
-      <div class="thread-info">
-        <h4>
-          <span @click="goToProfile" class="author">{{author.username}} - {{ publishedDate }}</span>
-        </h4>
-        <!-- <h4>published at: <span class="published">{{publishedDate}}</span></h4> -->
+      <div class="user-info">
+        <div class="title-close">
+          <div class="thread-title">
+            <h1>{{thread.title}}</h1>
+          </div>
+        </div>
+        <div class="thread-info">
+          <h4>
+            <span @click="goToProfile" class="author">{{author.username}} - {{ publishedDate }}</span>
+          </h4>
+          <!-- <h4>published at: <span class="published">{{publishedDate}}</span></h4> -->
+        </div>
+      </div>
+      </div>
+      <div class="closed">
+        <h2 v-if="isClosed">closed</h2>
       </div>
     </div>
   </div>
@@ -53,6 +63,9 @@ export default {
     },
     isEvenRow() {
       return this.index % 2 == 0;
+    },
+    isClosed() {
+      return this.thread.active == 0;
     }
   },
   methods: {
@@ -93,12 +106,23 @@ export default {
   border-radius: 5px;
   display: flex;
   align-content: flex-start;
+  justify-content: space-between;
   /* box-shadow: 0.5px 0.5px 8px #000000; */
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
 .thread-container h1 {
   margin-bottom: 0px;
   margin-top: 10px;
+}
+
+.left {
+  display:flex;
 }
 
 .thread-container h4 {
@@ -114,8 +138,34 @@ export default {
   width: 80px;
 }
 
+.user-info {
+}
+
+.title-close {
+  widows: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.closed {
+  padding-top: 20px;
+  padding-right: 40px;
+
+}
+
+.closed h2 {
+  color: red;
+  border: 1px solid red;
+  margin: 0px;
+  border-radius: 5px;
+  padding: 2px;
+}
+
 .thread-title {
   padding-left: 40px;
+}
+.thread-title h1 {
+  /* margin-right: 70px; */
 }
 
 .thread-info {
@@ -126,9 +176,11 @@ export default {
 }
 
 .thread-info h4 {
-  margin-top: 5px;
+  margin-top: 0px;
   padding-left: 40px;
 }
+
+
 
 .author {
   padding-left: 5px;
