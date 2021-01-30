@@ -5,8 +5,8 @@
         <h1 class="title">{{ this.$route.params.subforum.title }}</h1>
         <h2>{{ this.$route.params.subforum.description }}</h2>
       </div>
-      <div class="create" @click="createNewThread">
-        <h3>Create Thread</h3>
+      <div class="create">
+        <h3 @click="createNewThread">Create Thread</h3>
       </div>
     </div>
     <hr style="border:black;color:black;width:60%;height:2px;background-color:black" />
