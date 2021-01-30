@@ -26,7 +26,7 @@
         </div>
       <div class="message">
         <div v-if="shouldEdit">
-          <EditPost />
+          <EditPost :post="post" />
         </div>
         <div v-if="!shouldEdit">
           <h2>{{post.message}}</h2>
@@ -101,10 +101,14 @@ export default {
       });
       res = await res.json();
       console.log(res);
-      this.$parent.reload();
+      // this.$parent.reload();
+      this.fetchPostsInParent();
     },
     async edit() {
       this.shouldEdit = !this.shouldEdit;
+    },
+    fetchPostsInParent() {
+      this.$parent.reload();
     },
     goToProfile() {
       this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
