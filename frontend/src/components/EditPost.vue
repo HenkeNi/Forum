@@ -11,13 +11,27 @@
 
 <script>
 export default {
- methods: {
-   async updateMessage() {
-     console.log("UPDATE");
-    
-
+  props: ['post'],
+  methods: {
+    async updateMessage() {
+      console.log(this.post)
+      await fetch(`/rest/v1/posts/${this.post.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ 
+          id: this.post.id,
+          message: document.getElementById("edit-message").value, 
+          userId: this.post.userId,
+        })
+      });
+      // res = await res.json();      
+      this.$parent.fetchPostsInParent();
+      this.cancel();
    },
    cancel() {
+     document.getElementById("edit-message").value = "";
      this.$parent.shouldEdit = false;
    }
 
