@@ -169,6 +169,7 @@ const updatePost = async (req, res) => {
     WHERE id = $id
   `);
   res.json(statement.run(req.body));
+  // res.json(statement.run({ id: req.params.id }));
 }
 
 
