@@ -13,12 +13,24 @@
       <div>
         <h2 v-if="isWarning">Warning!</h2>
       </div>
+      <div class="options">
+      <div v-if="isEditable" @click="edit" class="edit">
+        <h3>Edit</h3>
+      </div>
       <div class="remove">
-      <div v-if="isAuthorized" @click="remove"><h3>remove</h3></div>
+      <div v-if="isAuthorized" @click="remove">
+        <h3>remove</h3>
+      </div>
+      </div>
     </div>
         </div>
       <div class="message">
-        <h2>{{post.message}}</h2>
+        <div v-if="shouldEdit">
+          <EditPost />
+        </div>
+        <div v-if="!shouldEdit">
+          <h2>{{post.message}}</h2>
+        </div>
       </div>
     </div>
     
@@ -27,11 +39,17 @@
 </template>
 
 <script>
+import EditPost from '../components/EditPost.vue';
+
 export default {
+  components: {
+    EditPost
+  },
   props: ['post'],
   data() {
     return {
-      author: Object
+      author: Object,
+      shouldEdit: false,
     }
   },
   computed: {
@@ -45,6 +63,15 @@ export default {
         return user.userRole === 'admin' || user.userRole === 'moderator';
       }
       return false;
+    },
+    isEditable() {
+      return this.isAuthorized || (this.$store.getters.currentUser !== null && this.$store.getters.currentUser.id === this.author.id);
+
+      // let user = this.$store.getters.currentUser;
+      // if (user) {
+      //   return user.userRole === 'admin' || user.userRole === 'moderator' || user.id === this.author.id; 
+      // }
+      // return false;
     },
     publishedDate() {
       //return new Date(this.post.published_time).toLocaleString();
@@ -76,6 +103,9 @@ export default {
       console.log(res);
       this.$parent.reload();
     },
+    async edit() {
+      this.shouldEdit = !this.shouldEdit;
+    },
     goToProfile() {
       this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
     }
@@ -104,10 +134,11 @@ export default {
 }
 
 .top {
-  width: 580px;
+  /* width: 580px; */
   display: flex;
   justify-content: space-between;
 }
+
 
 
 .profile {
@@ -146,7 +177,7 @@ img {
 }
 
 .published {
-  width: 60%;
+  /* width: 60%; */
   display: flex;
 }
 
@@ -172,6 +203,10 @@ img {
   background-color: rgb(255, 255, 116);
 }
 
+.options {
+  display: flex;
+  justify-content: flex-end;
+}
 
 .remove h3 {
   cursor: pointer;
@@ -180,9 +215,17 @@ img {
   color: white;
   border-radius: 5px;
   padding: 5px;
-  border: 1px solid rgb(214, 214, 214);
+  border: 2px solid rgb(214, 214, 214);
 }
 
+.edit h3 {
+  margin-right: 10px;
+  cursor: pointer;
+  background-color: rgb(226, 226, 188);
+  border-radius: 5px;
+  border: 2px solid black;
+  padding: 5px;
+}
 
 
 </style>
