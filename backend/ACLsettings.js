@@ -26,6 +26,9 @@ module.exports = {
     if (method === 'POST' && (user.userRole === 'member' || user.userRole === 'admin' || user.userRole === 'moderator')) { return true; }
   
     if (method === 'DELETE' && (user.userRole === 'admin' || user.userRole === 'moderator')) { return true; }
+
+    console.log(req.body);
+    if (method === 'PUT' && (user.userRole === 'admin' || user.userRole === 'moderator' || req.body.userId === user.id)) { return true; }
   },
   users(user, method, req) {
 
