@@ -29,7 +29,8 @@
           <EditPost :post="post" />
         </div>
         <div v-if="!shouldEdit">
-          <h2>{{post.message}}</h2>
+          <p class="has-edited" v-if="isEdited">(Edited)</p>
+          <h2 class="main-text">{{post.message}}</h2>
         </div>
       </div>
     </div>
@@ -72,6 +73,9 @@ export default {
       //   return user.userRole === 'admin' || user.userRole === 'moderator' || user.id === this.author.id; 
       // }
       // return false;
+    },
+    isEdited() {
+      return this.post.isEdited === 1;
     },
     publishedDate() {
       //return new Date(this.post.published_time).toLocaleString();
@@ -231,5 +235,12 @@ img {
   padding: 5px;
 }
 
+.has-edited {
+  margin: 0px;
+}
+
+.main-text {
+  margin-top: 0px;
+}
 
 </style>

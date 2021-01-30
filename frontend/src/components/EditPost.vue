@@ -14,7 +14,6 @@ export default {
   props: ['post'],
   methods: {
     async updateMessage() {
-      console.log(this.post)
       await fetch(`/rest/v1/posts/${this.post.id}`, {
         method: "PUT",
         headers: {
@@ -24,6 +23,7 @@ export default {
           id: this.post.id,
           message: document.getElementById("edit-message").value, 
           userId: this.post.userId,
+          isEdited: 1,
         })
       });
       // res = await res.json();      
