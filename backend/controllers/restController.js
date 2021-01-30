@@ -160,7 +160,16 @@ const updateUser = async (req, res) => {
 }
 
 
+const updatePost = async (req, res) => {
+  console.log("UPDATING POST");
 
+  let statement = db.prepare(/*sql*/`
+    UPDATE posts
+    SET ${Object.keys(req.body).map(x => x + ' = $' + x)}  
+    WHERE id = $id
+  `);
+  res.json(statement.run(req.body));
+}
 
 
 
@@ -211,7 +220,7 @@ module.exports = {
   deleteUser,
 
   updateUser,
-
+  updatePost,
   // getAllThreads,
   // getThreadById,
   // getThreadPosts,

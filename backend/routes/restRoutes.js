@@ -17,6 +17,8 @@ router.post("/posts", restController.createPost);
 // PUT
 router.put("/threads/:threadId", restController.closeThread);
 router.put("/users/:id", restController.updateUser);
+router.put("/posts/:id", restController.updatePost);
+
 
 // DELETE
 router.delete("/posts/:id", restController.deletePost);
