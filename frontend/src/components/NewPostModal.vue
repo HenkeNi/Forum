@@ -61,6 +61,8 @@ export default {
         post.warning = 1;
       }
 
+      //let res = await this.$store.dispatch("postNewPost", post);
+
       let res = await fetch("/rest/v1/posts", {
         method: "POST",
         headers: {
@@ -81,8 +83,8 @@ export default {
 .modal {
   z-index: 1;
   position: absolute;
-  width: 100%;
-  height: 120%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
