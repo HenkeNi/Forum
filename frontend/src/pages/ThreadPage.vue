@@ -71,7 +71,6 @@ export default {
       this.fetchPosts();
     },
     async fetchPosts() {
-      console.log("FETCHING POSTS");
       let res = await fetch(`/rest/v1/posts/${this.thread.id}`); // TODO: FIX!!!!
       res = await res.json();
       this.posts = res;

@@ -4,6 +4,7 @@
       v-for="post in posts"
       :key = "post.id"
       :post="post"
+      :thread="thread"
     />
   </div>  
 </template>
@@ -15,7 +16,7 @@ export default {
    components: {
     PostListItem,
   },
-  props: ['posts'], 
+  props: ['posts', 'thread'], 
   methods: {
     reload() {
       this.$parent.fetchPosts();

@@ -46,7 +46,7 @@ export default {
   components: {
     EditPost
   },
-  props: ['post'],
+  props: ['post', 'thread'],
   data() {
     return {
       author: Object,
@@ -66,7 +66,7 @@ export default {
       return false;
     },
     isEditable() {
-      return this.isAuthorized || (this.$store.getters.currentUser !== null && this.$store.getters.currentUser.id === this.author.id);
+      return this.thread.active === 1 && (this.isAuthorized || (this.$store.getters.currentUser !== null && this.$store.getters.currentUser.id === this.author.id));
 
       // let user = this.$store.getters.currentUser;
       // if (user) {
