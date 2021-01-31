@@ -11,6 +11,13 @@ const getAllSubforums = async (req, res) => {
   res.json(statement.all());
 }
 
+const getAllUsers = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    SELECT * FROM users
+  `);
+  res.json(statement.all());
+}
+
 const getAllSubforumThreads = async (req, res) => {
   let statement = db.prepare(/*sql*/ `
     SELECT * FROM threads 
@@ -207,6 +214,7 @@ const updatePost = async (req, res) => {
 
 module.exports = {
   getAllSubforums,
+  getAllUsers,
   //getAllThreads,
   getAllSubforumThreads,
   getUserById,
