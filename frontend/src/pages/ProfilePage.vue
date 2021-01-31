@@ -10,6 +10,9 @@
         <h3>role: {{user.userRole}}</h3>
       </div>
     </div>
+    <!-- <div>
+      <h2 @click="goToMessagePage" class="message">Send PM</h2>
+    </div> -->
     <div v-if="showOptions">
       <div>
       <div class="delete">
@@ -21,11 +24,20 @@
       <h3 v-if="isModerator" @click="removeModerator">Remove Moderator</h3>
     </div>
     </div>
+    <div v-if=isAdminProfile>
+      <h2 class="list">List of users</h2>
+      <UserList />
+    </div>
   </div>
 </template>
 
 <script>
+import UserList from '../components/UserList.vue';
+
 export default {
+  components: {
+    UserList
+  },
   props: ["user"],
   computed: {
     showOptions() {
@@ -34,6 +46,10 @@ export default {
     },
     isModerator() {
       return this.user.userRole !== null && this.user.userRole === "moderator"; 
+    },
+    isAdminProfile() {
+      return this.user.userRole !== null && this.user.userRole === 'admin' && 
+        this.$store.getters.currentUser !== null && this.$store.getters.currentUser.userRole === "admin"
     }
   },
   methods: {
@@ -48,6 +64,9 @@ export default {
     },
     goToHomePage() {
       this.$router.push("/");
+    },
+    goToMessagePage() {
+      this.$router.push({ name: 'MessagePage', params: {user: this.user} });
     },
     async makeModerator() {
       if (this.user.userRole === "Admin") { return; } // Prevent admin from making themselves moderator...
@@ -135,5 +154,14 @@ img {
   display: flex;
   background-color: rgb(26, 33, 36);
   color: white;
+}
+
+.list {
+  padding-top: 40px;
+  margin-bottom: 5px;
+}
+
+.message {
+  cursor: pointer;
 }
 </style>
