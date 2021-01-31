@@ -5,6 +5,7 @@ import SubforumPage from '@/pages/SubforumPage';
 import ThreadPage from '@/pages/ThreadPage';
 import ThreadCreationPage from '@/pages/ThreadCreationPage';
 import ProfilePage from '@/pages/ProfilePage';
+import MessagePage from '@/pages/MessagePage';
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,12 @@ const routes = [
     path: '/profile/:user',
     name: 'ProfilePage',
     component: ProfilePage,
+    props: true,
+  },
+  {
+    path: '/messagepage/:user',
+    name: 'MessagePage',
+    component: MessagePage,
     props: true,
   }
 ];
