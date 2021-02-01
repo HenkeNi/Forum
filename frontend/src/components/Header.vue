@@ -8,6 +8,7 @@
       <div class="overlay">
         <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
         <div class="menu-options"> 
+          <h3 class="messages" @click="goToConversations" v-if="currentUser">Messages</h3>
           <h3 @click="goToProfile">{{currentUser.username}}</h3>
           <div class="sign-in" id="sign-in-options">
             <h3 @click="showSignInModal">Login /</h3>
@@ -72,6 +73,9 @@ export default {
     },
     goToProfile() {
       this.$router.push({ name: 'ProfilePage', params: {user: this.currentUser} });
+    },
+    goToConversations() {
+      this.$router.push({ name: 'ConversationsPage', params: {user: this.currentUser} });
     },
     async signOutUser() {
       let res = await fetch('/rest/v1/logout', {
@@ -195,6 +199,14 @@ export default {
     background: rgb(26, 33, 36);
   height: 5px;
   width: 100vw;
+}
+
+.messages {
+  /* background-color: aquamarine;
+  border: 2px solid black;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 5px; */
 }
 
 </style>
