@@ -3,6 +3,97 @@ const sqlite3 = require('better-sqlite3');
 const db = sqlite3('../database/database.db');
 
 
+//*************** TEST AREA ********************
+const createConversation = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    INSERT INTO conversations DEFAULT VALUES
+    
+  `);
+    res.json(statement.run(req.body));
+}
+
+const createMessage = async (req, res) => {
+  console.log("SENDING MESSAGE");
+  let statement = db.prepare(/*sql*/`
+    INSERT INTO messages (senderId, text, send_date, conversationId)
+      VALUES($senderId, $text, $send_date, $conversationId);
+  `);
+  res.json(statement.run(req.body));
+}
+
+const addUserToConversation = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    INSERT INTO conversationsXusers (userId, conversationId)
+      VALUES($userId, $conversationId);
+  `);
+  res.json(statement.run(req.body));
+}
+
+
+const getUsersInConversation = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    SELECT
+      userId, username
+    FROM
+      users,
+      conversations,
+      conversationsXusers
+    WHERE 
+      users.id = conversationsXusers.userId
+    AND
+      conversations.id = conversationsXusers.conversationId
+    AND conversations.id = $id
+  `);
+  res.json(statement.all({ id: req.params.id }));
+}
+
+const getMessagesInConversation = async (req, res) => {
+  console.log("GETTING MESSAGES");
+  let statement = db.prepare(/*sql*/`
+    SELECT
+      messages.id AS id, senderId, text, send_date
+    FROM
+      messages,
+      conversations
+    WHERE 
+      conversations.id = $convId
+    AND messages.conversationId = $convId
+  `);
+  res.json(statement.all({ convId: req.params.id }));
+}
+
+const getConversations = async (req, res) => {
+  console.log("GET user's conversations")
+  let statement = db.prepare(/*sql*/`
+    SELECT 
+      conversations.id AS convID
+    FROM
+      conversations,
+      users,
+      conversationsXusers
+    WHERE
+      users.id = conversationsXusers.userId
+    AND
+      users.id = $id
+    AND 
+      conversations.id = conversationsXusers.conversationId
+  `);
+    res.json(statement.all({ id: req.params.id }));
+}
+
+
+
+//***********************************
+
+
+
+
+
+
+
+
+
+
 // GET
 const getAllSubforums = async (req, res) => {
   console.log("FETCHING SUBFORUMS");
@@ -215,37 +306,31 @@ const updatePost = async (req, res) => {
 module.exports = {
   getAllSubforums,
   getAllUsers,
-  //getAllThreads,
   getAllSubforumThreads,
   getUserById,
   getThreadPosts,
-  // getNumberOfPostsInThread,
-
   createThread,
   createPost,
-
   closeThread,
   deletePost,
   deleteUser,
-
   updateUser,
   updatePost,
-  // getAllThreads,
-  // getThreadById,
-  // getThreadPosts,
-  // getAllUsers,
-
- deleteAllUserThreads,
+  deleteAllUserThreads,
   deleteAllUserPosts,
- 
   getNumberOfThreadsInSubforum,
-  getNumberOfPostsInThread
+  getNumberOfPostsInThread,
 
 
 
 
+  createConversation,
+  addUserToConversation,
+  getUsersInConversation,
+  createMessage,
+  getMessagesInConversation,
+  getConversations
 
-  //getPosts,
-  //createThread,
-  //createPost,
+
+
 }

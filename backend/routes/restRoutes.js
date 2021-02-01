@@ -2,6 +2,16 @@ const express = require('express');
 const router = express.Router();
 const restController = require('../controllers/restController');
 
+
+//**************TEST
+router.post('/conversations', restController.createConversation);
+router.post('/conversationsXusers', restController.addUserToConversation);
+router.get('/conversationsXusers/:id', restController.getUsersInConversation);
+router.post('/messages', restController.createMessage);
+router.get('/messages/:id', restController.getMessagesInConversation);
+router.get('/conversations/:id', restController.getConversations);
+
+
 // Get 
 router.get('/subforums', restController.getAllSubforums);
 router.get('/users', restController.getAllUsers);
