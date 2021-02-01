@@ -66,5 +66,17 @@ module.exports = {
   },
   logout() {
     return true;
+  },
+
+
+  // ************ TEST ******
+  conversations() {
+    return true;
+  },
+  conversationsXusers() {
+    return true;
+  },
+  messages() {
+    return true;
   }
 };
