@@ -10,9 +10,9 @@
         <h3>role: {{user.userRole}}</h3>
       </div>
     </div>
-    <!-- <div>
+    <div>
       <h2 @click="goToMessagePage" class="message">Send PM</h2>
-    </div> -->
+    </div>
     <div v-if="showOptions">
       <div>
       <div class="delete">
