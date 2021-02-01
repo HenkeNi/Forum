@@ -6,6 +6,7 @@ import ThreadPage from '@/pages/ThreadPage';
 import ThreadCreationPage from '@/pages/ThreadCreationPage';
 import ProfilePage from '@/pages/ProfilePage';
 import MessagePage from '@/pages/MessagePage';
+import ConversationsPage from '@/pages/ConversationsPage';
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,12 @@ const routes = [
     path: '/messagepage/:user',
     name: 'MessagePage',
     component: MessagePage,
+    props: true,
+  },
+  {
+    path: '/conversationspage/:user',
+    name: 'ConversationsPage',
+    component: ConversationsPage,
     props: true,
   }
 ];
