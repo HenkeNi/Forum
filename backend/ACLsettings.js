@@ -16,6 +16,8 @@ module.exports = {
     if (method === 'POST' && (user.userRole === 'member' || user.userRole === 'admin' || user.userRole === 'moderator')) { return true; }
 
     if (method === 'PUT' && (user.userRole === 'admin' || user.userRole === 'moderator')) { console.log("CLOSING THREAD"); return true; }
+ 
+    if (method === 'DELETE' && (user.userRole === 'admin' || user.userRole === 'moderator')) { return true; }
   },
   posts(user, method, req) {
     
@@ -62,26 +64,41 @@ module.exports = {
   whoami() {
     return true;
   },
-  logout() {
-    return true;
+  logout() {  
+    return true; // TODO : bara loga ut om det finns en userRole??
   },
 
 
   // ************ TEST ******
-  conversations() {
-    return true;
-  },
-  conversationsXusers() {
-    return true;
-  },
-  messages() {
+  conversations(user, method, req) {
 
-    // TODO: alla inloggade ska få skicka meddelande
-
-    // TODO: bara inloggade med rätt id(?) ska få göra get...
-
+    if (method === 'GET' && user.userRole) { console.log("IN HERE"); return true; } 
     
+    if (method === 'POST' && user.userRole) { return true; } 
+    
+    if (method === 'DELETE' && user.userRole) { return true; }
 
-    return true;
+    return false;
+  },
+  conversationsXusers(user, method, req) {
+    if (method === 'GET' && user.userRole) { return true; } 
+    
+    if (method === 'POST' && user.userRole) { return true; } 
+    
+    if (method === 'DELETE' && user.userRole) { return true; }
+
+    return false;
+  },
+  messages(user, method, req) {
+
+    // Everyone can do a get
+    if (method === 'GET' && user.userRole) { return true; } // TODO: Bara dem med rätt conversationsId ska få tillgång till meddelanden
+    
+    // All logged in users can do a post
+    if (method === 'POST' && user.userRole) { return true; } 
+
+    if (method === 'DELETE' && user.userRole) { return true; }
+
+    return false;
   }
 };
