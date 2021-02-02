@@ -1,5 +1,7 @@
 <template>
   <div class="modal" v-show="value">
+    <div class="background" @click="close">
+    </div>
     <div class="form">
       <div class="title">
         <h2>Create Account</h2>
@@ -90,6 +92,13 @@ export default {
   align-items: center;
 }
 
+.background {
+  z-index: 5;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .title {
   text-decoration: underline;
   margin-bottom: 0px;
@@ -100,6 +109,7 @@ h2 {
 }
 
 .form {
+  z-index: 10;
   width: 30%;
   height: 40%;
   /* padding: 20px 50px 50px; */
