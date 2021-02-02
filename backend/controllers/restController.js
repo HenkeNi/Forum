@@ -208,21 +208,21 @@ const deletePost = async (req, res) => {
   res.json(statement.run({ id: req.params.id }));
 }
 
-const deleteAllUserThreads = async (req, res) => {
-  let statement = db.prepare(/*sql*/`
-    DELETE FROM threads
-    where userId == $id
-  `);
-  res.json(statement.run({ id: req.params.id }));
-}
+// const deleteAllUserThreads = async (req, res) => {
+//   let statement = db.prepare(/*sql*/`
+//     DELETE FROM threads
+//     where userId == $id
+//   `);
+//   res.json(statement.run({ id: req.params.id }));
+// }
 
-const deleteAllUserPosts = async (req, res) => {
-  let statement = db.prepare(/*sql*/`
-    DELETE FROM posts
-    where userId == $id
-  `);
-  res.json(statement.run({ id: req.params.id }));
-}
+// const deleteAllUserPosts = async (req, res) => {
+//   let statement = db.prepare(/*sql*/`
+//     DELETE FROM posts
+//     where userId == $id
+//   `);
+//   res.json(statement.run({ id: req.params.id }));
+// }
 
 const deleteUser = async (req, res) => {
   console.log("DELETING USER");
@@ -233,9 +233,16 @@ const deleteUser = async (req, res) => {
   res.json(statement.run({ id: req.params.id }));
 }
 
+const deleteThreadById = async (req, res) => {
+  console.log("DELETE THREAD BY ID");
+  let statement = db.prepare(/*sql*/`
+    DELETE FROM threads
+    WHERE id = $id
+  `);
+  res.json(statement.run({ id: req.params.id }));
+}
 
 
-//const makeUserModerator 
 
 const updateUser = async (req, res) => {
   console.log("UPDATING USER");
@@ -266,40 +273,11 @@ const updatePost = async (req, res) => {
     WHERE id = $id
   `);
   res.json(statement.run(req.body));
-  // res.json(statement.run({ id: req.params.id }));
 }
 
 
 
 
-
-
-// const getForumThreads = async (req, res) => {
-//   let statement = db.prepare(/*sql*/`SELECT * FROM threads WHERE thread.subforumId = subforums.id`);
-//   res.json(statement.all({ subjectId: req.params.subjectId }));
-// }
-
-// const getThreads = async (req, res) => {
-//   let statement = db.prepare(/*sql*/`SELECT * FROM subforums`);
-//   res.json(statement.all({ subjectId: req.params.subjectId })); // TODO: FIX
-// } 
-
-// const getPosts = async (req, res) => {
-//   let statement = db.prepare(/*sql*/ `
-//     SELECT * FROM posts.* FROM posts, threads WHERE posts.threadId = $threadId AND threads.id = $threadId
-//     `);
-// }
-
-// const createThread = async (req, res) => {
-//   let statement = db.prepare(/*sql*/`
-//   INSERT into ForumThreads (thread_info, created, created_by, thread_title, category) VALUES ($thread_info, $created, $created_by, $thread_title, $category)`);
-
-//   res.json(statement.run({thread_info: req.body.thread_info, created: req-body.created, created_by: req.body.created_by, thread_title: req.body,thread_title, category: req.body.category}))
-// }
-
-// createPost = async (req, res) => {
-
-// }
 
 
 module.exports = {
@@ -315,13 +293,11 @@ module.exports = {
   deleteUser,
   updateUser,
   updatePost,
-  deleteAllUserThreads,
-  deleteAllUserPosts,
+
   getNumberOfThreadsInSubforum,
   getNumberOfPostsInThread,
 
-
-
+  deleteThreadById,
 
   createConversation,
   addUserToConversation,
