@@ -188,6 +188,7 @@ export default {
 
 .list {
   width: 60vw;
+  height: 60vh;
   display: flex;
   justify-content: center;
 }
