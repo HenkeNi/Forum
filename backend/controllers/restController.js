@@ -96,7 +96,6 @@ const getConversations = async (req, res) => {
 
 // GET
 const getAllSubforums = async (req, res) => {
-  console.log("FETCHING SUBFORUMS");
   let statement = db.prepare(/*sql*/ `
     SELECT * FROM subforums`);
   res.json(statement.all());

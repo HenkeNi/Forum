@@ -13,8 +13,6 @@ module.exports = {
     //return true;
     if (method === 'GET') { return true; }
 
-    //let role = req.body.userRole;
-    //console.log("ROLE:::::::: ", req.body);
     if (method === 'POST' && (user.userRole === 'member' || user.userRole === 'admin' || user.userRole === 'moderator')) { return true; }
 
     if (method === 'PUT' && (user.userRole === 'admin' || user.userRole === 'moderator')) { console.log("CLOSING THREAD"); return true; }
@@ -77,6 +75,13 @@ module.exports = {
     return true;
   },
   messages() {
+
+    // TODO: alla inloggade ska få skicka meddelande
+
+    // TODO: bara inloggade med rätt id(?) ska få göra get...
+
+    
+
     return true;
   }
 };

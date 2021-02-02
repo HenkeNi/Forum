@@ -28,8 +28,6 @@ const isValidEmail = (email) => {
 
 const login = async (req, res) => {
 
-  console.log("SIGN IN USER");
-
   if (req.body.password) {
     req.body.password = Encrypt.multiEncrypt(req.body.password);
   }
@@ -49,13 +47,11 @@ const login = async (req, res) => {
 
 
 const whoami = async (req, res) => {
-  console.log("CURRENT USER", req.session.user);
   res.json(req.session.user || null);
 }
 
 
 const logout = async (req, res) => {
-  console.log("LOGOUT USER");
   delete req.session.user;
   res.json({ loggedOut: true });
 }

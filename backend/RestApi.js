@@ -73,7 +73,7 @@ module.exports = class RestApi {
 
   createPostRoute(table) {
     this.app.post(this.prefix + table, (req, res) => {
-      console.log("IN HERE!!!!")
+
       let b = req.body;
       if (b.password) { b.password = Encrypt.multiEncrypt(b.password); } // encrypt password fields (if any!)
 
