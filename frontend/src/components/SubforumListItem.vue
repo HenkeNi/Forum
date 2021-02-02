@@ -57,6 +57,7 @@ export default {
   cursor: pointer;
   display: flex;
   flex-flow: row wrap;
+  color: white;
   /* flex-direction: row;
   flex-wrap: wrap; */
 }
@@ -80,10 +81,8 @@ export default {
 
 .icon-img {
   background-color: rgb(214, 214, 214);
-  /* background-color: yellow; */
   height: 100%;
   width: 12vw;
-  /* text-align: center; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,14 +90,15 @@ export default {
 }
 
 .threads {
-  color: white;
+  /* color: white; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-right: 30px;
-
 }
+
+
 
 .threads-title {
   margin: 0px;
@@ -131,12 +131,22 @@ hr {
 }
 
 .text {
-  color: rgb(214, 214, 214);
+  /* color: rgb(214, 214, 214); */
   text-shadow: 1px 2px #000000;
   /* text-shadow: -0.5px 0.5px #000000;   */
-
 }
 
+span {
+  color: rgb(51, 50, 50);
+}
 
+.subforum-container:hover {
+  color: rgb(207, 207, 132);
+  border: 1px solid rgb(207, 207, 132);
+}
+
+.subforum-container:hover .icon-img {
+  background-color: rgb(207, 207, 132); 
+}
 
 </style>

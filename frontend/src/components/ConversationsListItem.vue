@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div @click="goToMessagePage" class="container">
     <h2 
     v-for="user in this.otherUser"
     :key="user.userId"
-    @click="goToMessagePage"
     class="conversation-item"
     >{{ user.username }}</h2>
+    <div class="icon-img">
+      <span class="material-icons" style="font-size: 8em;">chat</span>
+    </div>
   </div>
 </template>
 
@@ -27,7 +29,6 @@ export default {
       let res = await fetch(`/rest/v1/conversationsXusers/${this.convID.convID}`);
       res = await res.json();
       this.otherUser = res.filter(user => user.userId !== this.currentUser.id);
-      console.log(this.otherUser);
     },
     async fetchFullAuthor() {
       let res = await fetch(`/rest/v1/users/${this.otherUser[0].userId}`); // TODO: FETCH FIRST FOR NOW!!
@@ -35,7 +36,6 @@ export default {
     },
     async goToMessagePage() {
       let user = await this.fetchFullAuthor();
-      console.log("CORRECT USER?, ", user);
       this.$router.push({ name: 'MessagePage', params: {user: user} });
     },
   },
@@ -46,8 +46,23 @@ export default {
 </script>
 
 <style scoped>
-.conversation-item {
+.container {
+  background-color: rgb(54, 62, 65);
+  border: 2px solid white;
+  width: 20vw;
+  height: 20vw;
+  color: white;
+  text-align: center;
+  margin-left: 20px;
   cursor: pointer;
 }
+
+.container:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
+}
+
+
+
 
 </style>

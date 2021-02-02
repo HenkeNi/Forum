@@ -120,6 +120,11 @@ export default {
   /* box-shadow: 0.5px 0.5px 8px #000000; */
 }
 
+.thread-container:hover {
+  color: rgb(207, 207, 132);
+  border: 1px solid rgb(207, 207, 132);
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -226,6 +231,11 @@ export default {
   background-color: rgb(160, 156, 156);
   color: black;
   /* box-shadow: 0.5px 0.5px 8px #000000; */
+}
+
+.evenRow:hover {
+  color: rgb(207, 207, 132);
+  border: 1px solid rgb(207, 207, 132);
 }
 
 .title {

@@ -120,7 +120,6 @@ export default {
       console.log(res);
     },
     async fetchMessages() {
-      console.log("Fetching messages...");
       if (this.conversationsID !== null) {
         let res = await fetch(`/rest/v1/messages/${this.conversationsID}`);
         this.messages = await res.json();
@@ -138,7 +137,6 @@ export default {
       let convID = convUser1.filter(element => convUser2.includes(element)); 
 
       if (convID !== undefined && convID.length > 0) {
-        console.log("Conversation found! id: ", convID[0]);
         this.conversationsID = convID[0]; 
       }  
     },

@@ -7,9 +7,10 @@
           <br />
         </div>
         <div class="checkbox" v-if="showCheckbox">
-          <label for="warning">Warning message: </label>
           <!-- <br /> -->
-          <input type="checkbox" id="post-warning" name="post-warning" />
+          <label class="box">Warning message: 
+            <input class="box" type="checkbox" id="post-warning" name="post-warning" />
+          </label>
         </div>
         <div class="buttons">
           <input class="send" @click.prevent="createPost" type="submit" value="Post" />
@@ -118,6 +119,10 @@ export default {
   color: white;
 }
 
+.box {
+  cursor: pointer;
+}
+
 .checkbox {
   padding-top: 10px;
   margin-bottom: 10px;
@@ -126,6 +131,9 @@ export default {
   justify-content: center;
 }
 
+.checkbox:hover {
+  color: rgb(207, 207, 132);
+}
 
 .send {
   cursor: pointer;
@@ -134,6 +142,11 @@ export default {
   color: white;
   border-radius: 5px;
   border: 1px solid rgb(214, 214, 214);
+}
+
+.send:hover {
+  color: rgb(207, 207, 132);
+  border: 1px solid rgb(207, 207, 132);
 }
 
 .cancel {
@@ -145,6 +158,10 @@ export default {
   border: 1px solid rgb(214, 214, 214);
 }
 
+.cancel:hover {
+  color: rgb(207, 207, 132);
+  border: 1px solid rgb(207, 207, 132);
+}
 
 .buttons {
   display: flex;

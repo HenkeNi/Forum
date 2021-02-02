@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list">
     <ConversationsListItem 
     v-for="convID in convIDs"
     :key="convID.id"
@@ -14,21 +14,16 @@ export default {
   props: ['convIDs'],
   components: {
     ConversationsListItem
-  },
-  data() {
-    return {
-      
-    }
-  },
-  methods: {
-    
-  },
-  created() {
-    // console.log("Conver...", this.convIDs);
-  },
+  }, 
 }
 </script>
 
 <style scoped>
+
+.list {
+  padding-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+}
 
 </style>

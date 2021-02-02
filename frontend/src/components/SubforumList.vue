@@ -50,4 +50,9 @@ h1 {
   text-align: center;
   text-decoration: underline;
 }
+
+.forum {
+  color: rgb(37, 38, 41);
+}
+
 </style>

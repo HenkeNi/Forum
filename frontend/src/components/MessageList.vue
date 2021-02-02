@@ -17,9 +17,6 @@ export default {
     MessageListItem
   },
   props: ['messages'],
-  created() {
-    console.log("mes: ", this.messages);
-  },
   
 }
 </script>

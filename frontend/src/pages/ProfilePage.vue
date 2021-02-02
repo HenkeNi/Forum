@@ -164,4 +164,10 @@ img {
 .message {
   cursor: pointer;
 }
+
+.message:hover {
+  color: rgb(207, 207, 132);
+}
+
+
 </style>

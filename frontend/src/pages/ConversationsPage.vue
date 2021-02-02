@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ user.username }}'s conversations</h1>
+    <h1 class="title">{{ user.username }}'s conversations</h1>
     <ConversationsList :convIDs="convIDs"/>
   </div>
 </template>
@@ -33,5 +33,12 @@ export default {
 </script>
 
 <style scoped>
+.title {
+  padding-top: 30px;
+  color: white;
+  text-align: center;
+  text-decoration: underline;
+}
+
 
 </style>

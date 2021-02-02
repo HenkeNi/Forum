@@ -171,14 +171,22 @@ export default {
 .block {
   position: relative;
   /* border-radius: 5px; */
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   text-align: center;
-  width: 60vw;
-  border: 1px solid black;
+  /* width: 60vw; */
+  margin-left: 10px;
+  width: 15vw;
+  border: 2px solid rgb(27, 27, 27);
+  border-top: 0px;
   background-color: rgb(175, 25, 25);
   cursor: pointer;
   color: white;
+}
+
+.block:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
 }
 
 .block h2 {
@@ -224,8 +232,13 @@ export default {
   color: white;
   border-radius: 5px;
   border: 1px solid rgb(214, 214, 214);
-
 }
+
+.post h2:hover {
+  color: rgb(207, 207, 132);
+  border: 1px solid rgb(207, 207, 132);
+}
+
 
 
 </style>

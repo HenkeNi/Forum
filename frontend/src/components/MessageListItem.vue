@@ -17,8 +17,6 @@ export default {
   },
   computed: {
     isOwnMessage() {
-      console.log(this.message);
-      console.log("OWN: ", this.$store.getters.currentUser.id === this.message.senderId);
       return this.$store.getters.currentUser.id === this.message.senderId;
     }
   },
@@ -30,7 +28,6 @@ export default {
   },
   created() {
     this.fetchAuthor();
-    console.log(this.message);
   },
   
 

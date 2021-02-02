@@ -226,6 +226,11 @@ img {
   border: 2px solid rgb(214, 214, 214);
 }
 
+.remove h3:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
+}
+
 .edit h3 {
   margin-right: 10px;
   cursor: pointer;
@@ -233,6 +238,10 @@ img {
   border-radius: 5px;
   border: 2px solid black;
   padding: 5px;
+}
+
+.edit h3:hover {
+  background-color: rgb(207, 207, 132);
 }
 
 .has-edited {

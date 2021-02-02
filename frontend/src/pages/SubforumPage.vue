@@ -111,6 +111,7 @@ export default {
   text-align: center;
   display: flex;
   justify-content: flex-end;
+  color: white;
 }
 
 .create h3 {
@@ -118,11 +119,16 @@ export default {
   padding: 10px 15px;
   font-weight: bold;
   background-color: rgb(26, 33, 36);
-  color: white;
   /* background-color: yellow; */
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid rgb(214, 214, 214);
+  border: 2px solid rgb(214, 214, 214);
   box-shadow: 1px 2px 8px #000000;
 }
+
+.create h3:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
+}
+
 </style>

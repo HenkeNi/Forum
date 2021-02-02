@@ -163,9 +163,14 @@ label {
   color: white;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid rgb(214, 214, 214);
+  border: 2px solid rgb(214, 214, 214);
   box-shadow: 1px 2px 8px #000000;
   width: 100%;
+}
+
+.confirm:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
 }
 
 .cancel {
@@ -174,9 +179,15 @@ label {
   color: black;
   border-radius: 5px;
   cursor: pointer;
-  border: 1px solid rgb(214, 214, 214);
+  border: 2px solid rgb(214, 214, 214);
   box-shadow: 1px 2px 8px #000000;
   width: 100%;
 }
+
+.cancel:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
+}
+
 
 </style>

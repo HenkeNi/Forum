@@ -53,9 +53,8 @@ export default {
     },
 
     hideElements(hideLogin) {
-       var login = document.getElementById("sign-in-options");
-       var logout = document.getElementById("logout-option");
-
+      var login = document.getElementById("sign-in-options");
+      var logout = document.getElementById("logout-option");
 
       if (!hideLogin) {
         login.style.display = "block";
@@ -88,10 +87,7 @@ export default {
       });
       res = await res.json();
       
-      if (!res) {
-        console.log("Logout failed!"); // write message ... failed to login!
-      } else {
-        console.log("Logout Succeeded!\n", res);
+      if (res) {
         this.hideElements(false);
         this.$store.commit('setCurrentUser', null);
       }
@@ -149,6 +145,14 @@ export default {
   /* color: white; */
   /* color: rgb(207, 205, 205); */
   cursor: pointer;
+}
+
+.title:hover {
+  color: rgb(207, 207, 132);
+}
+
+h3:hover {
+  color: rgb(207, 207, 132);
 }
 
 .menu-options {
