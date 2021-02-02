@@ -187,7 +187,8 @@ export default {
 
 .textarea {
   color: white;
-  background-color: rgb(98, 73, 122);
+    background-color: rgb(54, 62, 65);
+  /* background-color: rgb(98, 73, 122); */
   border: 2px solid black;
 }
 
@@ -206,9 +207,10 @@ p {
 }
 
 .send button {
-  background-color: rgb(49, 27, 66);
-  border: 2px solid black;
+  background-color: rgb(27, 38, 43);
+  border: 2px solid white;
   color: white;
+  padding: 3px;
 }
 
 </style>

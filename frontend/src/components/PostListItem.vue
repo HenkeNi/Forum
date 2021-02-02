@@ -164,6 +164,10 @@ export default {
 
 }
 
+.profile:hover {
+  color: rgb(207, 207, 132);
+}
+
 .author {
   margin: 0px;
   padding-top: 5px;
@@ -220,10 +224,10 @@ img {
   cursor: pointer;
   margin-right: 20px;
   background-color: rgb(175, 25, 25);
-  color: white;
+  color: black;
   border-radius: 5px;
   padding: 5px;
-  border: 2px solid rgb(214, 214, 214);
+  border: 2px solid black;
 }
 
 .remove h3:hover {
@@ -241,7 +245,8 @@ img {
 }
 
 .edit h3:hover {
-  background-color: rgb(207, 207, 132);
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
 }
 
 .has-edited {

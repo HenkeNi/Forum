@@ -3,6 +3,7 @@
     <div class="license">
       <div class="image">
         <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
+        <p v-if="ownProfile" @click="addProfileImage" class="add">+ add image</p>
       </div>
       <div class="info">
         <h2 class="title">{{ user.username }}</h2>
@@ -11,7 +12,7 @@
       </div>
     </div>
     <div>
-      <h2 @click="goToMessagePage" class="message">Send PM</h2>
+      <h2 v-if="!ownProfile" @click="goToMessagePage" class="message">Send PM</h2>
     </div>
     <div v-if="showOptions">
       <div>
@@ -24,8 +25,8 @@
       <h3 v-if="isModerator" @click="removeModerator">Remove Moderator</h3>
     </div>
     </div>
-    <div v-if=isAdminProfile>
-      <h2 class="list">List of users</h2>
+    <div class="list" v-if=isAdminProfile>
+      <h2 class="list-item">List of users</h2>
       <UserList />
     </div>
   </div>
@@ -40,6 +41,9 @@ export default {
   },
   props: ["user"],
   computed: {
+    ownProfile() {
+      return this.$store.getters.currentUser.id === this.user.id;
+    },
     showOptions() {
       if (this.user.userRole === "admin") { return false; } // Admin pressed on own profile -> don't turn admin into a moderator/delete admin
       return (this.$store.getters.currentUser !== null && this.$store.getters.currentUser.userRole === "admin"); // only show if admin
@@ -93,6 +97,9 @@ export default {
       res = await res.json();
       console.log(res);
       if (res) { this.user.userRole = "member"; }
+    },
+    async addProfileImage() {
+      console.log("TODO: add user-image:");
     }
   }, 
 };
@@ -141,7 +148,7 @@ export default {
 img {
   width: 200px;
   height: 90%;
-  padding-bottom: 30px;
+  padding-bottom: 0px;
   padding-top: 10px;
   padding-left: 10px;
   margin-right: 10px;
@@ -156,7 +163,15 @@ img {
   color: white;
 }
 
+
 .list {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  height: 250px;
+  overflow: scroll;
+}
+
+.list-item {
   padding-top: 40px;
   margin-bottom: 5px;
 }
@@ -169,5 +184,16 @@ img {
   color: rgb(207, 207, 132);
 }
 
+.add {
+  margin: 0px;
+  margin-bottom: 15px;
+  text-align: center;
+  padding-bottom: 10px;
+  cursor: pointer;
+}
+
+.add:hover {
+  color: rgb(207, 207, 132);
+}
 
 </style>

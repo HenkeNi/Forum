@@ -29,7 +29,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;  
-  background-color: rgb(76, 76, 136);
+    background-color: rgb(54, 62, 65);
+
+  /* background-color: rgb(76, 76, 136); */
   border: 2px solid black;
   height: 300px;
   overflow-y: scroll;

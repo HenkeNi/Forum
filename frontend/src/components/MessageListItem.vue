@@ -2,7 +2,7 @@
   <div v-bind:class="{ own: isOwnMessage }" class="large-container">
     <div class="container">
       <h2>{{ message.text }}</h2>
-      <p>{{ this.author.username }}</p>
+      <p>writen by: {{ this.author.username }}</p>
     </div>
   </div>
 </template>
@@ -42,7 +42,8 @@ export default {
 }
 
 .container {
-  background-color: rgb(142, 160, 170);
+  /* background-color: rgb(142, 160, 170); */
+  background-color: rgb(77, 99, 109);
   width: 40vw;
   padding-left: 20px;
   padding-right: 20px;
@@ -57,7 +58,8 @@ export default {
 }
 
 .own .container {
-  background-color: rgb(150, 150, 211);
+  /* background-color: rgb(150, 150, 211); */
+  background-color: rgb(77, 77, 109);
   text-align: end;
 }
 

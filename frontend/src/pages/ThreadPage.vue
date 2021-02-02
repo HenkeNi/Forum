@@ -1,39 +1,47 @@
 <template>
   <div id="thread-page" class="thread-page">
-    <NewPostModal :threadId="this.thread.id" @reload="fetchPosts" @myEvent="modalClosed" v-model="newpostModalOpen" />
+    <NewPostModal
+      :threadId="this.thread.id"
+      @reload="fetchPosts"
+      @myEvent="modalClosed"
+      v-model="newpostModalOpen"
+    />
     <div class="page-head">
       <h1 v-bind:class="{ showclose: showCloseThread }" class="title">{{thread.title}}</h1>
-      <div class="block" v-if="showCloseThread">
-        <h2 @click="closeThread">Close Thread</h2>
+      <div class="admin-options" v-if="showCloseThread">
+        <div class="opt-close tab">
+          <h2 @click="closeThread">Close Thread</h2>
+        </div>
+        <div class="opt-remove tab">
+          <h2 @click="removeThread">Remove Thread</h2>
+        </div>
       </div>
     </div>
     <div class="closed" v-if="threadClosed">
       <h3 class="closed-text">Thread Closed!</h3>
     </div>
     <PostList class="list" :posts="this.posts" :thread="this.thread" />
-    
-  <div class="buttons">
-        <div @click="newPost" class="post" v-if="!threadClosed">
-    <!-- <div @click.prevent="scrollTo('#newpost')" class="post" v-if="!threadClosed"> -->
-      <h2>New Post</h2>
-    </div>
-    <!-- <div class="block" v-if="showCloseThread">
+
+    <div class="buttons">
+      <div @click="newPost" class="post" v-if="!threadClosed">
+        <!-- <div @click.prevent="scrollTo('#newpost')" class="post" v-if="!threadClosed"> -->
+        <h2>New Post</h2>
+      </div>
+      <!-- <div class="block" v-if="showCloseThread">
       <h2 @click="closeThread">Close Thread</h2>
-    </div> -->
-  </div>
-    
-    <div id="newpost" class="newpost" v-if="shouldPost">
-      <NewPost :threadId="this.thread.id"/>
+      </div>-->
     </div>
 
-    
+    <div id="newpost" class="newpost" v-if="shouldPost">
+      <NewPost :threadId="this.thread.id" />
+    </div>
   </div>
 </template>
 
 <script>
 import PostList from "../components/PostList.vue";
 import NewPostModal from "../components/NewPostModal.vue";
-import NewPost from '../components/NewPost.vue';
+import NewPost from "../components/NewPost.vue";
 
 export default {
   components: {
@@ -47,7 +55,7 @@ export default {
       posts: [],
       threadClosed: false,
       newpostModalOpen: false,
-      shouldPost: false,
+      shouldPost: false
     };
   },
   computed: {
@@ -83,9 +91,18 @@ export default {
       console.log(res);
       this.threadClosed = true;
     },
+    async removeThread() {
+      console.log("DELETING THREAD")
+      await fetch(`/rest/v1/threads/${this.thread.id}`, {
+        method: 'DELETE'
+      });
+      this.$router.push("/");
+    },
     newPost() {
-
-      if (!this.isLoggedIn) { alert("Login to post a message!"); return; } 
+      if (!this.isLoggedIn) {
+        alert("Login to post a message!");
+        return;
+      }
 
       this.shouldPost = !this.shouldPost;
       //this.scrollToEnd();
@@ -93,12 +110,10 @@ export default {
       // TODO : if no current user => return, show error message
 
       // TODO: Scrolla ner sidan...
-      // TODO: disable button. alt stäng 
+      // TODO: disable button. alt stäng
       // TODO: kolla att man är inloggad
 
-
       //window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
-
 
       //this.newpostModalOpen = !this.newpostModalOpen;
     },
@@ -107,16 +122,13 @@ export default {
       // if (el) {
       // el.scrollIntoView({behavior: 'smooth'});
       // }
-
-
       //let pageDiv = document.getElementById("thread-page");
-      //pageDiv.scrollTop = pageDiv.scrollHeight;    
-
-        //pageDiv.scrollIntoView();
+      //pageDiv.scrollTop = pageDiv.scrollHeight;
+      //pageDiv.scrollIntoView();
       //let container = document.getElementById("newpost");
       // container.scrollTop = container.scrollHeight;
       //container.scrollIntoView() - 200;
-    },
+    }
   },
   created() {
     this.fetchPosts();
@@ -124,11 +136,11 @@ export default {
   },
   mounted() {
     this.fetchPosts();
-  },
+  }
   // watch: {
   //   newpostModalOpen() {
   //     this.fetchPosts();
-  //   } 
+  //   }
   //}
 };
 </script>
@@ -145,9 +157,9 @@ export default {
 }
 
 .showclose {
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
   border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px; 
+  border-bottom-right-radius: 0px;
 }
 
 .page-head {
@@ -168,30 +180,50 @@ export default {
   word-wrap: break-word;
 }
 
-.block {
+.admin-options {
   position: relative;
   /* border-radius: 5px; */
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
+  /* border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px; */
   text-align: center;
   /* width: 60vw; */
+  /* width: 15vw; */
   margin-left: 10px;
-  width: 15vw;
-  border: 2px solid rgb(27, 27, 27);
+  /* width: 30vw; */
   border-top: 0px;
-  background-color: rgb(175, 25, 25);
-  cursor: pointer;
-  color: white;
+  color: black;
+
+  display: flex;
+  flex-direction: row;
 }
 
-.block:hover {
+.tab {
+  width: 15.5vw;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border: 2px solid rgb(27, 27, 27);
+  /* border-top: 0px; */
+  cursor: pointer;
+}
+.tab h2 {
+  margin: 0px;
+}
+
+.tab:hover {
   color: rgb(207, 207, 132);
   border: 2px solid rgb(207, 207, 132);
 }
 
+.opt-remove {
+  background-color: red;
+}
+
+.opt-close {
+  background-color: yellow;
+}
+
 .block h2 {
   margin: 0px;
-
 }
 
 .block h3 {
@@ -238,7 +270,4 @@ export default {
   color: rgb(207, 207, 132);
   border: 1px solid rgb(207, 207, 132);
 }
-
-
-
 </style>
