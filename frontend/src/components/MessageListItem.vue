@@ -33,7 +33,10 @@ export default {
     },
     async markAsRead() {
       // Make put to db and update unread to 0(?)
-      if (this.message.unread === 1 && this.message.senderId !== this.isOwnMessage) {
+      console.log("OWN MESSAGE: ", !this.isOwnMessage);
+
+      if (this.message.unread === 1 && !this.isOwnMessage) {
+        console.log("MARK AS READ!!");
         let res = await fetch(`/rest/v1/messages/${this.message.id}`, {
           method: 'PUT',
           headers: {
