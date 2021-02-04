@@ -41,8 +41,10 @@ export default {
         this.postMessage();
         this.fetchMessages();
       } else {
+        console.log("CONVERSATION WITH NEW USER");
         // TODO: FIX!!!
-        this.createConversation();
+        let id = await this.createConversation();
+        console.log("CONVERSATion started with id: ", id);
         await this.addUserToConversation(this.user.id);
         await this.addUserToConversation(this.$store.getters.currentUser.id);
         await this.postMessage();
@@ -66,16 +68,17 @@ export default {
 
     // If new conversation
     async createConversation() {
-      if (this.conversationsId != null) {
-        return;
-      }
-
+  
       let res = await fetch("/rest/v1/conversations", {
         method: "POST"
       });
       res = await res.json();
       this.conversationsID = res.lastInsertRowid;
-
+      
+      
+      return res.lastInsertRowid;
+      
+      
       //this.addUserToConversation(this.user.id, res.lastInsertRowid);
       //this.addUserToConversation(this.$store.getters.currentUser.id, res.lastInsertRowid);
       //this.postMessage(res.lastInsertRowid);
