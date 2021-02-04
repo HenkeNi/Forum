@@ -99,6 +99,8 @@ module.exports = {
 
     if (method === 'DELETE' && user.userRole) { return true; }
 
+    if (method === 'PUT' && user.userRole) { return true; }
+
     return false;
   }
 };
