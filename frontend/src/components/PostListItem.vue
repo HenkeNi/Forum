@@ -2,7 +2,8 @@
   <div v-bind:class="{ warning: isWarning }" class="post-container">
     <div @click="goToProfile" class="profile">
       <h3 class="author">{{author.username}}</h3>
-      <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
+      <img class="image" :src="author.imgUrl" />
+      <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
       <h4>{{ author.userRole }}</h4>
     </div>
     <div  class="main">
@@ -255,6 +256,10 @@ img {
 
 .main-text {
   margin-top: 0px;
+}
+
+.image {
+    object-fit: cover;
 }
 
 </style>
