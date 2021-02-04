@@ -2,22 +2,26 @@
   <div v-bind:class="{ evenRow: !isEvenRow }" class="thread-container" @click="goToThreadPage">
     <div class="container">
       <div class="left">
-      <div class="user-icon">
-        <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
-      </div>
-      <div class="user-info">
-        <div class="title-close">
-          <div class="thread-title">
-            <h2 class="title">{{thread.title}}</h2>
+        <div class="user-icon">
+                <span class="material-icons" style="font-size: 3.5em;">chat</span>
+
+          <!-- <img src="https://www.shareicon.net/data/512x512/2016/04/02/743328_chat_512x512.png"/> -->
+          <!-- <img :src="author.imgUrl" /> -->
+          <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
+        </div>
+        <div class="user-info">
+          <div class="title-close">
+            <div class="thread-title">
+              <h2 class="title">{{thread.title}}</h2>
+            </div>
+          </div>
+          <div class="thread-info">
+            <h4>
+              <span @click="goToProfile" class="author">{{author.username}} - {{ publishedDate }}</span>
+            </h4>
+            <!-- <h4>published at: <span class="published">{{publishedDate}}</span></h4> -->
           </div>
         </div>
-        <div class="thread-info">
-          <h4>
-            <span @click="goToProfile" class="author">{{author.username}} - {{ publishedDate }}</span>
-          </h4>
-          <!-- <h4>published at: <span class="published">{{publishedDate}}</span></h4> -->
-        </div>
-      </div>
       </div>
       <div class="closed">
         <h2 v-if="isClosed">closed</h2>
@@ -94,7 +98,7 @@ export default {
   },
   created() {
     this.fetchAuthor();
-    this.fetchPostAmount()
+    this.fetchPostAmount();
   }
 };
 </script>
@@ -137,7 +141,7 @@ export default {
 }
 
 .left {
-  display:flex;
+  display: flex;
 }
 
 .thread-container h4 {
@@ -148,14 +152,25 @@ export default {
   background-color: red;
 }*/
 
+.user-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px;
+
+}
+
 .user-icon img {
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: 70px;
+  /* height: 80px;
+  width: 80px; */
+  /* object-fit: cover; */
+  /* border-radius: 50%; */
 }
 
 .user-info {
-  width: 70%;
-
+  width: 70%; 
 }
 
 .title-close {
@@ -212,8 +227,6 @@ export default {
   padding-left: 40px;
 }
 
-
-
 .author {
   padding-left: 5px;
   color: rgb(231, 231, 31);
@@ -229,7 +242,7 @@ export default {
 
 .evenRow {
   background-color: rgb(160, 156, 156);
-  color: black;
+  color: rgb(32, 32, 32);
   /* box-shadow: 0.5px 0.5px 8px #000000; */
 }
 
@@ -238,12 +251,17 @@ export default {
   border: 1px solid rgb(207, 207, 132);
 }
 
+/* .evenRow .user-icon {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+} */
+
 .title {
   padding-top: 10px;
   width: 300px;
   margin: 0px;
   text-overflow: ellipsis;
-  overflow: hidden; 
+  overflow: hidden;
   white-space: nowrap;
 }
 
