@@ -71,6 +71,7 @@ export default {
       this.registerModalOpen = !this.registerModalOpen;
     },
     goToProfile() {
+      if (this.$route.path !== "/") { this.$router.push("/"); } // TODO: Temporary fix...
       this.$router.push({ name: 'ProfilePage', params: {user: this.currentUser} });
     },
     goToConversations() {
@@ -90,6 +91,8 @@ export default {
       if (res) {
         this.hideElements(false);
         this.$store.commit('setCurrentUser', null);
+
+        if (this.$route.path !== "/") { this.$router.push("/"); }
       }
     },
   },
