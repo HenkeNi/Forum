@@ -1,21 +1,29 @@
 <template>
   <div>
     <h1 class="title">{{ user.username }}'s conversations</h1>
+    <h2 @click="showUserSearch">Start new conversation</h2>
+    <div v-if="findUser">
+      <h1>Hello</h1>
+      <SearchUser />
+    </div>
     <ConversationsList :convIDs="convIDs"/>
   </div>
 </template>
 
 <script>
 import ConversationsList from '../components/ConversationsList';
+import SearchUser from '../components/SearchUser.vue';
 
 export default {
   props: ['user'],
   components: {
-    ConversationsList
+    ConversationsList,
+    SearchUser
   },
   data() {
     return {
       convIDs: [],
+      findUser: false,
     }
   },
   methods: {
@@ -25,6 +33,9 @@ export default {
       console.log(res);
       this.convIDs = res;
     },
+    showUserSearch() {
+      this.findUser = !this.findUser;
+    }
   },
   created() {
     this.fetchConversations();
