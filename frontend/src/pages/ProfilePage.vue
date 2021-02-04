@@ -2,8 +2,15 @@
   <div class="profile-page">
     <div class="license">
       <div class="image">
-        <img src="https://image.flaticon.com/icons/png/512/21/21294.png" />
-        <p v-if="ownProfile" @click="addProfileImage" class="add">+ add image</p>
+        <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
+        <img :src="user.imgUrl" />
+        <div v-if="ownProfile">
+          <p @click="showUrl = !showUrl" class="add">+ add image</p>
+          <div v-if="showUrl">
+            <input id="image-url" placeholder="image url.." type="text"/>
+            <button @click="addProfileImage">Update</button>
+          </div>
+        </div>
       </div>
       <div class="info">
         <h2 class="title">{{ user.username }}</h2>
@@ -12,7 +19,7 @@
       </div>
     </div>
     <div>
-      <h2 v-if="!ownProfile" @click="goToMessagePage" class="message">Send PM</h2>
+      <h2 v-if="!ownProfile && isLoggedIn" @click="goToMessagePage" class="message">Send PM</h2>
     </div>
     <div v-if="showOptions">
       <div>
@@ -40,9 +47,20 @@ export default {
     UserList
   },
   props: ["user"],
+  data() {
+    return {
+      showUrl: false,
+    }
+  },
   computed: {
     ownProfile() {
-      return this.$store.getters.currentUser.id === this.user.id;
+      if (this.$store.getters.currentUser !== null) {
+        return this.$store.getters.currentUser.id === this.user.id;
+      }
+      return false;
+    },
+    isLoggedIn() {
+      return this.$store.getters.currentUser !== null;
     },
     showOptions() {
       if (this.user.userRole === "admin") { return false; } // Admin pressed on own profile -> don't turn admin into a moderator/delete admin
@@ -100,8 +118,21 @@ export default {
     },
     async addProfileImage() {
       console.log("TODO: add user-image:");
+      let res = await fetch(`/rest/v1/users/${this.$store.getters.currentUser.id}`, {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ imgUrl: document.getElementById('image-url').value })
+      });
+      this.user.imgUrl = document.getElementById('image-url').value;
+      document.getElementById('image-url').value = ""; // clear field
+      console.log(res);
     }
   }, 
+  created() {
+    console.log(this.user);
+  },
 };
 </script>
 
@@ -152,6 +183,7 @@ img {
   padding-top: 10px;
   padding-left: 10px;
   margin-right: 10px;
+  object-fit: cover;
 }
 
 .license {
