@@ -30,10 +30,24 @@ export default {
       // TODO: PUT IN viex?
       let res = await fetch(`/rest/v1/users/${this.message.senderId}`);
       this.author = await res.json();
+    },
+    async markAsRead() {
+      // Make put to db and update unread to 0(?)
+      if (this.message.unread === 1 && this.message.senderId !== this.isOwnMessage) {
+        let res = await fetch(`/rest/v1/messages/${this.message.id}`, {
+          method: 'PUT',
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ unread: 0 })
+        });
+        console.log(await res.json());
+      }
     }
   },
   created() {
     this.fetchAuthor();
+    this.markAsRead();
   }
 };
 </script>

@@ -51,7 +51,7 @@ const getMessagesInConversation = async (req, res) => {
   console.log("GETTING MESSAGES");
   let statement = db.prepare(/*sql*/`
     SELECT
-      messages.id AS id, senderId, text, send_date
+      messages.id AS id, senderId, text, send_date, unread
     FROM
       messages,
       conversations
@@ -82,7 +82,6 @@ const getConversations = async (req, res) => {
 }
 
 
-
 //***********************************
 
 
@@ -91,6 +90,11 @@ const getConversations = async (req, res) => {
 
 
 
+const searchForUser = async (req, res) => {
+  let statement = db.prepare(/*sql*/"SELECT * FROM users WHERE username LIKE '" + req.params.name + "%'");
+  //let statement = db.prepare(/*sql*/"SELECT * FROM users WHERE username LIKE 'bat%'");
+  res.json(statement.all({ name: req.params.name }));
+}
 
 
 
@@ -143,7 +147,7 @@ const getUserById = async (req, res) => {
 };
 
 
-// Found with better solution
+// Found better solution....
 const getNumberOfThreadsInSubforum = async (req, res) => {
   let statement = db.prepare(/*sql*/`
         SELECT COUNT(subforumId)
@@ -161,6 +165,28 @@ const getNumberOfPostsInThread = async (req, res) => {
   `);
   res.json(statement.all({ id: req.params.threadId }));
 }
+
+const getNumberOfUnreadMessages = async (req, res) => {
+
+  // console.log("User int here!=!=!=!: ", req);
+  // console.log("or here", res);
+  console.log("session user", req.session.user.id);
+
+  let statement = db.prepare(/*sql*/"SELECT COUNT(unread) FROM messages WHERE messages.conversationId = $id AND messages.unread = 1 AND NOT messages.senderId = " + req.session.user.id);
+    
+  res.json(statement.all({ id: req.params.id }));
+}
+// let statement = db.prepare(/*sql*/`
+//     SELECT COUNT(unread)
+//     FROM messages
+//     WHERE 
+//       messages.conversationId = $id
+//     AND
+//       messages.unread = 1 
+//     AND 
+//       NOT messages.senderId = ${req.session.user.id}
+//   `);
+
 
 
 
@@ -263,6 +289,20 @@ const updateUser = async (req, res) => {
   res.json(statement.run(req.body));
 }
 
+const updateMessage = async (req, res) => {
+  console.log(req.body);
+
+  req.body.id = req.params.id;
+
+  console.log("Update messages");
+  let statement = db.prepare(/*sql*/`
+    UPDATE messages
+    SET ${Object.keys(req.body).map(x => x + ' = $' + x)}
+    WHERE id = $id
+  `);
+  res.json(statement.run(req.body));
+}
+
 
 const updatePost = async (req, res) => {
   console.log("UPDATING POST");
@@ -304,8 +344,11 @@ module.exports = {
   getUsersInConversation,
   createMessage,
   getMessagesInConversation,
-  getConversations
+  getConversations,
+  searchForUser,
 
+  updateMessage,
+  getNumberOfUnreadMessages,
 
 
 }

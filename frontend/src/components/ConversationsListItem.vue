@@ -1,5 +1,10 @@
 <template>
   <div @click="goToMessagePage" class="container">
+    <div class="unread">
+      <h1 v-if="unreadMessages != 0">{{unreadMessages}}</h1>
+    </div>
+    <div class="main">
+
     <h2 
     v-for="user in this.otherUser"
     :key="user.userId"
@@ -7,6 +12,7 @@
     >{{ user.username }}</h2>
     <div class="icon-img">
       <span class="material-icons" style="font-size: 8em;">chat</span>
+    </div>
     </div>
   </div>
 </template>
@@ -17,6 +23,7 @@ export default {
   data() {
     return {
       otherUser: Object,
+      unreadMessages: 0,
     }
   },
   computed: {
@@ -38,9 +45,16 @@ export default {
       let user = await this.fetchFullAuthor();
       this.$router.push({ name: 'MessagePage', params: {user: user} });
     },
+    async fetchNumberOfNewMessages() {
+      let res = await fetch(`/rest/v1/messages/count/${this.convID.convID}`);
+      res = await res.json()
+      this.unreadMessages = res[0]["COUNT(unread)"];
+      // console.log("UNREAD Messages: ", res[0]["COUNT(unread)"]);
+    }
   },
   created() {
     this.fetchUsersInConversations();
+    this.fetchNumberOfNewMessages();
   },
 }
 </script>
@@ -62,6 +76,33 @@ export default {
   border: 2px solid rgb(207, 207, 132);
 }
 
+.conversation-item {
+  margin: 2px;  
+}
+
+.main {
+  position: relative;
+  top: 10px;
+
+}
+
+.unread {
+  display: flex;
+  justify-content: flex-end;
+  position: relative; 
+  top: -15px;
+  right: -15px; 
+  padding-right: 0px;
+}
+
+
+.unread h1 {
+  border-radius: 50%;
+  margin: 0;
+  background-color: red;
+  text-align: center;
+  width: 20%;
+}
 
 
 

@@ -30,7 +30,7 @@ router.post("/posts", restController.createPost);
 router.put("/threads/:threadId", restController.closeThread);
 router.put("/users/:id", restController.updateUser);
 router.put("/posts/:id", restController.updatePost);
-
+router.put("/messages/:id", restController.updateMessage);
 
 // DELETE
 router.delete("/posts/:id", restController.deletePost);
@@ -40,6 +40,10 @@ router.delete("/threads/:id", restController.deleteThreadById);
 // GET Count
 router.get("/threads/count/:subforumId", restController.getNumberOfThreadsInSubforum);
 router.get("/posts/count/:threadId", restController.getNumberOfPostsInThread);
+router.get("/messages/count/:id", restController.getNumberOfUnreadMessages);
+
+// Get search
+router.get("/users/search/:name", restController.searchForUser);
 
 
 module.exports = router;
