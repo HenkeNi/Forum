@@ -82,6 +82,16 @@ const getConversations = async (req, res) => {
 }
 
 
+const getQuoteForPost = async (req, res) => {
+  console.log("GETTING QUOTES FOR POST");
+  let statement = db.prepare(/*sql*/`
+    SELECT * FROM quotes
+    WHERE quotes.postId = $id
+  `);
+  res.json(statement.all({ id: req.params.id }));
+}
+
+
 //***********************************
 
 
@@ -212,6 +222,15 @@ const createPost = async (req, res) => {
   res.json(statement.run(req.body));
 }
 
+const createQuote = async (req, res) => {
+  console.log("Posting new quote");
+  let statement = db.prepare(/*sql*/`
+    INSERT INTO quotes (message, userId, postId, published_time, isEdited)
+    VALUES ($message, $userId, $postId, $published_time, $isEdited)
+  `);
+    res.json(statement.run(req.body));
+}
+
 
 
 const closeThread = async (req, res) => {
@@ -328,11 +347,13 @@ module.exports = {
   getThreadPosts,
   createThread,
   createPost,
+  createQuote,
   closeThread,
   deletePost,
   deleteUser,
   updateUser,
   updatePost,
+  getQuoteForPost,
 
   getNumberOfThreadsInSubforum,
   getNumberOfPostsInThread,

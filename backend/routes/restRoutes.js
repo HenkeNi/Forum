@@ -18,11 +18,12 @@ router.get('/users', restController.getAllUsers);
 router.get('/threads/:subforumId', restController.getAllSubforumThreads);
 router.get('/users/:id', restController.getUserById);
 router.get('/posts/:threadId', restController.getThreadPosts);
-
+router.get('/quotes/:id', restController.getQuoteForPost);
 
 // POST
 router.post("/threads", restController.createThread);
 router.post("/posts", restController.createPost);
+router.post("/quotes", restController.createQuote);
 //router.post('/threads/:subforumId', restController.createThread);
 
 

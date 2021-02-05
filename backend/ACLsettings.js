@@ -102,5 +102,15 @@ module.exports = {
     if (method === 'PUT' && user.userRole) { return true; }
 
     return false;
+  },
+
+  quotes(user, method, req) {
+    if (method === 'POST' && user.userRole) { return true; }
+
+    if (method === 'GET' && user.userRole) { return true; }
+
+    return false;
   }
+
+
 };
