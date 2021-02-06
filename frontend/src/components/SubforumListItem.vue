@@ -45,6 +45,8 @@ export default {
 .subforum-container {
   margin-bottom: 30px;
   width: 55vw;
+  /* min-width:  */
+
   border: 1px solid rgb(214, 214, 214);
 
 
@@ -102,7 +104,9 @@ export default {
 
 .threads-title {
   margin: 0px;
-  font-size: 1em;
+  /* font-size: 1em; */
+  font-size: 1vw;
+
 
 }
 
