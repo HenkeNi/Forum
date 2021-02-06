@@ -19,6 +19,8 @@ export default {
 .home-page {
   margin-top: 0px;
   background-color: gray;
+  display: flex; 
+  justify-content: center;
+  flex-direction: column;
 }
-
 </style>
