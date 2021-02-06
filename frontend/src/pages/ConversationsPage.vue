@@ -1,9 +1,10 @@
 <template>
   <div>
     <h1 class="title">{{ user.username }}'s conversations</h1>
-    <h2 @click="showUserSearch">Start new conversation</h2>
+    <div class="find-container">
+      <h2 class="find-btn" @click="showUserSearch">Find user</h2>
+    </div>
     <div v-if="findUser">
-      <h1>Hello</h1>
       <SearchUser />
     </div>
     <ConversationsList :convIDs="convIDs"/>
@@ -49,6 +50,11 @@ export default {
   color: white;
   text-align: center;
   text-decoration: underline;
+}
+
+.find-container {
+  display: flex;
+  justify-content: center;
 }
 
 
