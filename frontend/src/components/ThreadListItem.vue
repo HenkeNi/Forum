@@ -3,8 +3,8 @@
     <div class="container">
       <div class="left">
         <div class="user-icon">
-                <span class="material-icons" style="font-size: 3.5em;">chat</span>
-
+                <!-- <span class="material-icons" style="font-size: 3.5em;">chat</span> -->
+            <span class="material-icons" style="font-size: 3.4em">folder</span>
           <!-- <img src="https://www.shareicon.net/data/512x512/2016/04/02/743328_chat_512x512.png"/> -->
           <!-- <img :src="author.imgUrl" /> -->
           <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
