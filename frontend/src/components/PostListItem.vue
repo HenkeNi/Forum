@@ -6,26 +6,36 @@
       <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
       <h4>{{ author.userRole }}</h4>
     </div>
-    <div  class="main">
-    <div class="top">
-      <div class="published">
-        <h3>{{publishedDate}}</h3>
-      </div>
-      <div>
-        <h2 v-if="isWarning">Warning!</h2>
-      </div>
-      <div class="options">
-      <div v-if="isEditable" @click="edit" class="edit">
-        <h3>Edit</h3>
-      </div>
-      <div class="remove">
-      <div v-if="isAuthorized" @click="remove">
-        <h3>remove</h3>
-      </div>
-      </div>
-    </div>
+    <div class="main">
+      <div class="top">
+        <div class="published">
+          <h3>{{publishedDate}}</h3>
         </div>
+        <div>
+          <h2 v-if="isWarning">Warning!</h2>
+        </div>
+        <div class="options">
+          <div class="quote" @click="quoteUser">
+            <h2>quote</h2>
+          </div>
+          <div v-if="isEditable" @click="edit" class="edit">
+            <h3>Edit</h3>
+          </div>
+          <div class="remove">
+            <div v-if="isAuthorized" @click="remove">
+              <h3>remove</h3>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="message">
+        <div class="quote-container" v-if="quote !== null">
+          <div class="quote-header">
+            <h4>at dd-mm-yy at hh:mm {{this.quote.username}} wrote:</h4>
+          </div>
+          <h3>{{this.quote.message}}</h3>
+        </div>
+
         <div v-if="shouldEdit">
           <EditPost :post="post" />
         </div>
@@ -35,24 +45,23 @@
         </div>
       </div>
     </div>
-    
-
   </div>
 </template>
 
 <script>
-import EditPost from '../components/EditPost.vue';
+import EditPost from "../components/EditPost.vue";
 
 export default {
   components: {
     EditPost
   },
-  props: ['post', 'thread'],
+  props: ["post", "thread"],
   data() {
     return {
       author: Object,
       shouldEdit: false,
-    }
+      quote: null
+    };
   },
   computed: {
     isWarning() {
@@ -62,16 +71,21 @@ export default {
       let user = this.$store.getters.currentUser;
 
       if (user) {
-        return user.userRole === 'admin' || user.userRole === 'moderator';
+        return user.userRole === "admin" || user.userRole === "moderator";
       }
       return false;
     },
     isEditable() {
-      return this.thread.active === 1 && (this.isAuthorized || (this.$store.getters.currentUser !== null && this.$store.getters.currentUser.id === this.author.id));
+      return (
+        this.thread.active === 1 &&
+        (this.isAuthorized ||
+          (this.$store.getters.currentUser !== null &&
+            this.$store.getters.currentUser.id === this.author.id))
+      );
 
       // let user = this.$store.getters.currentUser;
       // if (user) {
-      //   return user.userRole === 'admin' || user.userRole === 'moderator' || user.id === this.author.id; 
+      //   return user.userRole === 'admin' || user.userRole === 'moderator' || user.id === this.author.id;
       // }
       // return false;
     },
@@ -84,15 +98,44 @@ export default {
       let currentDate = new Date();
 
       if (publishedDate.getDate() < currentDate.getDate() - 7) {
-        let months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        return months[publishedDate.getMonth()] + "  " + publishedDate.getDay() + ", " + publishedDate.getFullYear();
+        let months = [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "June",
+          "July",
+          "Aug",
+          "Sept",
+          "Oct",
+          "Nov",
+          "Dec"
+        ];
+        return (
+          months[publishedDate.getMonth()] +
+          "  " +
+          publishedDate.getDay() +
+          ", " +
+          publishedDate.getFullYear()
+        );
       }
 
       let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-      let day = publishedDate.getDate() === currentDate.getDate() ? "Today" : 
-      publishedDate.getDate() === currentDate.getDate() - 1 ? "Yesterday" : days[publishedDate.getDay()];
+      let day =
+        publishedDate.getDate() === currentDate.getDate()
+          ? "Today"
+          : publishedDate.getDate() === currentDate.getDate() - 1
+          ? "Yesterday"
+          : days[publishedDate.getDay()];
 
-      return day + " at " + publishedDate.getHours() + ":" + publishedDate.getMinutes();
+      return (
+        day +
+        " at " +
+        publishedDate.getHours() +
+        ":" +
+        publishedDate.getMinutes()
+      );
     }
   },
   methods: {
@@ -102,7 +145,7 @@ export default {
     },
     async remove() {
       let res = await fetch(`/rest/v1/posts/${this.post.id}`, {
-        method: 'delete'
+        method: "delete"
       });
       res = await res.json();
       console.log(res);
@@ -112,17 +155,33 @@ export default {
     async edit() {
       this.shouldEdit = !this.shouldEdit;
     },
+    async getPossibleQuote() {
+      let res = await fetch(`/rest/v1/quotes/${this.post.id}`);
+      res = await res.json();
+
+      if (res[0]) {
+        this.quote = res[0];
+      }
+    },
     fetchPostsInParent() {
       this.$parent.reload();
     },
     goToProfile() {
-      this.$router.push({ name: 'ProfilePage', params: {user: this.author} });
+      this.$router.push({ name: "ProfilePage", params: { user: this.author } });
+    },
+    quoteUser() {
+      if (this.$store.getters.currentUser === null) {
+        alert("Login to quote a message!");
+        return;
+      }
+      this.$parent.passQuotedPost(this.post);
     }
   },
   created() {
     this.fetchAuthor();
+    this.getPossibleQuote();
   }
-}
+};
 </script>
 
 
@@ -148,8 +207,6 @@ export default {
   justify-content: space-between;
 }
 
-
-
 .profile {
   margin: 0px;
   cursor: pointer;
@@ -162,7 +219,6 @@ export default {
 
 .profile h4 {
   margin: 0px;
-
 }
 
 .profile:hover {
@@ -174,12 +230,10 @@ export default {
   padding-top: 5px;
 }
 
-
 img {
   width: 80px;
   height: 80px;
 }
-
 
 .main {
   padding-left: 15px;
@@ -208,7 +262,7 @@ img {
 }
 
 .posted-by {
-    color: rgb(231, 231, 31);
+  color: rgb(231, 231, 31);
 }
 
 .warning {
@@ -259,7 +313,33 @@ img {
 }
 
 .image {
-    object-fit: cover;
+  object-fit: cover;
+}
+
+.quote {
+  cursor: pointer;
+}
+.quote h2 {
+  border: 2px solid black;
+  border-radius: 5px;
+  background-color: rgb(90, 88, 88);
+  margin-right: 5px;
+}
+
+.quote h2:hover {
+  color: rgb(207, 207, 132);
+  border: 2px solid rgb(207, 207, 132);
+}
+
+
+
+.quote-container {
+    background-color: rgb(122, 103, 110);
+}
+
+.quote-header {
+  background-color: rgb(56, 37, 44);
+
 }
 
 </style>

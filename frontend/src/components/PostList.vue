@@ -20,6 +20,9 @@ export default {
   methods: {
     reload() {
       this.$parent.fetchPosts();
+    },
+    passQuotedPost(post) {
+      this.$parent.setQuotedPost(post);
     }
   },
 }

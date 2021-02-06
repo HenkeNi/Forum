@@ -33,7 +33,7 @@
     </div>
 
     <div id="newpost" class="newpost" v-if="shouldPost">
-      <NewPost :threadId="this.thread.id" />
+      <NewPost :quote="quotedPost" :threadId="this.thread.id" />
     </div>
   </div>
 </template>
@@ -55,7 +55,8 @@ export default {
       posts: [],
       threadClosed: false,
       newpostModalOpen: false,
-      shouldPost: false
+      shouldPost: false,
+      quotedPost: null 
     };
   },
   computed: {
@@ -97,6 +98,10 @@ export default {
         method: 'DELETE'
       });
       this.$router.push("/");
+    },
+    setQuotedPost(post) {
+      this.quotedPost = post;
+     this.shouldPost = true;
     },
     newPost() {
       if (!this.isLoggedIn) {
