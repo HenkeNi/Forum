@@ -1,0 +1,11 @@
+[Thoughts]
+
+* instead of having quotes as its own table; save quoted message in post.message using [quote][/quote] tags?
+  ex: [quote]This is quoted from another user[/quote]
+  - Bit harder to work with
+  - Harder to get data like when it was posted...
+  - not as reponsive (quote tabel will be updated if foreign keys gets updated, where hardcoded text will not)
+  + Saves request to db...
+
+
+  
