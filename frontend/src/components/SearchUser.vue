@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <input id="search" type="text" />
-    <button @click="getSearchedUser">Search</button>
-    <div>
+  <div class="container">
+    <div class="search">
+      <input placeholder="Enter username" id="search" type="text" />
+      <button @click="getSearchedUser">Search</button>
+    </div>
+    <div class="content">
       <div v-if="searchedUsers != null">
-        <h2>found users</h2>
-        <div v-for="user in searchedUsers" :key="user.id">
-        <h2 @click="goToMessagePage(user)">{{user.username}}</h2>
-      </div>
+        <div class="list-item" @click="goToMessagePage(user)" v-for="user in searchedUsers" :key="user.id" >
+          <h3>{{user.username}}</h3>
+        </div>
       </div>
       
       <!-- <UserList /> -->
@@ -44,5 +45,28 @@ export default {
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  width: 30vw;
+  margin: auto;
+}
+
+.search {
+  width: 15vw;
+  margin: auto;
+}
+
+.list-item {
+  background-color: rgb(26, 33, 36);
+  border: 2px solid white;
+  color: white;
+  /* height: 5vh; */
+}
+.list-item h3 {
+  margin: 3px;
+}
 
 </style>
