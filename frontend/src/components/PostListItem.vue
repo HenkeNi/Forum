@@ -15,7 +15,7 @@
           <h2 v-if="isWarning">Warning!</h2>
         </div>
         <div class="options">
-          <div class="quote" @click="quoteUser">
+          <div v-if="isLoggedIn" class="quote" @click="quoteUser">
             <h2>quote</h2>
           </div>
           <div v-if="isEditable" @click="edit" class="edit">
@@ -29,12 +29,16 @@
         </div>
       </div>
       <div class="message">
-        <div class="quote-container" v-if="quote !== null">
-          <div class="quote-header">
-            <h4>at dd-mm-yy at hh:mm {{this.quote.username}} wrote:</h4>
+        <div v-if="this.quote" >
+          <QuoteItem :quote="quote" />
+        </div>
+
+        <!-- <div class="quote-container" v-if="quote !== null">
+          <div v-if="quotedAuthor" class="quote-header">
+            <h4>at dd-mm-yy at hh:mm {{this.quotedAuthor.username}} wrote:</h4>
           </div>
           <h3>{{this.quote.message}}</h3>
-        </div>
+        </div> -->
 
         <div v-if="shouldEdit">
           <EditPost :post="post" />
@@ -50,17 +54,21 @@
 
 <script>
 import EditPost from "../components/EditPost.vue";
+import QuoteItem from "../components/QuoteItem.vue";
 
 export default {
   components: {
-    EditPost
+    EditPost,
+    QuoteItem
   },
   props: ["post", "thread"],
   data() {
     return {
+      // author: Object,
       author: Object,
       shouldEdit: false,
-      quote: null
+      quote: null,
+      // quotedAuthor: null
     };
   },
   computed: {
@@ -74,6 +82,9 @@ export default {
         return user.userRole === "admin" || user.userRole === "moderator";
       }
       return false;
+    },
+    isLoggedIn() {
+      return this.$store.getters.currentUser !== null;
     },
     isEditable() {
       return (
@@ -139,8 +150,15 @@ export default {
     }
   },
   methods: {
-    async fetchAuthor() {
+    // async fetchQuotedAuthor(quote) {
+    //   let res = await fetch(`/rest/v1/users/${quote.userId}`); // TODO: FIX!!!!
+    //   res = await res.json();
+    //   console.log(res);
+    //   this.quotedAuthor = res;
+    // },
+     async fetchAuthor() {
       let res = await fetch(`/rest/v1/users/${this.post.userId}`); // TODO: FIX!!!!
+    
       this.author = await res.json();
     },
     async remove() {
@@ -161,6 +179,7 @@ export default {
 
       if (res[0]) {
         this.quote = res[0];
+        //this.fetchQuotedAuthor(res[0]);
       }
     },
     fetchPostsInParent() {
@@ -180,6 +199,7 @@ export default {
   created() {
     this.fetchAuthor();
     this.getPossibleQuote();
+    // this.fetchQuotedAuthor();    
   }
 };
 </script>
@@ -333,13 +353,6 @@ img {
 
 
 
-.quote-container {
-    background-color: rgb(122, 103, 110);
-}
 
-.quote-header {
-  background-color: rgb(56, 37, 44);
-
-}
 
 </style>
