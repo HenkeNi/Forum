@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <h2>MESSAGES:</h2>
+    <h2>Conversation:</h2>
     <MessageListItem 
       v-for="message in messages"
       :key="message.id"

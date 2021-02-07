@@ -4,6 +4,7 @@
       <div class="container">
         <h2>{{ message.text }}</h2>
         <p>writen by: {{ this.author.username }}</p>
+        <p v-if="isOwnMessage && message.unread === 1" class="read-status">(unread)</p>
       </div>
       <div class="bottom">
         <div class="arrow"></div>
@@ -33,10 +34,7 @@ export default {
     },
     async markAsRead() {
       // Make put to db and update unread to 0(?)
-      console.log("OWN MESSAGE: ", !this.isOwnMessage);
-
       if (this.message.unread === 1 && !this.isOwnMessage) {
-        console.log("MARK AS READ!!");
         let res = await fetch(`/rest/v1/messages/${this.message.id}`, {
           method: 'PUT',
           headers: {
@@ -51,6 +49,7 @@ export default {
   created() {
     this.fetchAuthor();
     this.markAsRead();
+    console.log(this.message);
   }
 };
 </script>
@@ -113,6 +112,10 @@ export default {
 .own .bottom {
   display: flex;
   justify-content: flex-end;
+}
+
+.read-status {
+  font-size: 0.8em;
 }
 
 </style>
