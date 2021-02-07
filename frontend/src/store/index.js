@@ -34,8 +34,7 @@ export default new Vuex.Store({
       commit("setCurrentUser", user);
       //this.setCurrentUser(user);
 
-      console.log("Fetched current user: ", user);
-
+ 
      // user !== null ? commit('setIsLoggedIn', true) : commit('setIsLoggedIn', false);
      // console.log(this.state.isLoggedIn);
     },
