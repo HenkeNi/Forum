@@ -100,8 +100,11 @@ export default {
       this.$router.push("/");
     },
     setQuotedPost(post) {
-      this.quotedPost = post;
-     this.shouldPost = true;
+      if (this.threadClosed === false) {
+        this.quotedPost = post;
+        this.shouldPost = true;
+      } 
+      // TODO: else print thread is closed
     },
     newPost() {
       if (!this.isLoggedIn) {
