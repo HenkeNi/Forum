@@ -107,7 +107,7 @@ module.exports = {
   quotes(user, method, req) {
     if (method === 'POST' && user.userRole) { return true; }
 
-    if (method === 'GET' && user.userRole) { return true; }
+    if (method === 'GET') { return true; }
 
     return false;
   }
