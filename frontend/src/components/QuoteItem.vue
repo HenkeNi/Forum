@@ -3,6 +3,7 @@
     <h4 class="quote-header">at dd-mm-yy at hh:mm {{this.quotedAuthor.username}} wrote:</h4>
     <div>
       <h3>{{this.quote.message}}</h3>
+      <h4 v-if="this.quote.isEdited === 1">(edited)</h4>
     </div>
   </div>
 </template>

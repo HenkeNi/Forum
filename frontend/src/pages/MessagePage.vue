@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div class="send">
+      <h2>Conversation with {{user.username}}</h2>
       <textarea
         class="textarea"
         id="post-message"
@@ -195,6 +196,8 @@ export default {
   display: flex;
   justify-content: center;
 }
+
+
 
 .textarea {
   color: white;
