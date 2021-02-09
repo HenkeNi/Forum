@@ -2,7 +2,8 @@
   <div v-bind:class="{ own: isOwnMessage }" class="large-container">
     <div>
       <div class="container">
-        <h2>{{ message.text }}</h2>
+        <h3 v-if="isOwnMessage" @click="deletePost" class="delete">X</h3>
+        <h2 class="message">{{ message.text }}</h2>
         <p>writen by: {{ this.author.username }}</p>
         <p v-if="isOwnMessage && message.unread === 1" class="read-status">(unread)</p>
       </div>
@@ -44,12 +45,17 @@ export default {
         });
         console.log(await res.json());
       }
+    },
+    async deletePost() {
+      await fetch(`/rest/v1/messages/${this.message.id}`, {
+        method: 'DELETE',
+      });
+      this.$parent.fetchMessages();
     }
   },
   created() {
     this.fetchAuthor();
     this.markAsRead();
-    console.log(this.message);
   }
 };
 </script>
@@ -84,6 +90,15 @@ export default {
   /* background-color: rgb(150, 150, 211); */
   background-color: rgb(77, 77, 109);
   text-align: end;
+}
+
+.delete {
+  margin: 5px;
+  cursor: pointer;
+}
+
+.message {
+  margin-top: 5px;
 }
 
 .arrow {

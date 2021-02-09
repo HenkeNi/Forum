@@ -12,7 +12,7 @@ router.get('/messages/:id', restController.getMessagesInConversation);
 router.get('/conversations/:id', restController.getConversations);
 router.get('/messages/all/:id', restController.getTotalNumberOfNewMessages);
 router.delete('/conversationsXusers', restController.deleteConversationXusers);
-
+router.delete('/messages/:id', restController.deleteMessage);
 
 // Get 
 router.get('/subforums', restController.getAllSubforums);

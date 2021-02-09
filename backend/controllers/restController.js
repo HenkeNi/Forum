@@ -93,9 +93,6 @@ const getQuoteForPost = async (req, res) => {
 
 // deleteUserFromConversation
 const deleteConversationXusers = async (req, res) => {
-  console.log("DELETING CONVErXUSER");
-  //req.body.userId = req.session.user.id;
-
   let statement = db.prepare(/*sql*/`
     DELETE FROM 
       conversationsXusers
@@ -108,6 +105,11 @@ const deleteConversationXusers = async (req, res) => {
   res.json(statement.run(req.body));
 }
 
+const deleteMessage = async (req, res) => {
+  let statement = db.prepare(/*sql*/"DELETE FROM messages WHERE messages.id = " + req.params.id + " AND messages.senderId = " + req.session.user.id);
+    
+  res.json(statement.run());
+}
 
 //***********************************
 
@@ -418,5 +420,5 @@ module.exports = {
   updateMessage,
   getNumberOfUnreadMessages,
 
-
+deleteMessage
 }

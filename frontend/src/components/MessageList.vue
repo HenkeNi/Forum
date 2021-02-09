@@ -17,7 +17,11 @@ export default {
     MessageListItem
   },
   props: ['messages'],
-  
+  methods: {
+    fetchMessages() {
+      this.$parent.fetchMessages();
+    }
+  },
 }
 </script>
 
