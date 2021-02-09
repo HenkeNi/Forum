@@ -1,23 +1,6 @@
 <template>
   <div class="profile-page">
-    <div class="license">
-      <div class="image">
-        <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
-        <img :src="user.imgUrl" />
-        <div v-if="ownProfile">
-          <p @click="showUrl = !showUrl" class="add">+ add image</p>
-          <div v-if="showUrl">
-            <input id="image-url" placeholder="image url.." type="text"/>
-            <button @click="addProfileImage">Update</button>
-          </div>
-        </div>
-      </div>
-      <div class="info">
-        <h2 class="title">{{ user.username }}</h2>
-        <h3>email: {{user.email }}</h3>
-        <h3>role: {{user.userRole}}</h3>
-      </div>
-    </div>
+    <License :user="user"/>
     <div>
       <h2 v-if="!ownProfile && isLoggedIn" @click="goToMessagePage" class="message">Send PM</h2>
     </div>
@@ -41,17 +24,14 @@
 
 <script>
 import UserList from '../components/UserList.vue';
+import License from '../components/License.vue';
 
 export default {
   components: {
-    UserList
+    UserList,
+    License
   },
   props: ["user"],
-  data() {
-    return {
-      showUrl: false,
-    }
-  },
   computed: {
     ownProfile() {
       if (this.$store.getters.currentUser !== null) {
@@ -116,23 +96,8 @@ export default {
       console.log(res);
       if (res) { this.user.userRole = "member"; }
     },
-    async addProfileImage() {
-      console.log("TODO: add user-image:");
-      let res = await fetch(`/rest/v1/users/${this.$store.getters.currentUser.id}`, {
-        method: 'PUT',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ imgUrl: document.getElementById('image-url').value })
-      });
-      this.user.imgUrl = document.getElementById('image-url').value;
-      document.getElementById('image-url').value = ""; // clear field
-      console.log(res);
-    }
+    
   }, 
-  created() {
-    console.log(this.user);
-  },
 };
 </script>
 
@@ -145,20 +110,7 @@ export default {
   align-items: center;
 }
 
-.title {
-  padding-top: 40px;
-  margin: 0px;
-  text-align: start;
-  text-decoration: underline;
-}
 
-.info {
-  text-align: start;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-right: 10px;
-}
 
 .delete {
   cursor: pointer;
@@ -176,24 +128,6 @@ export default {
   border: solid black 2px;
 }
 
-img {
-  width: 200px;
-  height: 90%;
-  padding-bottom: 0px;
-  padding-top: 10px;
-  padding-left: 10px;
-  margin-right: 10px;
-  object-fit: cover;
-}
-
-.license {
-  border: solid black 2px;
-  width: 50vw;
-  margin-top: 30px;
-  display: flex;
-  background-color: rgb(26, 33, 36);
-  color: white;
-}
 
 
 .list {
@@ -218,7 +152,7 @@ img {
 
 .add {
   margin: 0px;
-  margin-bottom: 15px;
+  /* margin-bottom: 15px; */
   text-align: center;
   padding-bottom: 10px;
   cursor: pointer;
