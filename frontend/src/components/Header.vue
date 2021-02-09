@@ -8,7 +8,12 @@
       <div class="overlay">
         <h1 class="title" @click="backToHomePage">Superhero Forum</h1>
         <div class="menu-options"> 
-          <h3 class="messages" @click="goToConversations" v-if="currentUser">Messages</h3>
+          <div class="message-items">
+            <div class="message-new-item">
+              <h4 class="new-messages" v-if="newMessages && isLoggedIn">New</h4>
+            </div>
+            <h3 class="messages" @click="goToConversations" v-if="currentUser">Messages</h3>
+          </div>
           <h3 @click="goToProfile">{{currentUser.username}}</h3>
           <div class="sign-in" id="sign-in-options">
             <h3 @click="showSignInModal">Login /</h3>
@@ -35,6 +40,7 @@ export default {
     return {
       signInModalOpen: false,
       registerModalOpen: false,
+      newMessages: false,
     }
   },
   computed: {
@@ -44,6 +50,9 @@ export default {
     },*/
     currentUser() {
       return this.$store.getters.currentUser || "";
+    },
+    isLoggedIn() {
+      return this.$store.getters.currentUser !== null;
     }
   },
   methods: {
@@ -95,9 +104,18 @@ export default {
         if (this.$route.path !== "/") { this.$router.push("/"); }
       }
     },
+    async getNewMessagesCount() {
+      if (!this.currentUser) { return; }      
+      let res = await fetch(`/rest/v1/messages/all/${this.currentUser.id}`);
+      res = await res.json();
+      if (res[0]["COUNT(unread)"] > 0) {
+        this.newMessages = true;
+      }
+    }
   },
   mounted() {
     this.hideElements(false);
+    this.getNewMessagesCount();
   },
   watch: {
     /*isLoggedIn() {
@@ -105,6 +123,10 @@ export default {
     },*/
     currentUser() {
       this.$store.getters.currentUser === null ? this.hideElements(false) : this.hideElements(true);
+
+      if (this.$store.getters.currentUser !== null) {
+        this.getNewMessagesCount();
+      }
     },
   }
 }
@@ -187,6 +209,12 @@ h3:hover {
   /* justify-content: space-around; */
 }
 
+.new-messages {
+  background-color: red;
+  border-radius: 50%;
+  padding: 2px; 
+}
+
 .sign-in h3 {
   margin: 0px;
   display: inline-block;
@@ -214,6 +242,20 @@ h3:hover {
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   padding: 5px; */
+}
+
+.message-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-new-item {
+  display: flex;
+  justify-content: flex-end;
+}
+.message-new-item h4 {
+  margin: 0px;
+  margin-bottom: -4px;
 }
 
 </style>
