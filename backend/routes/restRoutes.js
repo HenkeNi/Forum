@@ -10,6 +10,8 @@ router.get('/conversationsXusers/:id', restController.getUsersInConversation);
 router.post('/messages', restController.createMessage);
 router.get('/messages/:id', restController.getMessagesInConversation);
 router.get('/conversations/:id', restController.getConversations);
+router.get('/messages/all/:id', restController.getTotalNumberOfNewMessages);
+router.delete('/conversationsXusers', restController.deleteConversationXusers);
 
 
 // Get 

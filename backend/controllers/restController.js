@@ -91,6 +91,23 @@ const getQuoteForPost = async (req, res) => {
   res.json(statement.all({ id: req.params.id }));
 }
 
+// deleteUserFromConversation
+const deleteConversationXusers = async (req, res) => {
+  console.log("DELETING CONVErXUSER");
+  //req.body.userId = req.session.user.id;
+
+  let statement = db.prepare(/*sql*/`
+    DELETE FROM 
+      conversationsXusers
+    WHERE
+      conversationsXusers.userId = $userId
+    AND 
+      conversationsXusers.conversationId = $conversationId
+  `);
+
+  res.json(statement.run(req.body));
+}
+
 
 //***********************************
 
@@ -101,7 +118,7 @@ const getQuoteForPost = async (req, res) => {
 
 
 const searchForUser = async (req, res) => {
-  let statement = db.prepare(/*sql*/"SELECT * FROM users WHERE username LIKE '" + req.params.name + "%'");
+  let statement = db.prepare(/*sql*/"SELECT * FROM users WHERE username LIKE '%" + req.params.name + "%' AND NOT users.id = " + req.session.user.id);
   //let statement = db.prepare(/*sql*/"SELECT * FROM users WHERE username LIKE 'bat%'");
   res.json(statement.all({ name: req.params.name }));
 }
@@ -176,6 +193,9 @@ const getNumberOfPostsInThread = async (req, res) => {
   res.json(statement.all({ id: req.params.threadId }));
 }
 
+
+//TODO: RENAME; is for specific conversations....
+// For specific conversations...
 const getNumberOfUnreadMessages = async (req, res) => {
 
   // console.log("User int here!=!=!=!: ", req);
@@ -186,6 +206,31 @@ const getNumberOfUnreadMessages = async (req, res) => {
     
   res.json(statement.all({ id: req.params.id }));
 }
+
+
+const getTotalNumberOfNewMessages = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    SELECT COUNT(unread)
+FROM
+messages,
+conversations,
+conversationsXusers
+WHERE
+messages.conversationId = conversations.id
+AND 
+messages.unread = 1
+AND 
+conversations.id = conversationsXusers.conversationId
+AND 
+conversationsXusers.userId = $id
+AND NOT
+messages.senderId = $id
+  `);
+    res.json(statement.all({ id: req.params.id }));
+}
+
+
+
 // let statement = db.prepare(/*sql*/`
 //     SELECT COUNT(unread)
 //     FROM messages
@@ -357,8 +402,10 @@ module.exports = {
 
   getNumberOfThreadsInSubforum,
   getNumberOfPostsInThread,
+  getTotalNumberOfNewMessages,
 
   deleteThreadById,
+  deleteConversationXusers,
 
   createConversation,
   addUserToConversation,
