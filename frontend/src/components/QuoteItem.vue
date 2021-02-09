@@ -1,6 +1,6 @@
 <template>
   <div class="quote-container">
-    <h4 class="quote-header">at dd-mm-yy at hh:mm {{this.quotedAuthor.username}} wrote:</h4>
+    <h4 class="quote-header">{{ publishedDate }} - {{this.quotedAuthor.username}} wrote:</h4>
     <div>
       <h3>{{this.quote.message}}</h3>
       <h4 v-if="this.quote.isEdited === 1">(edited)</h4>
@@ -14,6 +14,15 @@ export default {
   data() {
     return {
       quotedAuthor: Object,
+    }
+  },
+  computed: {
+    publishedDate() {
+
+      let publishedDate = new Date(this.quote.published_time);
+      let months = ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"];
+
+      return (publishedDate.getDay() + " " + months[publishedDate.getMonth()] + ", " + publishedDate.getFullYear() + " at " + publishedDate.getHours() + ":" + publishedDate.getMinutes());        
     }
   },
   methods: {
