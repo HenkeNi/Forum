@@ -15,6 +15,11 @@ export default {
   components: {
     ConversationsListItem
   }, 
+  methods: {
+    fetchConversations() {
+      this.$parent.fetchConversations();
+    }
+  },
 }
 </script>
 
@@ -24,6 +29,7 @@ export default {
   padding-top: 30px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 </style>
