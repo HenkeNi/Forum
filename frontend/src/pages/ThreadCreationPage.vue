@@ -25,6 +25,8 @@ export default {
   methods: {
     async createThread(e) {
       e.preventDefault();
+
+      if (document.getElementById('title').value === "" || document.getElementById('message') === "") { return; }
       
       let thread = {
         "title": document.getElementById("title").value,

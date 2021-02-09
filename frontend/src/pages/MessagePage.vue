@@ -38,6 +38,8 @@ export default {
   },
   methods: {
     async sendMessage() {
+      if (document.getElementById("post-message").value === "") { return; }
+
       if (this.conversationsID !== null) {
         this.postMessage();
         this.fetchMessages();

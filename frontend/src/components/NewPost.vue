@@ -125,6 +125,8 @@ export default {
     async createPost(e) {
       e.preventDefault();
 
+      if (document.getElementById("post-message").value === "") { return; }
+
       let post = {
         message: document.getElementById("post-message").value,
         userId: this.$store.getters.currentUser.id,
