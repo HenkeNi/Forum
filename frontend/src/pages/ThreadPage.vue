@@ -85,15 +85,12 @@ export default {
       this.posts = res;
     },
     async closeThread() {
-      let res = await fetch(`/rest/v1/threads/${this.thread.id}`, {
+      await fetch(`/rest/v1/threads/${this.thread.id}`, {
         method: "PUT"
       });
-      res = await res.json();
-      console.log(res);
       this.threadClosed = true;
     },
     async removeThread() {
-      console.log("DELETING THREAD")
       await fetch(`/rest/v1/threads/${this.thread.id}`, {
         method: 'DELETE'
       });
@@ -144,6 +141,13 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  watch: {
+    posts() {
+      if (this.posts.length === 0) { // Remove thread if no posts
+        this.removeThread();
+      }
+    }
   }
   // watch: {
   //   newpostModalOpen() {
