@@ -44,6 +44,8 @@ router.delete("/threads/:id", restController.deleteThreadById);
 router.get("/threads/count/:subforumId", restController.getNumberOfThreadsInSubforum);
 router.get("/posts/count/:threadId", restController.getNumberOfPostsInThread);
 router.get("/messages/count/:id", restController.getNumberOfUnreadMessages);
+router.get('/posts/user/count/:userId', restController.getNumberOfPostsByUser);
+
 
 // Get search
 router.get("/users/search/:name", restController.searchForUser);

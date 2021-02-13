@@ -82,6 +82,16 @@ const getConversations = async (req, res) => {
 }
 
 
+getNumberOfPostsByUser = async (req, res) => {
+  let statement = db.prepare(/*sql*/`
+    SELECT COUNT(userId)
+        FROM posts  
+        WHERE userId = $id
+  `);
+    res.json(statement.all({ id: req.params.userId }));
+}
+
+
 const getQuoteForPost = async (req, res) => {
   console.log("GETTING QUOTES FOR POST");
   let statement = db.prepare(/*sql*/`
@@ -145,7 +155,9 @@ const getAllSubforumThreads = async (req, res) => {
   let statement = db.prepare(/*sql*/ `
     SELECT * FROM threads 
     WHERE subforumId = $subforumId 
-    ORDER BY published_time ASC
+    ORDER BY 
+    isNailed DESC,
+    published_time DESC
   `);
   res.json(statement.all(req.params)); // TODO: CHECK::::
 }
@@ -251,8 +263,8 @@ messages.senderId = $id
 const createThread = async (req, res) => {
   console.log("POSTING NEW THREAD");
   let statement = db.prepare(/*sql*/`
-    INSERT INTO threads (title, userId, published_time, subforumId) 
-    VALUES ($title, $userId, $published_time, $subforumId)
+    INSERT INTO threads (title, userId, published_time, subforumId, isNailed) 
+    VALUES ($title, $userId, $published_time, $subforumId, $isNailed)
     `);
     
     //WHERE NOT (user.isActive = 0 (SELECT * FROM users WHERE id = userId))
@@ -416,6 +428,7 @@ module.exports = {
   getMessagesInConversation,
   getConversations,
   searchForUser,
+  getNumberOfPostsByUser,
 
   updateMessage,
   getNumberOfUnreadMessages,
