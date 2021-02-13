@@ -5,7 +5,7 @@
       <img :src="user.imgUrl" />
       <!-- <div class="add-image" v-if="ownProfile">
         <h2>Hello</h2>
-      </div> -->
+      </div>-->
       <div v-if="ownProfile">
         <p @click="showUrl = !showUrl" class="add">+ add image</p>
         <div class="url-container" v-if="showUrl">
@@ -20,6 +20,8 @@
       </div>
       <h3 class="email">email: {{user.email }}</h3>
       <h3 class="role">role: {{user.userRole}}</h3>
+      <h3>Registration: {{this.registrationDate}}</h3>
+      <h3>Posts: {{this.user.numberOfPosts}}</h3>
     </div>
   </div>
 </template>
@@ -38,25 +40,50 @@ export default {
         return this.$store.getters.currentUser.id === this.user.id;
       }
       return false;
+    },
+    registrationDate() {
+      let regDate = new Date(this.user.registrationDate);
+      return (
+        regDate.getDay() +
+        1 +
+        "/" +
+        regDate.getMonth() +
+        1 +
+        "/" +
+        regDate.getFullYear()
+      );
     }
   },
   methods: {
     async addProfileImage() {
-      let url = document.getElementById('image-url').value;
+      let url = document.getElementById("image-url").value;
 
-      if (url === "") { return; }
+      if (url === "") {
+        return;
+      }
 
-      let res = await fetch(`/rest/v1/users/${this.$store.getters.currentUser.id}`, {
-        method: 'PUT',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ imgUrl: url })
-      });
+      let res = await fetch(
+        `/rest/v1/users/${this.$store.getters.currentUser.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ imgUrl: url })
+        }
+      );
       this.user.imgUrl = url;
       url = ""; // clear field
       console.log(res);
-    }
+    },
+     async getNumberOfPostsByUser() {
+      let res = await fetch(`/rest/v1/posts/user/count/${this.user.id}`);
+      res = await res.json();
+      this.user.numberOfPosts = res[0]["COUNT(userId)"];
+    },
+  },
+  created() {
+    this.getNumberOfPostsByUser();
   },
 };
 </script>
@@ -73,7 +100,6 @@ export default {
 
 .info {
   width: 100%;
-  
 }
 .username {
   text-align: center;
@@ -93,14 +119,12 @@ export default {
   font-size: 1.6em;
 }
 
-
 .title {
   /* padding-top: 40px; */
   margin: 0px;
   text-align: start;
   text-decoration: underline;
 }
-
 
 .info {
   /* text-align: start;
@@ -109,8 +133,6 @@ export default {
   justify-content: center;
   padding-right: 10px; */
 }
-
-
 
 img {
   width: 15vw;
@@ -132,9 +154,6 @@ img {
   padding-left: 10px;
   margin-right: 10px;
 } */
-
-
-
 
 .url-container {
   margin: 5px;
