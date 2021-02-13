@@ -35,7 +35,9 @@ export default {
       let res = await fetch(`/rest/v1/conversations/${this.user.id}`);
       res = await res.json();
       console.log(res);
-      this.convIDs = res;
+      if (res) {
+        this.convIDs = res;
+      }
     },
     showUserSearch() {
       this.findUser = !this.findUser;
