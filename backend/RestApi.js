@@ -8,10 +8,12 @@ module.exports = class RestApi {
     this.app = expressApp;
     this.db = sqlite3(pathToDB);
     this.prefix = urlPrefix;
-    //let tables = this.getAllTables();
-
+    
     this.getAllTables(); // TEST!!
+    
 
+    //let tables = this.getAllTables();
+    
     // for (let table of this.getAllTables()) {
     //   this.createGetAllRoute(table);
     //   this.createGetRoute(table);

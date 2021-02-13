@@ -5,6 +5,9 @@
       <img class="image" :src="author.imgUrl" />
       <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
       <h4>{{ author.userRole }}</h4>
+      <h5>Registration:</h5>
+      <h5>{{ this.registrationDate }}</h5>
+      <h5>Posts: {{this.author.numberOfPosts}}</h5>
     </div>
     <div class="main">
       <div class="top">
@@ -48,6 +51,7 @@
           <h2 class="main-text">{{post.message}}</h2>
         </div>
       </div>
+          <!-- <h2>Flag as offensive</h2> -->
     </div>
   </div>
 </template>
@@ -102,6 +106,10 @@ export default {
     },
     isEdited() {
       return this.post.isEdited === 1;
+    },
+    registrationDate() {
+      let regDate = new Date(this.author.registrationDate);
+      return regDate.getDay() + 1 + "/" + regDate.getMonth() + 1 + "/" + regDate.getFullYear(); 
     },
     publishedDate() {
       //return new Date(this.post.published_time).toLocaleString();
@@ -182,6 +190,11 @@ export default {
         //this.fetchQuotedAuthor(res[0]);
       }
     },
+    async getNumberOfPostsByUser() {
+      let res = await fetch(`/rest/v1/posts/user/count/${this.post.userId}`);
+      res = await res.json();
+      this.author.numberOfPosts = res[0]["COUNT(userId)"];
+    },
     fetchPostsInParent() {
       this.$parent.reload();
     },
@@ -198,6 +211,7 @@ export default {
   },
   created() {
     this.fetchAuthor();
+    this.getNumberOfPostsByUser();
     this.getPossibleQuote();
     // this.fetchQuotedAuthor();    
   }
