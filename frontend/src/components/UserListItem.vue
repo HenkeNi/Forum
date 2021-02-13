@@ -2,6 +2,11 @@
   <div>
     <div @click="goToUserProfile" class="container">
       <h2>{{user.username}}</h2>
+      <h2>{{user.email}}</h2>
+      <h2>{{user.userRole}}</h2>
+      <!-- <div class="rapported" v-if="user.isRapported === 1">
+        <h2>Rapported!</h2>
+      </div> -->
     </div>
   </div>
 </template>
@@ -31,6 +36,11 @@ methods: {
 }
 .container:hover {
   color: rgb(207, 207, 132);
+}
+
+
+.rapported {
+  color: red;
 }
 
 </style>
