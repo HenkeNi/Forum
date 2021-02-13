@@ -1,0 +1,43 @@
+[Thoughts]
+
+
+********** HOW TO GO ABOUT BEING ABLE TO QUOTE OTHER USERS POSTS **********
+I wanted to add the ability to quote other users posts inside a thread (just like any other forum).
+
+How it's working now: 
+  In the end I decided to make a quote its own table in the database (a table that contains the quoted-text, the author of the quote and so on)
+
+Thoughts: 
+  I thought about, instead of having a quote being its own table, it could also work saving the quoted text inside of the 
+  current users message. So when the user is sending their message I would also add the message from the quoted post inside of some 
+  custome [tags]. Ex:
+
+  post.message:
+
+  [quote]"This text is quoted from another user"[/quote]
+
+  "This text is the text the current user is sending together with the quote"
+
+
+
+  This way you could also extract the quote from the message without needing it to be its own db-table. The downside would be that it 
+  could potentially be a bit harder to work with (extract the quote - especially if the quoted text already contains a quoted text).
+  It wouldn't be very reponsive either - if the author of the quote changed their username, it wouldn't update in the quote.
+
+  - not as reponsive (quote tabel will be updated if foreign keys gets updated, where hardcoded text will not)
+  + Saves request to db...
+ +/- Enables to quote a post that already contains a quote? Or it would cause a lot of problems....
+
+
+
+
+*** HOW TO RESPOND TO A DELETED USER ***
+How it's now:
+  When a user gets deleted, instead of putting OnDelete => Cascade on the foreign keys inside the thread and posts tables and deleting
+  all the posts and threads a user has created I decided to instead change the author to a default user called deleted_user. 
+
+  The reason for this is that I didn't make a lot of sense to delete everything a user has made (posts and threads) just because
+  they get deleted. For example, if a user has made a very popular thread it wouldn't make a lot of sense deleting it just because 
+  the user was deleted.
+
+  
