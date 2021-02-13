@@ -7,6 +7,12 @@
     <form class="form">
       <label for="title">Title</label><br/>
       <input required id="title" type="text" /><br/>
+      <div v-if="isModeratorOrAdmin">
+        <label>Make thread nailed:
+          <input id="nailed-check" type="checkbox" />
+        </label>
+      </div>
+
 
       <label for="message">Message</label><br/>
       <textarea required id="message" type="text" name="Text1" cols="40" rows="5"></textarea>
@@ -22,6 +28,15 @@
 <script>
 export default {
   props: ['subforum'],
+  computed: {
+    isModeratorOrAdmin() {
+      let user = this.$store.getters.currentUser;
+      if (user) {
+        return user.userRole === "admin" || user.userRole === "moderator";
+      }
+      return false;
+    }
+  },
   methods: {
     async createThread(e) {
       e.preventDefault();
@@ -35,12 +50,13 @@ export default {
         "subforumId": this.$route.params.subforum.id
       }
 
-      console.log("POSTING THREAD", thread);
-
       if (thread.userId === null || thread.userId === undefined) { return; } 
 
-      let res = await fetch('/rest/v1/threads', {
+      if (this.isModeratorOrAdmin && document.getElementById("nailed-check").checked === true) {
+        thread.isNailed = 1; 
+      }
 
+      let res = await fetch('/rest/v1/threads', {
       //let res = await fetch(`/threads/${this.$route.params.subforum.id}`, {
         method: 'POST',
         headers: {
