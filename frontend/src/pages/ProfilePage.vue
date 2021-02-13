@@ -16,19 +16,17 @@
     </div>
     </div>
     <div class="list" v-if=isAdminProfile>
-      <h2 class="list-item">List of users</h2>
-      <UserList />
+      <h2>Admin options:</h2>
+      <h2 class="list-route" @click.prevent="goToUserList">See list of user</h2>  
     </div>
   </div>
 </template>
 
 <script>
-import UserList from '../components/UserList.vue';
 import License from '../components/License.vue';
 
 export default {
   components: {
-    UserList,
     License
   },
   props: ["user"],
@@ -70,6 +68,13 @@ export default {
     goToMessagePage() {
       this.$router.push({ name: 'MessagePage', params: {user: this.user} });
     },
+    goToUserList() {
+      this.$router.push("/userlistpage");
+    },
+    async giveUserWarning() {
+      // TODO: Update user with a warning.... 
+      // Resets after x time... (goes back to 0?)
+    },
     async makeModerator() {
       if (this.user.userRole === "Admin") { return; } // Prevent admin from making themselves moderator...
 
@@ -96,8 +101,7 @@ export default {
       console.log(res);
       if (res) { this.user.userRole = "member"; }
     },
-    
-  }, 
+  },
 };
 </script>
 
@@ -128,7 +132,9 @@ export default {
   border: solid black 2px;
 }
 
-
+.list-route {
+  cursor: pointer;
+}
 
 .list {
   margin-top: 50px;
