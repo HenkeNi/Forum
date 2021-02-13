@@ -67,6 +67,7 @@ export default {
         email:    document.getElementById("reg-email").value,
         password: document.getElementById("reg-password").value,
         username: document.getElementById("reg-username").value,
+        registrationDate: Date.now(),
       });
       if (res.error) { this.failed = true; }
       if (res) { this.close(); }
