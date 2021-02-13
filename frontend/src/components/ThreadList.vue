@@ -26,7 +26,7 @@ export default {
     async fetchAllThreads() {
       let res = await fetch(`/rest/v1/threads/${this.subforum.id}`); 
       this.threads = await res.json();
-    }
+    },
   },
   created() {
     this.fetchAllThreads();

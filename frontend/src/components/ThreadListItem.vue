@@ -1,13 +1,12 @@
 <template>
   <div v-bind:class="{ evenRow: !isEvenRow }" class="thread-container" @click="goToThreadPage">
-    <div class="container">
+    <div v-bind:class="{ nailed: isNailed }" class="container">
       <div class="left">
-        <div class="user-icon">
-                <!-- <span class="material-icons" style="font-size: 3.5em;">chat</span> -->
-            <span class="material-icons" style="font-size: 3.4em">folder</span>
-          <!-- <img src="https://www.shareicon.net/data/512x512/2016/04/02/743328_chat_512x512.png"/> -->
-          <!-- <img :src="author.imgUrl" /> -->
-          <!-- <img src="https://image.flaticon.com/icons/png/512/21/21294.png" /> -->
+        <div v-if="!isNailed" class="user-icon">
+            <span class="material-icons" style="font-size: 3.4em">folder</span>         
+        </div>
+        <div v-else class="user-icon">
+          <span class="material-icons" style="font-size: 3.4em">error_outline</span>
         </div>
         <div class="user-info">
           <div class="title-close">
@@ -70,10 +69,13 @@ export default {
       );
     },
     isEvenRow() {
-      return this.index % 2 == 0;
+      return this.index % 2 === 0;
     },
     isClosed() {
-      return this.thread.active == 0;
+      return this.thread.active === 0;
+    },
+    isNailed() {
+      return this.thread.isNailed === 1;
     }
   },
   methods: {
@@ -107,23 +109,17 @@ export default {
 
 <style scoped>
 .thread-container {
-  /* margin-bottom: 30px; */
   width: 55vw;
   border: 1px solid white;
-  /* background-color: rgb(26, 33, 36); */
   background-color: rgb(54, 62, 65);
-  /* background-image: linear-gradient(to right, rgb(26, 33, 36), rgb(161, 164, 165)); */
   color: white;
-  /* background-color: rgb(85, 83, 83); */
   margin-bottom: -1px;
   cursor: pointer;
   border-radius: 5px;
   display: flex;
   align-content: flex-start;
   justify-content: space-between;
-  /* box-shadow: 0.5px 0.5px 8px #000000; */
 }
-
 .thread-container:hover {
   color: rgb(207, 207, 132);
   border: 1px solid rgb(207, 207, 132);
@@ -134,6 +130,18 @@ export default {
   display: flex;
   justify-content: space-between;
 }
+
+.nailed {
+  /* background-color: rgb(56, 54, 31); */
+  color: rgb(86, 125, 158);
+}
+
+.nailed:hover {
+  color: rgb(207, 207, 132);
+  /* border: 1px solid rgb(207, 207, 132); */
+}
+
+
 
 .thread-container h1 {
   margin-bottom: 0px;
