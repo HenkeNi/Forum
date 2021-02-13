@@ -1,7 +1,9 @@
 <template>
   <div class="page">
     <div class="send">
-      <h2>Conversation with {{user.username}}</h2>
+      <div class="other-user">
+        <h2>Conversation with</h2><h2 @click.prevent="goToProfile" class="name">{{user.username}}</h2>
+      </div>
       <textarea
         class="textarea"
         id="post-message"
@@ -161,6 +163,9 @@ export default {
         this.fetchMessages();
       }, 5000);
     },
+    goToProfile() {
+      this.$router.push({ name: 'ProfilePage', params: {user: this.user} });
+    }
    
     // async getUserInConversation() { // NEEDED???!
     //   let res = await fetch(`/rest/v1/conversationsXusers/${this.conversationsId}`);
@@ -229,4 +234,21 @@ p {
   padding: 3px;
   cursor: pointer;
 }
+
+
+.other-user {
+  display: flex;
+}
+
+.name {
+  padding-left: 10px;
+  color: rgb(30, 75, 134);
+  cursor: pointer;
+}
+
+.name:hover {
+  color: rgb(207, 207, 132);
+}
+
+
 </style>
