@@ -28,11 +28,15 @@ export default {
   components: {
     ThreadList
   },
-
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.currentUser !== null;
+    }
+  },
   methods: {
-    // TODO: maybe put thus code in subfou page and instead do router push to ThreadPage and do ti there....
     createNewThread() {
-      // if user is not logged in return....
+      if (!this.isLoggedIn) { return; } // Return if not logged in...
+
       this.$router.push({
         name: "threadCreation",
         params: { subforum: this.$route.params.subforum }
