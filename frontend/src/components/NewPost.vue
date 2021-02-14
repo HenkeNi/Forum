@@ -1,7 +1,7 @@
 <template>
   <div class="post-container">
     <!-- <form action=""> -->
-    <form class="post-form">
+    <form id="post-form" class="post-form">
       <div class="remove-quote" v-if="this.quotedPost !== null">
         <h4 @click.prevent="removeQuote">remove</h4>
       </div>
@@ -55,6 +55,7 @@ export default {
     return {
       quotedAuthor: Object,
       quotedPost: null,
+      test: document.getElementById('post-cont'),
     };
   },
   computed: {
@@ -73,6 +74,7 @@ export default {
     removeQuote() {
       console.log("remove quote");
       this.quotedPost = null;
+      this.$parent.clearQuotePost();
     },
     // getMessage() {
 
@@ -164,21 +166,17 @@ export default {
     }
   },
   created() {
-    console.log("START:", this.quotedPost);
     if (this.quote) {
       this.quotedPost = this.quote;
 
      //document.getElementById('quote-message').value = "BATMAN";//this.quote.message;
-     //console.log("SOME", document.getElementById('quote-message').value);
-     // console.log("New post with quote", this.quote);
       this.getQuotedAuthor();
       // document.getElementById('quote-text').value = this.quote.message; 
     }
-    // let div = document.getElementById("post-container");
-    // console.log(div);
-    // //div.scrollTop = div.scrollHeight;
-    // div.scrollIntoView();
-  }
+  },
+  mounted() {
+    this.$nextTick(() => document.getElementById('post-form').scrollIntoView()); // scroll down to NewPost when html is ready
+  },
 };
 </script>
 
