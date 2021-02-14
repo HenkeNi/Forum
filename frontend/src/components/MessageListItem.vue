@@ -4,7 +4,7 @@
       <div class="container">
         <h3 v-if="isOwnMessage" @click="deletePost" class="delete">X</h3>
         <h2 class="message">{{ message.text }}</h2>
-        <p>writen by: {{ this.author.username }}</p>
+        <p>written by: {{ this.author.username }}</p>
         <p v-if="isOwnMessage && message.unread === 1" class="read-status">(unread)</p>
       </div>
       <div class="bottom">
