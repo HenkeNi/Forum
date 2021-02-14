@@ -7,7 +7,8 @@
       <h4>{{ author.userRole }}</h4>
       <h5>Registration:</h5>
       <h5>{{ this.registrationDate }}</h5>
-      <h5>Posts: {{this.author.numberOfPosts}}</h5>
+      <h5>Posts: {{this.postsAmount}}</h5>
+      <!-- <h5>Posts: {{author.postsAmount}}</h5> -->
     </div>
     <div class="main">
       <div class="top">
@@ -19,7 +20,8 @@
         </div>
         <div class="options">
           <div v-if="isLoggedIn" class="quote" @click="quoteUser">
-            <h2>quote</h2>
+            <!-- <h2>quote</h2> -->
+            <img class="quote-img" src="@/assets/quote.png" />
           </div>
           <div v-if="isEditable" @click="edit" class="edit">
             <h3>Edit</h3>
@@ -72,6 +74,7 @@ export default {
       author: Object,
       shouldEdit: false,
       quote: null,
+      postsAmount: 0, // TEMP FIX
       // quotedAuthor: null
     };
   },
@@ -166,7 +169,6 @@ export default {
     // },
      async fetchAuthor() {
       let res = await fetch(`/rest/v1/users/${this.post.userId}`); // TODO: FIX!!!!
-    
       this.author = await res.json();
     },
     async remove() {
@@ -193,7 +195,9 @@ export default {
     async getNumberOfPostsByUser() {
       let res = await fetch(`/rest/v1/posts/user/count/${this.post.userId}`);
       res = await res.json();
-      this.author.numberOfPosts = res[0]["COUNT(userId)"];
+      this.author.postsAmount = res[0]["COUNT(userId)"];
+      console.log("thi", this.author);
+      this.postsAmount = res[0]["COUNT(userId)"];
     },
     fetchPostsInParent() {
       this.$parent.reload();
@@ -234,6 +238,9 @@ export default {
   border-radius: 10px;
   word-wrap: break-word;
 }
+
+
+
 
 .top {
   /* width: 580px; */
@@ -353,15 +360,29 @@ img {
 .quote {
   cursor: pointer;
 }
-.quote h2 {
+
+/* .quote h2 {
   border: 2px solid black;
   border-radius: 5px;
   background-color: rgb(90, 88, 88);
   margin-right: 5px;
+} */
+
+.quote-img {
+  border: 2px solid black;
+  background-color: rgb(109, 108, 108);
+  margin-right: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+  width: 5.5vh;
+  height: 5.5vh;
+  /* width: 10%; */
 }
 
-.quote h2:hover {
-  color: rgb(207, 207, 132);
+
+.quote-img:hover {
+  background-color: rgb(207, 207, 132);
+  
   border: 2px solid rgb(207, 207, 132);
 }
 
