@@ -23,9 +23,15 @@ export default {
       this.$parent.fetchMessages();
     }
   },
+  updated() {
+    document.querySelector(".end").scrollIntoView({behavior: "smooth"});
+  },
   mounted() {
+    console.log("mounted");
     this.$nextTick(() => {
-      setTimeout(() => { console.log("HOwdy"); document.querySelector(".end").scrollIntoView(); }, 1000);
+      //document.querySelector(".end").scrollIntoView();
+      // setTimeout(() => { console.log("HOwdy"); document.querySelector(".end").scrollIntoView({behavior: "smooth"}); }, 500);
+      setTimeout(() => { console.log("HOwdy"); document.querySelector(".end").scrollIntoView(); }, 200);
     });
     //this.$nextTick(() => document.getElementById('end').scrollIntoView());
   },
