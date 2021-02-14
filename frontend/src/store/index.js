@@ -6,12 +6,16 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     currentUser: null,
+    author: null,
   },
   getters: {
     currentUser(state) {
       //return JSON.parse(localStorage.getItem('currentUser'));
       return state.currentUser;
     },
+    author(state) {
+      return state.author;
+    }
     // isLoggedIn(state) {
     //   return state.loggedIn;
     // }
@@ -20,6 +24,9 @@ export default new Vuex.Store({
     setCurrentUser(state, user) {
       state.currentUser = user;
       //localStorage.setItem('currentUser', JSON.stringify(user));
+    },
+    setAuthor(state, author) {
+      state.author = author;
     }
     // setIsLoggedIn(state, isLoggedIn) {
     //   state.isLoggedIn = isLoggedIn;
@@ -74,6 +81,17 @@ export default new Vuex.Store({
       dispatch("signInUser", credentials);
       return res;
     },
+    async fetchAuthor({ commit }, id) {
+      let res = await fetch(`/rest/v1/users/${id}`); 
+      res = await res.json();
+
+      commit("setAuthor", res);
+      return res;
+    },
+
+  
+
+    //async getNumberOfPostsByUser()
     
 
   },
