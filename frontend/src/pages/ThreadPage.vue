@@ -32,8 +32,8 @@
       </div>-->
     </div>
 
-    <div id="newpost" class="newpost" v-if="shouldPost">
-      <NewPost :quote="quotedPost" :threadId="this.thread.id" />
+    <div id="scroll-post" class="newpost" v-if="shouldPost">
+      <NewPost id="tst" :quote="quotedPost" :threadId="this.thread.id" />
     </div>
   </div>
 </template>
@@ -79,6 +79,9 @@ export default {
       this.newpostModalOpen = false;
       this.fetchPosts();
     },
+    clearQuotePost() {
+      this.quotedPost = null;
+    },
     async fetchPosts() {
       let res = await fetch(`/rest/v1/posts/${this.thread.id}`); // TODO: FIX!!!!
       res = await res.json();
@@ -100,6 +103,7 @@ export default {
       if (this.threadClosed === false) {
         this.quotedPost = post;
         this.shouldPost = true;
+        // this.scrollToEnd();
       } 
       // TODO: else print thread is closed
     },
@@ -110,7 +114,7 @@ export default {
       }
 
       this.shouldPost = !this.shouldPost;
-      //this.scrollToEnd();
+      this.scrollToEnd();
 
       // TODO : if no current user => return, show error message
 
@@ -123,7 +127,16 @@ export default {
       //this.newpostModalOpen = !this.newpostModalOpen;
     },
     scrollToEnd() {
-      // const el = this.$el.getElementsByClassName('newpost')[0];
+      // document.getElementById('quote-message').scrollIntoView()
+      // console.log("SCROLL TO END!", document.getElementById('scroll-post'));
+      // window.scrollTo(0,document.body.scrollHeight);
+      
+      // document.getElementById('tst').scrollIntoView();
+
+
+      // window.scrollTo(0, document.body.scrollHeight || document.documentElement.scrollHeight);
+
+     // const el = this.$el.getElementsByClassName('newpost')[0];
       // if (el) {
       // el.scrollIntoView({behavior: 'smooth'});
       // }
@@ -141,11 +154,17 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+    // document.addEventListener('scroll', this.scrollToEnd)
   },
   watch: {
     posts() {
       if (this.posts.length === 0) { // Remove thread if no posts
         this.removeThread();
+      }
+    },
+    shouldPost() {
+      if (this.shouldPost === false) {
+        this.clearQuotePost();
       }
     }
   }
@@ -282,4 +301,5 @@ export default {
   color: rgb(207, 207, 132);
   border: 1px solid rgb(207, 207, 132);
 }
+
 </style>
