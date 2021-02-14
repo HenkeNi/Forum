@@ -51,12 +51,12 @@ export default {
       res = await res.json();
       this.otherUser = res.filter(user => user.userId !== this.currentUser.id);
     },
-    async fetchFullAuthor() {
-      let res = await fetch(`/rest/v1/users/${this.otherUser[0].userId}`); // TODO: FETCH FIRST FOR NOW!!
-      return await res.json();
-    },
+    // async fetchFullAuthor() {
+    //   let res = await fetch(`/rest/v1/users/${this.otherUser[0].userId}`); // TODO: FETCH FIRST FOR NOW!!
+    //   return await res.json();
+    // },
     async goToMessagePage() {
-      let user = await this.fetchFullAuthor();
+      let user = await this.$store.dispatch("fetchAuthor", this.otherUser[0].userId);
       this.$router.push({ name: "MessagePage", params: { user: user } });
     },
     async fetchNumberOfNewMessages() {
