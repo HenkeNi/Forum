@@ -25,7 +25,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      setTimeout(() => { console.log("HOwdy"); document.querySelector(".end").scrollIntoView(); }, 100);
+      setTimeout(() => { console.log("HOwdy"); document.querySelector(".end").scrollIntoView(); }, 1000);
     });
     //this.$nextTick(() => document.getElementById('end').scrollIntoView());
   },
